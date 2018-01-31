@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 import actions from '../../actions/user';
-import UsersList from './UsersList';
+import gridColumns from './gridColumns';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -18,7 +20,10 @@ class Dashboard extends React.Component {
 
     return (
       <div >
-        <UsersList users={this.props.users} />
+        <ReactTable
+          data={this.props.users}
+          columns={gridColumns}
+        />
       </div>
     );
   }
