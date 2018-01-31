@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="character")
+ */
+class Character
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $code = '';
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $name = '';
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $side = 0;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $image = '';
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $description = '';
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $tags = '';
+}

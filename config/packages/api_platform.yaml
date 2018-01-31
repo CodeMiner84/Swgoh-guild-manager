@@ -1,0 +1,19 @@
+#api_platform:
+#    formats:
+#        json:     ['application/json']
+#
+#    mapping:
+#        paths: ['%kernel.project_dir%/src/Entity']
+#
+#    title: 'MyShop'
+#    description: 'Api for MyShop'
+#    version: '0.0.1'
+#    oauth:
+#      enabled: true
+#      clientId: 'test'
+#      clientSecret: 'test'
+#
+#
+#    collection:
+#        pagination:
+#            enabled: true

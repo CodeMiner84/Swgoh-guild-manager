@@ -1,0 +1,8 @@
+index:
+    path: /
+    controller: App\Controller\ShopController::index
+
+#api:
+#    resource: '.'
+#    type: 'api_platform'
+#    prefix: '/api' # Optional
