@@ -1,0 +1,16 @@
+filter:
+    excluded_paths:
+        - "assets/"
+        - "bin/"
+        - "config/"
+        - "node_modules/"
+        - "public/"
+        - "templates/"
+        - "tests/"
+        - "translations/"
+        - "var/"
+        - "vendor/"
+build:
+    environment:
+        php:
+            version: 7.1.12
