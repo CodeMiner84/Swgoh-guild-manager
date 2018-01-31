@@ -1,6 +1,5 @@
 filter:
     excluded_paths:
-        - "assets/"
         - "bin/"
         - "config/"
         - "node_modules/"
@@ -14,3 +13,9 @@ build:
     environment:
         php:
             version: 7.1.12
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
