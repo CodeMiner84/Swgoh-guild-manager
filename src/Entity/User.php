@@ -35,11 +35,11 @@ class User
      * @JMS\Groups({"users", "guild"})
      * @JMS\Expose
      */
-    private $title;
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Guild", inversedBy="users")
-     * @ORM\JoinColumn(name="guild_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="guild_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $guild;
 
@@ -78,37 +78,37 @@ class User
     }
 
     /**
-     * Set title.
+     * Set name.
      *
-     * @param string $title
+     * @param string $name
      *
      * @return User
      */
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get title.
+     * Get name.
      *
      * @return string
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
      * Set guild.
      *
-     * @param \App\Entity\Guild|null $guild
+     * @param Guild|null $guild
      *
      * @return User
      */
-    public function setGuild(\App\Entity\Guild $guild = null)
+    public function setGuild(Guild $guild = null)
     {
         $this->guild = $guild;
 
@@ -118,7 +118,7 @@ class User
     /**
      * Get guild.
      *
-     * @return \App\Entity\Guild|null
+     * @return Guild|null
      */
     public function getGuild()
     {

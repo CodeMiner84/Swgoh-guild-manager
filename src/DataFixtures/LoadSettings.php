@@ -67,12 +67,12 @@ class LoadSettings extends Fixture
      */
     private function loadGuild(ObjectManager $manager): void
     {
-        foreach ($this->getGuildData() as [$title, $uuid, $code]) {
+        foreach ($this->getGuildData() as [$name, $uuid, $code]) {
             $setting = new Guild();
-            $setting->setUuid($title)
+            $setting->setUuid($name)
                 ->setUuid($uuid)
                 ->setCode($code)
-                ->setTitle($title);
+                ->setName($name);
 
             $manager->persist($setting);
             $this->addReference(sprintf("%s-guild", $code), $setting);

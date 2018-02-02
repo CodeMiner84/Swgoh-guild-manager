@@ -28,8 +28,21 @@ services:
         # but if a service is unused, it's removed anyway
         exclude: '../src/{Entity,Migrations,Tests,Handler}'
 
-
     App\Handler\:
         resource: '../src/Handler'
         public: true
 
+    App\Utils\CharacterCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'character'
+
+    App\Utils\GuildCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'guild'
+
+    App\Utils\UserCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'user'

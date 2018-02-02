@@ -14,14 +14,11 @@ use Symfony\Component\DomCrawler\Crawler;
  * Class CharacterCrawler
  * @package App\Utils
  */
-class CharacterCrawler extends AbstractCrawler
+class CharacterCrawler extends BaseCrawler implements CrawlerInterface
 {
-    /**
-     * @param Setting $settings
-     */
-    public function crawl(Setting $settings)
+    public function crawl()
     {
-        $crawler = new Crawler($this->getSiteHtml($settings->getApi()));
+        $crawler = new Crawler($this->getSiteHtml($this->settings->getApi()));
         $this->fetchCharacters($crawler->filter('li.character'));
     }
 

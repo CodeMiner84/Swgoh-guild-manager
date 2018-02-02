@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * Class CharacterRepository
  * @package App\Repository
  */
-class CharacterRepository extends ServiceEntityRepository
+class CharacterRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     /**
      * CharacterRepository constructor.

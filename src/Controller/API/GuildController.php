@@ -4,8 +4,8 @@ namespace App\Controller\API;
 
 use App\Entity\Guild;
 use App\Handler\ApiHandler;
-use App\Utils\AbstractCrawler;
-use App\Utils\GuildCrawler;
+use App\Utils\BaseCrawler;
+use App\Utils\UserCrawler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -47,7 +47,7 @@ class GuildController extends FOSRestController
      * )
      * @SWG\Tag(name="guild")
      */
-    public function collect(GuildCrawler $guildCrawler)
+    public function collect(UserCrawler $guildCrawler)
     {
         $guilds = $this->getDoctrine()->getRepository(Guild::class)->findAll();
 

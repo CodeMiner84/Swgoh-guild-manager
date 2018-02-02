@@ -5,7 +5,7 @@ namespace App\Controller\API;
 use App\Entity\Guild;
 use App\Entity\User;
 use App\Handler\ApiHandler;
-use App\Utils\GuildCrawler;
+use App\Utils\UserCrawler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;

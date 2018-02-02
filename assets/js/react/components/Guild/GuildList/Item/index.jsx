@@ -12,7 +12,7 @@ class Item extends React.Component {
       <Outer className="col-xs-12">
         <StyledItem>
           <Title>
-            <Link to={'/users/' + item.code}>{item.title}</Link>
+            <Link to={'/users/' + item.code}>{item.name}</Link>
           </Title>
         </StyledItem>
       </Outer>
