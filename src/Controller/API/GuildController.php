@@ -4,11 +4,10 @@ namespace App\Controller\API;
 
 use App\Entity\Guild;
 use App\Handler\ApiHandler;
-use App\Utils\BaseCrawler;
 use App\Utils\UserCrawler;
 use FOS\RestBundle\Controller\FOSRestController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
 
 /**
@@ -54,6 +53,7 @@ class GuildController extends FOSRestController
         foreach ($guilds as $guild) {
             $guildCrawler->crawl($guild);
         }
+
         return $this->getHandler()->collect(['guild']);
     }
 

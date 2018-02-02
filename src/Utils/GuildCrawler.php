@@ -4,15 +4,12 @@ namespace App\Utils;
 
 use App\Entity\Character;
 use App\Entity\Guild;
-use App\Entity\Setting;
 use App\Factory\CharacterFactory;
 use App\Factory\GuildFactory;
-use App\Repository\RepositoryInterface;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Class GuildCrawler
+ * Class GuildCrawler.
  */
 class GuildCrawler extends BaseCrawler implements CrawlerInterface
 {
@@ -29,7 +26,7 @@ class GuildCrawler extends BaseCrawler implements CrawlerInterface
             $guild = GuildFactory::create([
                 'name' => $crawler->filter('h3')->text(),
                 'uuid' => $match[1],
-                'code' => $match[2]
+                'code' => $match[2],
             ]);
 
             $this->em->persist($guild);
@@ -42,16 +39,15 @@ class GuildCrawler extends BaseCrawler implements CrawlerInterface
         $this->em->getRepository(Guild::class)->remove();
     }
 
-
     /**
      * @param string $url
-     * @param int $page
+     * @param int    $page
      */
     private function collectGuildsDOM(string $url, $page = 1): void
     {
-        $this->iter ++;
+        ++$this->iter;
         try {
-            $crawler = new Crawler($this->getSiteHtml(sprintf("%s?page=%s", $url, $page)));
+            $crawler = new Crawler($this->getSiteHtml(sprintf('%s?page=%s', $url, $page)));
             $domElements = $crawler->filter('ul.list-group li.character');
 
             if (count($domElements) > 0) {
@@ -61,7 +57,6 @@ class GuildCrawler extends BaseCrawler implements CrawlerInterface
                 $this->collectGuildsDOM($url, ++$page);
             }
         } catch (\Exception $e) {
-
         }
     }
 
@@ -69,17 +64,17 @@ class GuildCrawler extends BaseCrawler implements CrawlerInterface
      * @param Guild $guild
      * @param array $domList
      */
-    private function fetchGuilds( $dom): void
+    private function fetchGuilds($dom): void
     {
-        die("A");
+        die('A');
         $this->removeCharacters();
-        /** @var \DOMElement $item */
+        /* @var \DOMElement $item */
         foreach ($dom as $key => $domElement) {
             if ($key > 1) {
                 $html = $domElement->ownerDocument->saveHTML($domElement);
                 $liCrawler = new Crawler($html);
 
-                $side = explode("·", $liCrawler->filter('.media-heading > small > span')->html());
+                $side = explode('·', $liCrawler->filter('.media-heading > small > span')->html());
                 preg_match("/\/characters\/(.*)\//", $liCrawler->filter('a')->getNode(0)->getAttribute('href'), $matches);
 
                 $character = CharacterFactory::create([

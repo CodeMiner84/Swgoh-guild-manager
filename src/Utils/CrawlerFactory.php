@@ -6,12 +6,11 @@ use App\Entity\Character;
 use App\Entity\Guild;
 use App\Entity\Setting;
 use App\Entity\User;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Class CrawlerFactory
+ * Class CrawlerFactory.
  */
 class CrawlerFactory
 {
@@ -53,5 +52,4 @@ class CrawlerFactory
     {
         return $em->getRepository(Setting::class)->findOneByCode(self::SWGOH_API);
     }
-
 }

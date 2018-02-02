@@ -2,18 +2,12 @@
 
 namespace App\Utils;
 
-use App\Entity\Guild;
 use App\Entity\Setting;
-use App\Repository\GuildRepository;
 use App\Repository\RepositoryInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Class BaseCrawler
+ * Class BaseCrawler.
  */
 class BaseCrawler
 {
@@ -45,9 +39,9 @@ class BaseCrawler
     /**
      * BaseCrawler constructor.
      *
-     * @param Setting $setting
+     * @param Setting                $setting
      * @param EntityManagerInterface $em
-     * @param RepositoryInterface $repository
+     * @param RepositoryInterface    $repository
      */
     public function __construct(Setting $setting, EntityManagerInterface $em, RepositoryInterface $repository)
     {
@@ -55,6 +49,7 @@ class BaseCrawler
         $this->em = $em;
         $this->repository = $repository;
     }
+
     /**
      * @param string $url
      *

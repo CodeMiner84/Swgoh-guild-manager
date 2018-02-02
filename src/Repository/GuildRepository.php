@@ -7,9 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class GuildRepository
- *
- * @package App\Repository
+ * Class GuildRepository.
  */
 class GuildRepository extends ServiceEntityRepository implements RepositoryInterface
 {
@@ -22,7 +20,6 @@ class GuildRepository extends ServiceEntityRepository implements RepositoryInter
     {
         parent::__construct($registry, Guild::class);
     }
-
 
     public function remove(): void
     {

@@ -6,9 +6,7 @@ use App\Entity\Character;
 use App\Entity\Guild;
 
 /**
- * Class GuildFactory
- *
- * @package App\Factory
+ * Class GuildFactory.
  */
 class GuildFactory
 {

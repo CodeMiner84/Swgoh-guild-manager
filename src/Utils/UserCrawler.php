@@ -3,16 +3,12 @@
 namespace App\Utils;
 
 use App\Entity\Guild;
-use App\Entity\Setting;
 use App\Entity\User;
 use App\Factory\UserFactory;
-use App\Repository\RepositoryInterface;
-use App\Repository\UserRepository;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Class GuildCrawler
- * @package App\Utils
+ * Class GuildCrawler.
  */
 class UserCrawler extends BaseCrawler implements CrawlerInterface
 {
@@ -20,7 +16,7 @@ class UserCrawler extends BaseCrawler implements CrawlerInterface
 
     /**
      * @param Settings $settings
-     * @param Guild $guild
+     * @param Guild    $guild
      */
     public function crawl()
     {
@@ -37,7 +33,6 @@ class UserCrawler extends BaseCrawler implements CrawlerInterface
         return $this;
     }
 
-
     /**
      * @param Guild $guild
      *
@@ -45,7 +40,7 @@ class UserCrawler extends BaseCrawler implements CrawlerInterface
      */
     private function getGuildUrl(Guild $guild): string
     {
-        return file_get_contents(sprintf("%s%s/%s/%s/",
+        return file_get_contents(sprintf('%s%s/%s/%s/',
             $this->settings->getApi(),
             $this->settings->getGuildSuffix(),
             $guild->getUuid(),

@@ -4,12 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Guild;
 use App\Entity\Setting;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * Class LoadSettings
- * @package App\DataFixtures
+ * Class LoadSettings.
  */
 class LoadSettings extends Fixture
 {
@@ -28,7 +27,7 @@ class LoadSettings extends Fixture
     private function getData(): array
     {
         return [
-            ['SWGOH', 'swgoh', 'https://swgoh.gg', '/u', '/g']
+            ['SWGOH', 'swgoh', 'https://swgoh.gg', '/u', '/g'],
         ];
     }
 
@@ -38,7 +37,7 @@ class LoadSettings extends Fixture
     private function getGuildData(): array
     {
         return [
-            ['Tears of Wrath', '20375', 'tears-of-wrath']
+            ['Tears of Wrath', '20375', 'tears-of-wrath'],
         ];
     }
 
@@ -56,7 +55,7 @@ class LoadSettings extends Fixture
                 ->setGuildSuffix($guild);
 
             $manager->persist($setting);
-            $this->addReference(sprintf("%s-api", $title), $setting);
+            $this->addReference(sprintf('%s-api', $title), $setting);
         }
 
         $manager->flush();
@@ -75,7 +74,7 @@ class LoadSettings extends Fixture
                 ->setName($name);
 
             $manager->persist($setting);
-            $this->addReference(sprintf("%s-guild", $code), $setting);
+            $this->addReference(sprintf('%s-guild', $code), $setting);
         }
 
         $manager->flush();

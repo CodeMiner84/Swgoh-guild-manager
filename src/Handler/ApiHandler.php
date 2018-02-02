@@ -2,26 +2,20 @@
 
 namespace App\Handler;
 
-use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Class ApiHandler
- *
- * @package App\Handler
+ * Class ApiHandler.
  */
 class ApiHandler
 {
-    /**
-     *
-     */
     private const MAX_RESULTS = 100;
 
     /**
@@ -47,9 +41,9 @@ class ApiHandler
     /**
      * ApiHandler constructor.
      *
-     * @param RequestStack $requestStack
+     * @param RequestStack           $requestStack
      * @param EntityManagerInterface $em
-     * @param ViewHandlerInterface $viewHandler
+     * @param ViewHandlerInterface   $viewHandler
      */
     public function __construct(RequestStack $requestStack, EntityManagerInterface $em, ViewHandlerInterface $viewHandler)
     {
@@ -60,7 +54,7 @@ class ApiHandler
 
     /**
      * @param string $entity
-     * 
+     *
      * @return $this
      */
     public function init(string $entity)
@@ -77,14 +71,14 @@ class ApiHandler
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function collect(array $groups, array $routeParams = array())
+    public function collect(array $groups, array $routeParams = [])
     {
         $view = $this->createView(
             $this->transformIterator($this->getPaginatedResult()),
             $groups
         );
 
-        return $this->viewhandler->createResponse($view, $this->request,'json');
+        return $this->viewhandler->createResponse($view, $this->request, 'json');
     }
 
     /**
@@ -105,27 +99,25 @@ class ApiHandler
         return $view;
     }
 
-
     /**
      * @return Pagerfanta
      */
     private function getPaginatedResult(): Pagerfanta
     {
         $adapter = new DoctrineORMAdapter($this->getQueryBuilder());
-        
+
         $pagerfanta = new Pagerfanta($adapter);
 
         $pagerfanta
             ->setMaxPerPage($this->request->query->get('limit', self::MAX_RESULTS))
             ->setCurrentPage($this->request->query->get('page', 1));
 
-        if ($this->request->query->get('noLimit') !== null) {
+        if (null !== $this->request->query->get('noLimit')) {
             $pagerfanta->setMaxPerPage(999999);
         }
 
         return $pagerfanta;
     }
-
 
     /**
      * Create final return array with data needed + items per page etc.

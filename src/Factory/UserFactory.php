@@ -5,9 +5,7 @@ namespace App\Factory;
 use App\Entity\User;
 
 /**
- * Class UserFactory
- *
- * @package App\Factory
+ * Class UserFactory.
  */
 class UserFactory
 {

@@ -4,15 +4,11 @@ namespace App\Utils;
 
 use App\Entity\Character;
 use App\Entity\Guild;
-use App\Entity\Setting;
-use App\Entity\User;
 use App\Factory\CharacterFactory;
-use App\Factory\UserFactory;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Class CharacterCrawler
- * @package App\Utils
+ * Class CharacterCrawler.
  */
 class CharacterCrawler extends BaseCrawler implements CrawlerInterface
 {
@@ -31,16 +27,16 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
      * @param Guild $guild
      * @param array $domList
      */
-    private function fetchCharacters( $dom): void
+    private function fetchCharacters($dom): void
     {
         $this->removeCharacters();
-        /** @var \DOMElement $item */
+        /* @var \DOMElement $item */
         foreach ($dom as $key => $domElement) {
             if ($key > 1) {
                 $html = $domElement->ownerDocument->saveHTML($domElement);
                 $liCrawler = new Crawler($html);
 
-                $side = explode("·", $liCrawler->filter('.media-heading > small > span')->html());
+                $side = explode('·', $liCrawler->filter('.media-heading > small > span')->html());
                 preg_match("/\/characters\/(.*)\//", $liCrawler->filter('a')->getNode(0)->getAttribute('href'), $matches);
 
                 $character = CharacterFactory::create([

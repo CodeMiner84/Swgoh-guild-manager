@@ -8,13 +8,13 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class CharacterRepository
- * @package App\Repository
+ * Class CharacterRepository.
  */
 class CharacterRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     /**
      * CharacterRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
