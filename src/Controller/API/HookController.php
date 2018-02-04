@@ -3,8 +3,10 @@
 namespace App\Controller\API;
 
 use App\Entity\Guild;
+use App\Entity\User;
 use App\Utils\CharacterCrawler;
 use App\Utils\GuildCrawler;
+use App\Utils\UserCharacterCrawler;
 use App\Utils\UserCrawler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -43,6 +45,17 @@ class HookController extends FOSRestController
     public function fetchUsersFromGuild(Guild $guild, UserCrawler $crawler)
     {
         $crawler->setGuild($guild)->crawl();
+
+        return JsonResponse::create(['success']);
+    }
+
+    /**
+     * @Route("/fetch-user-character/{user}", name="api_fetch_user_characters")
+     * @ParamConverter("user", options={"mapping"={"user"="uuid"}})
+     */
+    public function fetchUserCharacters(User $user, UserCharacterCrawler $crawler)
+    {
+        $crawler->setUser($user)->crawl();
 
         return JsonResponse::create(['success']);
     }

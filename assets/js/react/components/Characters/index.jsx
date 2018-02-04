@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import actions from '../../actions/character';
-import Filtering from './Filtering';
+import Filtering from '../components/Filtering';
 import List from './List';
 
 class Characters extends React.Component {

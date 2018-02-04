@@ -23,9 +23,6 @@ const Main = props => (
     <div style={{ border: '#FF0000', color: '#000000', width: '100%', padding: '10px 30px' }}>
       {props.children}
     </div>
-    <div style={{ border: '#0000FF', color: '#000000', width: '100%', padding: '10px 30px' }}>
-      FOOTER
-    </div>
   </div>
 );
 

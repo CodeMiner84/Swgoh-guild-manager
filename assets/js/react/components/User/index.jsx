@@ -2,52 +2,64 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import ReactTable from 'react-table';
 import actions from '../../actions/user';
-import gridColumns from './gridColumns';
+import Toon from '../components/Toon';
+import Filtering from '../components/Filtering';
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.props.getAll();
+    this.state = {
+      phrase: '',
+    };
+
+    this.props.fetchUserCharacter(props.params.code);
+  }
+
+  changePhrase = (e) => {
+    this.setState({
+      phrase: e.target.value,
+    });
   }
 
   render() {
-    if (this.props.users.length === 0) {
+    if (this.props.userCharacters.length === 0) {
       return (<div />);
     }
 
     return (
       <div >
-        <ReactTable
-          data={this.props.users}
-          columns={gridColumns}
-          defaultPageSize={100}
-        />
+        <Filtering changePhrase={this.changePhrase} />
+        {this.props.userCharacters
+          .filter(toon => toon.character.name.toLowerCase().indexOf(this.state.phrase) > -1)
+          .map(toon => <Toon
+            toon={toon}
+          />)}
       </div>
     );
   }
 }
 
 Dashboard.propTypes = {
-  getAll: PropTypes.func.isRequired,
+  fetchUserCharacter: PropTypes.func.isRequired,
 };
 
-const getGuilds = state => state.user.users;
+const getCharacters = state => state.user.userCharacters;
 
 const selector = createSelector(
-  getGuilds,
-  users => users,
+  getCharacters,
+  userCharacters => userCharacters,
 );
 
 function mapStateToProps(state) {
+  console.log('state',state);
   return {
-    users: selector(state),
+    userCharacters: selector(state),
   };
 }
 
 const mapDispatchToProps = {
-  getAll: actions.fetchUsers,
+  fetchUserCharacter: actions.fetchUserCharacter,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

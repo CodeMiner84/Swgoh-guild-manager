@@ -46,3 +46,8 @@ services:
         factory: 'App\Utils\CrawlerFactory:get'
         arguments:
             $crawler: 'user'
+
+    App\Utils\UserCharacterCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'user-character'

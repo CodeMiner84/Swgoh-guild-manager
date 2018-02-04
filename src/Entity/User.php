@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -41,6 +42,16 @@ class User
      * @ORM\JoinColumn(name="guild_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $guild;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="user")
+     */
+    private $characters;
+
+    public function __construct()
+    {
+        $this->characters = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -122,5 +133,41 @@ class User
     public function getGuild()
     {
         return $this->guild;
+    }
+
+    /**
+     * Add character.
+     *
+     * @param \App\Entity\Character $character
+     *
+     * @return User
+     */
+    public function addCharacter(\App\Entity\Character $character)
+    {
+        $this->characters[] = $character;
+
+        return $this;
+    }
+
+    /**
+     * Remove character.
+     *
+     * @param \App\Entity\Character $character
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeCharacter(\App\Entity\Character $character)
+    {
+        return $this->characters->removeElement($character);
+    }
+
+    /**
+     * Get characters.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCharacters()
+    {
+        return $this->characters;
     }
 }

@@ -2,6 +2,7 @@ import types from '../actionType/user';
 
 const initialState = {
   users: [],
+  userCharacters: [],
 };
 
 function usersReducer(state = initialState, action) {
@@ -10,6 +11,11 @@ function usersReducer(state = initialState, action) {
       return {
         ...state,
         users: action.payload,
+      };
+    case types.USER_CHARACTERS_LIST:
+      return {
+        ...state,
+        userCharacters: action.payload,
       };
     default:
       return state;

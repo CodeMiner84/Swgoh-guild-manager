@@ -6,6 +6,7 @@ use App\Entity\Character;
 use App\Entity\Guild;
 use App\Entity\Setting;
 use App\Entity\User;
+use App\Entity\UserCharacter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -37,6 +38,9 @@ class CrawlerFactory
                 break;
             case 'user':
                 $instance = new UserCrawler($settings, $em, $em->getRepository(User::class));
+                break;
+            case 'user-character':
+                $instance = new UserCharacterCrawler($settings, $em, $em->getRepository(UserCharacter::class));
                 break;
         }
 

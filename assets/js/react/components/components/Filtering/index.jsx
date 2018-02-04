@@ -7,7 +7,7 @@ import FilterInput from './FilterInput';
 const Filtering = (props) => (
   <Container>
     <Inner>
-      <FilterInput type="text" onChange={props.changePhrase} />
+      <FilterInput placeholder="Type phrase to search ..." type="text" onChange={props.changePhrase} />
     </Inner>
   </Container>
 );

@@ -39,6 +39,11 @@ class ApiHandler
     public $repository;
 
     /**
+     * @var array
+     */
+    private $params = [];
+
+    /**
      * ApiHandler constructor.
      *
      * @param RequestStack           $requestStack
@@ -137,6 +142,24 @@ class ApiHandler
             'max' => $pagerfanta->getNbResults(),
             'offes' => $pagerfanta->getMaxPerPage(),
         ];
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams(array $params): self
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams(): array
+    {
+        return $this->params;
     }
 
     /**

@@ -1,3 +1,4 @@
 export default {
   USER_LIST: 'USER_LIST',
+  USER_CHARACTERS_LIST: 'USER_CHARACTERS_LIST',
 };

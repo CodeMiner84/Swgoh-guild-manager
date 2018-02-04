@@ -32,14 +32,13 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
         $this->removeCharacters();
         /* @var \DOMElement $item */
         foreach ($dom as $key => $domElement) {
-            if ($key > 1) {
-                $html = $domElement->ownerDocument->saveHTML($domElement);
-                $liCrawler = new Crawler($html);
+            $html = $domElement->ownerDocument->saveHTML($domElement);
+            $liCrawler = new Crawler($html);
 
-                $side = explode('·', $liCrawler->filter('.media-heading > small > span')->html());
-                preg_match("/\/characters\/(.*)\//", $liCrawler->filter('a')->getNode(0)->getAttribute('href'), $matches);
+            $side = explode('·', $liCrawler->filter('.media-heading > small > span')->html());
+            preg_match("/\/characters\/(.*)\//", $liCrawler->filter('a')->getNode(0)->getAttribute('href'), $matches);
 
-                $character = CharacterFactory::create([
+            $character = CharacterFactory::create([
                     'code' => $matches[1],
                     'name' => $domElement->getAttribute('data-name-lower'),
                     'description' => strip_tags($liCrawler->filter('p.character-description')->html()),
@@ -47,8 +46,7 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
                     'image' => $liCrawler->filter('img.char-portrait-img')->getNode(0)->getAttribute('src'),
                 ]);
 
-                $this->em->persist($character);
-            }
+            $this->em->persist($character);
         }
         $this->em->flush();
     }
