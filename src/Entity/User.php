@@ -37,7 +37,7 @@ class User
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Guild", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Guild", inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(name="guild_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $guild;

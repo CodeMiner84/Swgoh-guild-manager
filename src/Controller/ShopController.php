@@ -10,8 +10,9 @@ class ShopController extends Controller
     /**
      * @Route("/shop", name="guilds")
      * @Route("/users/{code}", name="users")
-     * @Route("/users", name="users2")
-     * @Route("/characters", name="users2")
+     * @Route("/users", name="users")
+     * @Route("/characters", name="characters")
+     * @Route("/user/{code}", name="user-characters")
      */
     public function index()
     {

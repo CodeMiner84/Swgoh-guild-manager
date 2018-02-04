@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import ReactTable from 'react-table';
 import actions from '../../actions/guild';
-import GuildList from './GuildList';
+import gridColumns from './gridColumns';
+
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -17,15 +19,25 @@ class Dashboard extends React.Component {
     }
 
     return (
-      <div >
-        <GuildList guilds={this.props.guilds} />
-      </div>
+      <ReactTable
+        data={this.props.guilds}
+        columns={gridColumns}
+        filterable
+        defaultFilterMethod={(filter, row) =>
+          String(row[filter.id]).toLowerCase().indexOf(filter.value.toLowerCase()) > -1}
+      />
     );
   }
 }
 
 Dashboard.propTypes = {
   getAll: PropTypes.func.isRequired,
+  guilds: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
 };
 
 const getGuilds = state => state.guild.guilds;

@@ -3,7 +3,6 @@
 namespace App\Utils;
 
 use App\Entity\Guild;
-use App\Entity\User;
 use App\Factory\UserFactory;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -53,7 +52,7 @@ class UserCrawler extends BaseCrawler implements CrawlerInterface
      */
     private function removeUsers(Guild $guild): void
     {
-        $this->em->getRepository(User::class)->removeFromGuild($guild);
+        $this->repository->removeFromGuild($guild);
     }
 
     /**
