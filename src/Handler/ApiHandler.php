@@ -44,6 +44,11 @@ class ApiHandler
     private $params = [];
 
     /**
+     * @var QueryBuilder
+     */
+    private $qb;
+
+    /**
      * ApiHandler constructor.
      *
      * @param RequestStack           $requestStack
@@ -72,11 +77,10 @@ class ApiHandler
 
     /**
      * @param array $groups
-     * @param array $routeParams
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function collect(array $groups, array $routeParams = [])
+    public function collect(array $groups)
     {
         $view = $this->createView(
             $this->transformIterator($this->getPaginatedResult()),
@@ -96,7 +100,7 @@ class ApiHandler
     {
         $view = View::create($data);
 
-        if ($groups) {
+        if (count($groups) > 0) {
             $context = $view->getContext();
             $context->setGroups($groups);
         }
@@ -133,8 +137,6 @@ class ApiHandler
      */
     public function transformIterator(Pagerfanta $pagerfanta): array
     {
-        $pagerfanta = $this->getPaginatedResult();
-
         return [
             'data' => iterator_to_array($pagerfanta->getCurrentPageResults()),
             'page' => $pagerfanta->getCurrentPage(),
