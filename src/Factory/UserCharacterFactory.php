@@ -13,7 +13,7 @@ class UserCharacterFactory
     /**
      * @param array $data
      *
-     * @return User
+     * @return UserCharacter
      */
     public function create(array $data)
     {

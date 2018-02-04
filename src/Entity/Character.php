@@ -210,7 +210,7 @@ class Character
      *
      * @return Character
      */
-    public function setTags($tags)
+    public function setTags($tags): self
     {
         $this->tags = $tags;
 
@@ -220,7 +220,7 @@ class Character
     /**
      * Get tags.
      *
-     * @return array
+     * @return string
      */
     public function getTags()
     {

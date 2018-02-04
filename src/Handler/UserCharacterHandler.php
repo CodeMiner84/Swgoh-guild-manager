@@ -27,7 +27,7 @@ class UserCharacterHandler extends ApiHandler
             if (in_array($param, self::ACCEPTED_PARAMS, true)) {
                 switch ($param) {
                     case self::USER_ID_PARAM:
-                        $qb->add('where', $alias.'.user = :user');
+                        $qb->add('where', ($qb->expr()->eq($alias.'.user', ':user')));
                         $qb->setParameter('user', $value);
                         break;
                 }

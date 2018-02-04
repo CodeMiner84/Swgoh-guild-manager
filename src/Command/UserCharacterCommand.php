@@ -42,11 +42,6 @@ class UserCharacterCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $argument = $input->getArgument('arg1');
-
-        if ($input->getOption('option1')) {
-            // ...
-        }
 
         $guilds = $this->entityManager->getRepository(Guild::class)->findAll();
 
@@ -54,13 +49,11 @@ class UserCharacterCommand extends Command
         $progress->setFormatDefinition('custom', ' %current%/%max% -- %message% (%guild%)');
         $progress->setFormat('custom');
         foreach ($guilds as $key => $guild) {
-            if ($key >= 793) {
-                $this->userCrawler->setGuild($guild)->crawl();
-                $progress->setMessage('Importing...');
-                $progress->setMessage($guild->getName(), 'guild');
-                $progress->advance();
-                $this->entityManager->clear();
-            }
+            $this->userCrawler->setGuild($guild)->crawl();
+            $progress->setMessage('Importing...');
+            $progress->setMessage($guild->getName(), 'guild');
+            $progress->advance();
+            $this->entityManager->clear();
         }
         $progress->finish();
 
