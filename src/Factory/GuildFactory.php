@@ -2,7 +2,6 @@
 
 namespace App\Factory;
 
-use App\Entity\Character;
 use App\Entity\Guild;
 
 /**
@@ -13,7 +12,7 @@ class GuildFactory
     /**
      * @param array $data
      *
-     * @return Character
+     * @return Guild
      */
     public function create(array $data)
     {

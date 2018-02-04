@@ -16,7 +16,7 @@ class CharacterHandler extends ApiHandler
     {
         /** @var QueryBuilder $qb */
         $qb = $this->qb;
-        $phrase = $this->request->query->all('phrase', null);
+        $phrase = $this->request->query->get('phrase', null);
 
         $alias = current($qb->getRootAliases());
         if (isset($phrase['phrase'])) {

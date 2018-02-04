@@ -46,7 +46,7 @@ class ApiHandler
     /**
      * @var QueryBuilder
      */
-    private $qb;
+    public $qb;
 
     /**
      * ApiHandler constructor.
@@ -94,9 +94,9 @@ class ApiHandler
      * @param $data
      * @param array $groups
      *
-     * @return static
+     * @return View
      */
-    public function createView($data, array $groups)
+    public function createView($data, array $groups): View
     {
         $view = View::create($data);
 

@@ -42,11 +42,6 @@ class GuildUpdateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $argument = $input->getArgument('arg1');
-
-        if ($input->getOption('option1')) {
-            // ...
-        }
 
         $guilds = $this->entityManager->getRepository(Guild::class)->findAll();
 

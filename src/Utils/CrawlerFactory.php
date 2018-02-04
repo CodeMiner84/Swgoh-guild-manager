@@ -52,8 +52,10 @@ class CrawlerFactory
      *
      * @return mixed
      */
-    private function getSettings(EntityManager $em)
+    private static function getSettings(EntityManager $em)
     {
-        return $em->getRepository(Setting::class)->findOneByCode(self::SWGOH_API);
+        return $em->getRepository(Setting::class)->findOneBy([
+            'code' => self::SWGOH_API,
+        ]);
     }
 }
