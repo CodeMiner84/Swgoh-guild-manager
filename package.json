@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
+    "bootstrap": "^3.3.7",
     "history": "1.13.x",
     "lodash": "^4.0.0",
     "prop-types": "^15.6.0",
