@@ -3,33 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import actions from '../../actions/character';
-import Filtering from '../components/Filtering';
 import List from './List';
 
 class Characters extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      phrase: '',
-    };
+
     this.props.getAll();
   }
 
-  changePhrase = (e) => {
-    this.setState({
-      phrase: e.target.value,
-    });
-  }
-
   render() {
-
     return (
       <div >
-        <div>
-          <Filtering changePhrase={this.changePhrase} />
-        </div>
         <List
-          phrase={this.state.phrase}
+          phrase={this.props.phrase}
           characters={this.props.characters}
         />
       </div>
@@ -37,7 +24,12 @@ class Characters extends React.Component {
   }
 }
 
+Characters.defaultProps = {
+  phrase: '',
+};
+
 Characters.propTypes = {
+  phrase: PropTypes.string,
   getAll: PropTypes.func.isRequired,
 };
 
@@ -56,7 +48,6 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   getAll: actions.fetchCharacters,
-  //filter: actions.filterCharacters,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Characters);

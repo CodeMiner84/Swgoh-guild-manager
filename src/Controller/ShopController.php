@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ShopController extends Controller
 {
     /**
+     * @Route("/login", name="app_login")
+     * @Route("/logout", name="app_logout")
      * @Route("/shop", name="guilds")
      * @Route("/users/{code}", name="users")
      * @Route("/users", name="users")

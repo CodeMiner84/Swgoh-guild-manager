@@ -12,6 +12,8 @@ namespace App\Controller\API;
 use App\Entity\Account;
 use App\Exception\DuplicateUserException;
 use App\Repository\AccountRepository;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +25,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class SecurityController extends AbstractController
 {
+    /**
+     * @Route("/api/login", name="security_logousst")
+     */
+    public function login(JWTTokenManagerInterface $interface): void
+    {
+        $interface;
+
+        die("A");
+    }
+
     /**
      * @Route("/api/logout", name="security_logout")
      */
@@ -36,7 +48,8 @@ class SecurityController extends AbstractController
     public function register(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
-        AccountRepository $accountRepository
+        AccountRepository $accountRepository,
+        JWTTokenManagerInterface $interface
     ) {
         if ($accountRepository->findOneBy(['email' => $request->request->get('email')]) ||
             $accountRepository->findOneBy(['username' => $request->request->get('username')])) {
@@ -55,11 +68,9 @@ class SecurityController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        $jwtManager = $this->container->get('lexik_jwt_authentication.jwt_manager');
-
         return JsonResponse::create([
             'success' => true,
-            'token' => $jwtManager->create($user),
+            'token' => $interface->create($user),
         ]);
     }
 }
