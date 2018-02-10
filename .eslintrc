@@ -18,5 +18,13 @@
   "globals": {
     "confirm": true,
     "document": true
-  }
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "globalReturn": false,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
 }

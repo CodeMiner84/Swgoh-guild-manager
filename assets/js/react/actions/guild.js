@@ -1,9 +1,9 @@
-import axios from 'axios';
+import { get } from '../utils/requests';
 import types from '../actionType/guild';
 
 function fetchGuilds() {
   return (dispatch) => {
-    return axios.get('/api/guild')
+    return get('/api/guild')
       .then((response) => {
         dispatch({
           type: types.GUILD_LIST,

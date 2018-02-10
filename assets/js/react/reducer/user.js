@@ -17,6 +17,11 @@ function usersReducer(state = initialState, action) {
         ...state,
         userCharacters: action.payload,
       };
+    case types.UPDATE_ACCOUNT:
+      return {
+        ...state,
+        account: action.payload,
+      }
     default:
       return state;
   }

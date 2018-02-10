@@ -8,7 +8,7 @@ import ProductList from './ProductList';
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.props.getAll();
+    //this.props.getAll();
   }
 
   render() {

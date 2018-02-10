@@ -1,15 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import Container from './Container';
-import Inner from './Inner';
-import FilterInput from './FilterInput';
-
-const Filtering = (props) => (
-  <Container>
-    <Inner>
-      <FilterInput placeholder="Type phrase to search ..." type="text" onChange={props.changePhrase} />
-    </Inner>
-  </Container>
+const Filtering = ({ handleFiltering }) => (
+  <input className="form-control form-control-dark w-100" type="text" onChange={handleFiltering} placeholder="Search" aria-label="Search" />
 );
+
+Filtering.propTypes = {
+  handleFiltering: PropTypes.func.isRequired,
+};
 
 export default Filtering;

@@ -10,7 +10,7 @@ import gridColumns from './gridColumns';
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.props.getAll();
+    props.getAll();
   }
 
   render() {
@@ -30,7 +30,12 @@ class Dashboard extends React.Component {
   }
 }
 
+Dashboard.defaultProps = {
+  disabledFiltering: false,
+};
+
 Dashboard.propTypes = {
+  disabledFiltering: PropTypes.bool,
   getAll: PropTypes.func.isRequired,
   guilds: PropTypes.arrayOf(
     PropTypes.shape({
