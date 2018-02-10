@@ -10,8 +10,11 @@ function get(url, params) {
 function post(url, params) {
   return axios.post(url, {
     ...params,
+  },
+  {
     headers: authHeader(),
-  });
+  }
+  );
 }
 
 export {

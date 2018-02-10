@@ -13,10 +13,16 @@ const Navbar = () => (
           </Link>
         </li>
         <li className="nav-item">
+          <Link to={'/account'} className="nav-link">
+            <FontAwesome name="user" className="mr-1" />
+            Account
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link to={'/guilds'} className="nav-link">
             <FontAwesome name="building" className="mr-1" />
-              Guilds
-            </Link>
+            Guilds
+          </Link>
         </li>
         <li className="nav-item">
           <Link to={'/users'} className="nav-link">

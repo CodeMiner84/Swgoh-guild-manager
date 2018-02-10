@@ -1,12 +1,11 @@
 import React from 'react';
-import Form from './Form';
 import { connect } from 'react-redux';
+import { withRouter, browserHistory } from 'react-router';
 import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import actions from '../../actions/login';
 import Main from '../Layout';
-import { withRouter, browserHistory } from 'react-router';
-
+import Form from './Form';
 
 class Login extends React.Component {
   constructor(props) {
@@ -19,15 +18,15 @@ class Login extends React.Component {
     };
   }
 
+  onChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({ submitted: true });
     this.props.login(this.state.username, this.state.password).then(() => browserHistory.push('/guilds'));
-  }
-
-  onChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
   }
 
   render() {
@@ -46,9 +45,10 @@ class Login extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log('state', state);
   return {
-    user: state.login.user,
-    submitted: state.login.submitted,
+    user: state.login ? state.login.user : null,
+    submitted: state.login ? state.login.submitted : null,
   };
 }
 
@@ -58,11 +58,13 @@ const mapDispatchToProps = {
 
 Login.defaultProps = {
   afterLogin: () => {},
+  login: () => {},
   submitted: false,
 };
 
 Login.propTypes = {
   afterLogin: PropTypes.func,
+  login: PropTypes.func,
   submitted: PropTypes.bool,
 };
 
