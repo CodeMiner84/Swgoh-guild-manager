@@ -1,9 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getFormValues } from 'redux-form'
+import { createSelector } from 'reselect'
 import Form from './Form'
 import actions from '../../actions/user'
-import { createSelector } from 'reselect'
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -11,6 +11,7 @@ class Dashboard extends React.Component {
 
     this.state = {
       submitting: false,
+      saved: false,
     }
   }
 
@@ -21,8 +22,9 @@ class Dashboard extends React.Component {
     }
 
     this.props.updateAccount(params).then(() => {
-      console.log('updated');
-      console.log(this.props.auth);
+      this.setState({
+        saved: true,
+      })
     })
   }
 
@@ -35,6 +37,7 @@ class Dashboard extends React.Component {
       <div >
         <h3>Account</h3>
         <Form
+          saved={this.state.saved}
           onSubmit={this.handleSubmit}
           submitting={this.state.submitting}
           data={this.props.auth}
@@ -59,6 +62,15 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   updateAccount: actions.updateAccount,
+}
+
+Dashboard.defaultProps = {
+  auth: false,
+}
+
+Dashboard.propTypes = {
+  updateAccount: PropTypes.func.isRequired,
+  auth: PropTypes.shape(),
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

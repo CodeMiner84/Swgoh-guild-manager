@@ -12,6 +12,7 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiHandler.
@@ -106,14 +107,28 @@ class ApiHandler
     }
 
     /**
+     * @param array $groups
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function badResponse()
+    {
+        $view = $this->createView([
+            'error' => true,
+        ], [], Response::HTTP_BAD_REQUEST);
+
+        return $this->viewhandler->createResponse($view, $this->request, 'json');
+    }
+
+    /**
      * @param $data
      * @param array $groups
      *
      * @return View
      */
-    public function createView($data, array $groups): View
+    public function createView($data, array $groups, $status = Response::HTTP_OK): View
     {
-        $view = View::create($data);
+        $view = View::create($data, $status);
 
         if (count($groups) > 0) {
             $context = $view->getContext();

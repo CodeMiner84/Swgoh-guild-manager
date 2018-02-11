@@ -6,9 +6,14 @@ function get(url, params) {
   return axios.get(url, {
     ...params,
     headers: authHeader(),
-  }).catch(() => {
-    logout()
-  })
+  }).then(
+    (response) => { return response },
+    (error) => {
+      if (error.response.data.error === undefined) {
+        logout()
+      }
+    },
+    )
 }
 function post(url, params) {
   return axios.post(url, {

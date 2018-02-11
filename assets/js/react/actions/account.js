@@ -2,15 +2,42 @@ import types from '../actionType/account'
 import { get } from '../utils/requests'
 
 function getAccount() {
-  return dispatch => get('/api/account/me')
-    .then((response) => {
-      dispatch({
-        type: types.RECV_ACCOUNT,
-        payload: response.data,
-      })
+  return (dispatch) => {
+    dispatch({
+      type: types.IS_LOADING,
     })
+
+    return get('/api/account/me')
+      .then((response) => {
+        dispatch({
+          type: types.RECV_ACCOUNT,
+          payload: response.data,
+        })
+      })
+  }
+}
+
+function fetchPersonalCollection(phrase = '') {
+  return (dispatch) => {
+    dispatch({
+      type: types.IS_LOADING,
+    })
+
+    return get(`/api/collection?noLimit&phrase=${phrase || ''}`)
+      .then((response) => {
+        dispatch({
+          type: types.USER_CHARACTERS_LIST,
+          payload: response.data.data,
+        })
+      }).catch(() => {
+        dispatch({
+          type: types.RECV_ERROR,
+        })
+      })
+  }
 }
 
 export default {
   getAccount,
+  fetchPersonalCollection,
 }

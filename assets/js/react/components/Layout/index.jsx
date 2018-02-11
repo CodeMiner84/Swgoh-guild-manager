@@ -34,8 +34,8 @@ class Main extends React.Component {
     })
     if (shouldUserCheck()) {
       this.props.getAccount()
-        .then((respond) => {
-        }).catch((errors) => {
+        .then(() => {
+        }).catch(() => {
           this.props.history.push('/login')
         })
     }
@@ -66,6 +66,7 @@ class Main extends React.Component {
   })
 
   render() {
+
     const allow = this.toggleFiltering()
 
     return (
@@ -88,7 +89,7 @@ class Main extends React.Component {
               <AuthorizedRoute path="/characters" searchPhrase={this.state.phrase} component={Character} />
               <AuthorizedRoute path="/cart" component={Cart} />
               <AuthorizedRoute path="/account" component={Account} />
-              <AuthorizedRoute path="/collection" component={Collection} />
+              <AuthorizedRoute path="/collection" searchPhrase={this.state.phrase} component={Collection} />
               <Route path="/login" component={Login} />
             </main>
           </div>
@@ -100,6 +101,7 @@ class Main extends React.Component {
 
 Main.propTypes = {
   history: PropTypes.shape(historyPropTypes).isRequired,
+  getAccount: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

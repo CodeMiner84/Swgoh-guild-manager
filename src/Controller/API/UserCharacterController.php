@@ -52,6 +52,10 @@ class UserCharacterController extends FOSRestController
     {
         $user = $this->getDoctrine()->getRepository(User::class)->findOneByUuid($this->getUser()->getUuid());
 
+        if (!$user) {
+            return $this->getHandler()->badResponse();
+        }
+
         return $this->getHandler()->setParams(['userId' => $user->getId()])->collect(['user_character']);
     }
 

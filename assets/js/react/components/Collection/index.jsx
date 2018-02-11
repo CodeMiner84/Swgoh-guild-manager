@@ -3,27 +3,22 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import actions from '../../actions/user'
+import actions from '../../actions/account'
 import Toon from '../components/Toon'
-import Filtering from '../components/Filtering'
+import Loader from '../../components/Loader'
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      phrase: '',
-    }
     this.props.fetchUserCharacter()
   }
 
-  changePhrase = (e) => {
-    this.setState({
-      phrase: e.target.value,
-    })
-  }
-
   render() {
-    if (this.props.userCharacters.length === 0) {
+    if (this.props.isLoading) {
+      return <Loader />
+    }
+
+    if (this.props.collection.userCharacters == undefined) {
       return (
         <div className="alert alert-danger">
           You need to map your user uuid <Link to={'/account'}>HERE</Link>
@@ -33,12 +28,9 @@ class Dashboard extends React.Component {
 
     return (
       <div className="row">
-        <Filtering changePhrase={this.changePhrase} />
-        {this.props.userCharacters
-          .filter(toon => toon.character.name.toLowerCase().indexOf(this.state.phrase) > -1)
-          .map(toon => <Toon
-            toon={toon}
-          />)}
+        {this.props.collection.userCharacters
+          .filter(toon => toon.character.name.toLowerCase().indexOf(this.props.phrase) > -1)
+          .map(toon => <Toon toon={toon} />)}
       </div>
     )
   }
@@ -46,18 +38,26 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   fetchUserCharacter: PropTypes.func.isRequired,
+  phrase: PropTypes.string.isRequired,
 }
 
-const getCharacters = state => state.user.userCharacters
+const getCharacters = state => state.account.userCharacters
+const checkLoading = state => state.account.isLoading
 
 const selector = createSelector(
   getCharacters,
-  userCharacters => userCharacters,
+  checkLoading,
+  (chars, loading) => ({
+    userCharacters: chars,
+    isLoading: loading,
+  }),
 )
 
 function mapStateToProps(state) {
+
   return {
-    userCharacters: selector(state),
+    collection: selector(state),
+    isLoading: state.account.isLoading,
   }
 }
 

@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { isAuth, logout } from '../../utils/auth';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import { isAuth } from '../../utils/auth'
 
 
 const TopNav = ({ handleFiltering, filtering, logoutUser }) => (
@@ -24,16 +24,16 @@ const TopNav = ({ handleFiltering, filtering, logoutUser }) => (
       </li>
     </ul>
   </nav>
-  );
+  )
 
 TopNav.defaultProps = {
   filtering: false,
-};
+}
 
 TopNav.propTypes = {
   handleFiltering: PropTypes.func.isRequired,
   filtering: PropTypes.bool,
   logoutUser: PropTypes.func.isRequired,
-};
+}
 
-export default TopNav;
+export default TopNav

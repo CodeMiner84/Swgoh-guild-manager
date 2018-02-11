@@ -22,13 +22,11 @@ const AuthorizedRoute = ({ component: Component, searchPhrase: phrase, ...rest }
 }
 
 AuthorizedRoute.defaultProps = {
-  location: '',
+  searchPhrase: '',
 }
 
 AuthorizedRoute.propTypes = {
-  location: PropTypes.string,
-  component: PropTypes.node.isRequired,
-  searchPhrase: PropTypes.string.isRequired,
+  searchPhrase: PropTypes.string,
 }
 
 export default AuthorizedRoute
