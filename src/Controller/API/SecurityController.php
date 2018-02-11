@@ -12,7 +12,6 @@ namespace App\Controller\API;
 use App\Entity\Account;
 use App\Exception\DuplicateUserException;
 use App\Repository\AccountRepository;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,7 +31,7 @@ class SecurityController extends AbstractController
     {
         $interface;
 
-        die("A");
+        die('A');
     }
 
     /**

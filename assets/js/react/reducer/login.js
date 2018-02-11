@@ -1,9 +1,9 @@
-import types from '../actionType/login';
+import types from '../actionType/login'
 
 const initialState = {
   user: [],
   submitted: false,
-};
+}
 
 function loginReducer(state = initialState, action) {
   switch (action.type) {
@@ -11,7 +11,7 @@ function loginReducer(state = initialState, action) {
       return {
         ...state,
         submitted: true,
-      };
+      }
     case types.LOGIN_SUCCESS:
       return {
         ...state,
@@ -19,8 +19,8 @@ function loginReducer(state = initialState, action) {
         submitted: false,
       }
     default:
-      return state;
+      return state
   }
 }
 
-export default loginReducer;
+export default loginReducer

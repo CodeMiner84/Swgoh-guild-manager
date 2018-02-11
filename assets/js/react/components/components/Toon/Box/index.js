@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export default styled.div`
     border-radius: 6px;
@@ -15,4 +15,4 @@ export default styled.div`
         opacity: 1;
       }
     }
-`;
+`

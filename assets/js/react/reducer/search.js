@@ -1,8 +1,8 @@
-import types from '../actionType/search';
+import types from '../actionType/search'
 
 const initialState = {
   products: [],
-};
+}
 
 function searchReducer(state = initialState, action) {
   switch (action.type) {
@@ -10,10 +10,10 @@ function searchReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
 }
 
-export default searchReducer;
+export default searchReducer

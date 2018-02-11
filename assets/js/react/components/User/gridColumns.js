@@ -4,4 +4,4 @@ export default [{
 }, {
   Header: 'Name',
   accessor: 'name',
-}];
+}]

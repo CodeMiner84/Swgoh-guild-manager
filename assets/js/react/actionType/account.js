@@ -1,0 +1,4 @@
+export default {
+  RECV_ACCOUNT: 'RECV_ACCOUNT',
+  RECV_ACCOUNTS: 'RECV_ACCOUNTS',
+}

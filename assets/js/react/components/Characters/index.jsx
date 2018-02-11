@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
 import actions from '../../actions/character';
 import List from './List';
 
@@ -50,4 +51,4 @@ const mapDispatchToProps = {
   getAll: actions.fetchCharacters,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Characters);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Characters));

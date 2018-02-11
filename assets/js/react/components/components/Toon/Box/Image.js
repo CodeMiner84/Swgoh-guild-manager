@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export default styled.div`
     text-align: center;
@@ -8,4 +8,4 @@ export default styled.div`
       width: 60px;
       height: 60px;
       border-radius: 30px;
-`;
+`

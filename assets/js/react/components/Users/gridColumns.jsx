@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default [{
   Header: 'Uuid',
@@ -11,5 +11,5 @@ export default [{
     (
       <Link to={`/user/${row.original.uuid}`}>{row.value}</Link>
     ),
-}];
+}]
 

@@ -14,8 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Class UserCharacterCommand
- * @package App\Command
+ * Class UserCharacterCommand.
  */
 class UserCharacterCommand extends Command
 {
@@ -36,8 +35,9 @@ class UserCharacterCommand extends Command
 
     /**
      * UserCharacterCommand constructor.
+     *
      * @param EntityManagerInterface $entityManager
-     * @param UserCrawler $userCrawler
+     * @param UserCrawler            $userCrawler
      */
     public function __construct(EntityManagerInterface $entityManager, UserCrawler $userCrawler)
     {
@@ -48,9 +48,6 @@ class UserCharacterCommand extends Command
         parent::__construct();
     }
 
-    /**
-     *
-     */
     protected function configure()
     {
         $this
@@ -61,8 +58,9 @@ class UserCharacterCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)

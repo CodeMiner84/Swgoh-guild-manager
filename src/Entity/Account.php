@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  * @ORM\Table(name="account")
+ *
+ * @JMS\ExclusionPolicy("all")
  */
 class Account implements UserInterface, \Serializable
 {
@@ -18,6 +21,9 @@ class Account implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @JMS\Groups({"account_show"})
+     * @JMS\Expose
      */
     private $id;
 
@@ -25,6 +31,9 @@ class Account implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(type="string")
+     *
+     * @JMS\Groups({"account_show"})
+     * @JMS\Expose
      */
     private $username;
 

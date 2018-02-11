@@ -1,8 +1,8 @@
-import types from '../actionType/guild';
+import types from '../actionType/guild'
 
 const initialState = {
   guilds: [],
-};
+}
 
 function guildReducer(state = initialState, action) {
   switch (action.type) {
@@ -10,10 +10,10 @@ function guildReducer(state = initialState, action) {
       return {
         ...state,
         guilds: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
 }
 
-export default guildReducer;
+export default guildReducer

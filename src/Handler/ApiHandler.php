@@ -76,14 +76,27 @@ class ApiHandler
     }
 
     /**
+     * @param $id
+     * @param $groups
+     *
+     * @return mixed
+     */
+    public function getResource($id, $groups)
+    {
+        return $this->repository->findOneById($id);
+    }
+
+    /**
      * @param array $groups
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function collect(array $groups)
+    public function collect(array $groups, string $id = null)
     {
         $view = $this->createView(
-            $this->transformIterator($this->getPaginatedResult()),
+            $id ?
+                $this->getResource($id, $groups) :
+                $this->transformIterator($this->getPaginatedResult()),
             $groups
         );
 

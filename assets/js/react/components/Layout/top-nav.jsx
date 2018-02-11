@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { isAuth, logout } from '../../utils/auth';
 
-const TopNav = ({ handleFiltering, filtering }) => (
+
+const TopNav = ({ handleFiltering, filtering, logoutUser }) => (
   <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a className="navbar-brand col-sm-3 col-md-2 mr-0">SWGOH<i>manager</i></a>
     {filtering &&
@@ -18,7 +19,7 @@ const TopNav = ({ handleFiltering, filtering }) => (
         <Link to="/login">Log in</Link>
         }
         {isAuth() &&
-        <Link to="#" onClick={() => logout()}>Logout</Link>
+        <Link to="#" onClick={logoutUser}>Logout</Link>
         }
       </li>
     </ul>
@@ -32,6 +33,7 @@ TopNav.defaultProps = {
 TopNav.propTypes = {
   handleFiltering: PropTypes.func.isRequired,
   filtering: PropTypes.bool,
+  logoutUser: PropTypes.func.isRequired,
 };
 
 export default TopNav;

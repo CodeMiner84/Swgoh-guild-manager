@@ -1,12 +1,14 @@
-import { browserHistory } from 'react-router';
+import { reactLocalStorage } from 'reactjs-localstorage'
 
 export function isAuth() {
-  return !!localStorage.getItem('token');
+  return !!reactLocalStorage.get('token')
+}
+
+export function setToken(token) {
+  return reactLocalStorage.set('token', token)
 }
 
 export function logout() {
-  localStorage.removeItem('token');
-
-  browserHistory.push('/login');
+  reactLocalStorage.clear()
 }
 

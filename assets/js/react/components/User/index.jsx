@@ -12,8 +12,7 @@ class Dashboard extends React.Component {
     this.state = {
       phrase: '',
     };
-
-    this.props.fetchUserCharacter(props.params.code);
+    this.props.fetchUserCharacter(props.match.params.code);
   }
 
   changePhrase = (e) => {
@@ -52,7 +51,6 @@ const selector = createSelector(
 );
 
 function mapStateToProps(state) {
-  console.log('state',state);
   return {
     userCharacters: selector(state),
   };
