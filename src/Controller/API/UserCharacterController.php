@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
 
 /**
- * @Route("/api/user/characters")
+ * @Route("/api/collection")
  */
 class UserCharacterController extends FOSRestController
 {
@@ -32,6 +32,26 @@ class UserCharacterController extends FOSRestController
      */
     public function cget(User $user)
     {
+        return $this->getHandler()->setParams(['userId' => $user->getId()])->collect(['user_character']);
+    }
+
+    /**
+     * @Route("/", name="api_user_collection")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns user characters list",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @Model(type=UserCharacter::class, groups={"user_character"})
+     *     )
+     * )
+     * @SWG\Tag(name="user_character")
+     */
+    public function getUserCollection()
+    {
+        $user = $this->getUser();
+
         return $this->getHandler()->setParams(['userId' => $user->getId()])->collect(['user_character']);
     }
 

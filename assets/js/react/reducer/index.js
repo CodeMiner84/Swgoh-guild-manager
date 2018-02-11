@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import { routerReducer } from 'react-router-redux'
 import dashboardReducer from './dashboard'
-import searchReducer from './search'
 import guildReducer from './guild'
 import usersReducer from './user'
 import characterReducer from './character'
@@ -11,7 +10,6 @@ import accountReducer from './account'
 
 const rootReducer = combineReducers({
   dashboard: dashboardReducer,
-  search: searchReducer,
   guild: guildReducer,
   user: usersReducer,
   character: characterReducer,

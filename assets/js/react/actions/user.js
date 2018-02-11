@@ -12,7 +12,17 @@ function fetchUsers() {
 }
 
 function fetchUserCharacter(code, phrase = '') {
-  return dispatch => get(`/api/user/characters/${code}?noLimit&phrase=${phrase || ''}`)
+  return dispatch => get(`/api/collection/${code}?noLimit&phrase=${phrase || ''}`)
+    .then((response) => {
+      dispatch({
+        type: types.USER_CHARACTERS_LIST,
+        payload: response.data.data,
+      })
+    })
+}
+
+function fetchPersonalCollection(phrase = '') {
+  return dispatch => get(`/api/collection?noLimit&phrase=${phrase || ''}`)
     .then((response) => {
       dispatch({
         type: types.USER_CHARACTERS_LIST,
@@ -34,5 +44,6 @@ function updateAccount(data) {
 export default {
   fetchUsers,
   fetchUserCharacter,
+  fetchPersonalCollection,
   updateAccount,
 }

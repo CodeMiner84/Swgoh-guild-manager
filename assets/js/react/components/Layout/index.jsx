@@ -16,7 +16,7 @@ import Login from '../Login'
 import Users from '../Users'
 import Cart from '../Cart'
 import Guild from '../Guild'
-import Search from '../Search'
+import Collection from '../Collection'
 
 class Main extends React.Component {
   constructor(props) {
@@ -34,14 +34,14 @@ class Main extends React.Component {
     })
     if (shouldUserCheck()) {
       this.props.getAccount()
-        .then(respond => {
-        }).catch(errors => {
-        this.props.history.push('/login')
-      })
+        .then((respond) => {
+        }).catch((errors) => {
+          this.props.history.push('/login')
+        })
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     this.setState({
       auth: isAuth(),
     })
@@ -78,7 +78,7 @@ class Main extends React.Component {
         <div className="container-fluid">
           <div className="row">
             {this.state.auth &&
-              <Navbar/>
+              <Navbar />
             }
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
               <Route exact path="/" component={Dashboard} />
@@ -88,7 +88,7 @@ class Main extends React.Component {
               <AuthorizedRoute path="/characters" searchPhrase={this.state.phrase} component={Character} />
               <AuthorizedRoute path="/cart" component={Cart} />
               <AuthorizedRoute path="/account" component={Account} />
-              <AuthorizedRoute path="/search" component={Search} />
+              <AuthorizedRoute path="/collection" component={Collection} />
               <Route path="/login" component={Login} />
             </main>
           </div>
