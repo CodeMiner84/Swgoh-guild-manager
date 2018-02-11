@@ -50,7 +50,7 @@ class UserCharacterController extends FOSRestController
      */
     public function getUserCollection()
     {
-        $user = $this->getUser();
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneByUuid($this->getUser()->getUuid());
 
         return $this->getHandler()->setParams(['userId' => $user->getId()])->collect(['user_character']);
     }

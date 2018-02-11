@@ -1,7 +1,7 @@
 import types from '../actionType/account'
 
 const initialState = {
-  logged: [],
+  auth: [],
 }
 
 function accountReducer(state = initialState, action) {
@@ -9,7 +9,12 @@ function accountReducer(state = initialState, action) {
     case types.RECV_ACCOUNT:
       return {
         ...state,
-        logged: action.payload,
+        auth: action.payload,
+      }
+    case types.UPDATE_ACCOUNT:
+      return {
+        ...state,
+        auth: action.payload,
       }
     default:
       return state

@@ -1,5 +1,5 @@
 import types from '../actionType/user'
-import { get, post } from '../utils/requests'
+import { get, patch, post } from '../utils/requests'
 
 function fetchUsers() {
   return dispatch => get('/api/users')
@@ -32,10 +32,10 @@ function fetchPersonalCollection(phrase = '') {
 }
 
 function updateAccount(data) {
-  return dispatch => post('/api/account/', data)
+  return dispatch => patch('/api/account/', data)
     .then((response) => {
       dispatch({
-        type: types.USER_CHARACTERS_LIST,
+        type: types.UPDATE_ACCOUNT,
         payload: response.data.data,
       })
     })

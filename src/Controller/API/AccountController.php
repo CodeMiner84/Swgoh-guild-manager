@@ -5,11 +5,14 @@ namespace App\Controller\API;
 use App\Entity\Account;
 use App\Entity\Guild;
 use App\Entity\User;
+use App\Handler\AccountHandler;
 use App\Handler\ApiHandler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/api/account")
@@ -18,6 +21,7 @@ class AccountController extends FOSRestController
 {
     /**
      * @Route("/", name="api_account")
+     * @Method("PATCH")
      *
      * @SWG\Response(
      *     response=200,
@@ -29,9 +33,9 @@ class AccountController extends FOSRestController
      * )
      * @SWG\Tag(name="users")
      */
-    public function postAction()
+    public function patchAction(Request $request)
     {
-        return $this->getHandler()->collect(['users']);
+        return $this->getHandler()->updateEntry($request->request->all(), $this->getUser()->getId(), ['account_show']);
     }
 
     /**
@@ -59,6 +63,6 @@ class AccountController extends FOSRestController
 
     public function getHandler()
     {
-        return $this->get(ApiHandler::class)->init(Account::class);
+        return $this->get(AccountHandler::class)->init(Account::class);
     }
 }

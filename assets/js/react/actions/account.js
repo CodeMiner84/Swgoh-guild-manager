@@ -6,7 +6,7 @@ function getAccount() {
     .then((response) => {
       dispatch({
         type: types.RECV_ACCOUNT,
-        payload: response.data.data,
+        payload: response.data,
       })
     })
 }

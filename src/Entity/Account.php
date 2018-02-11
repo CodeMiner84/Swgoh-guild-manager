@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @JMS\ExclusionPolicy("all")
  */
-class Account implements UserInterface, \Serializable
+class Account implements UserInterface, \Serializable, EntityInterface
 {
     /**
      * @var int
@@ -78,6 +78,16 @@ class Account implements UserInterface, \Serializable
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     *
+     * @JMS\Groups({"account_show"})
+     * @JMS\Expose
+     */
+    private $uuid;
 
     /**
      * Admin constructor.
@@ -298,5 +308,39 @@ class Account implements UserInterface, \Serializable
         $this->username = $username;
 
         return $this;
+    }
+
+    /**
+     * Get enabled.
+     *
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set uuid.
+     *
+     * @param string $uuid
+     *
+     * @return Account
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * Get uuid.
+     *
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 }

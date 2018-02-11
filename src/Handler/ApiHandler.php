@@ -2,6 +2,8 @@
 
 namespace App\Handler;
 
+use App\Entity\EntityInterface;
+use App\Entity\RequestTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\View\View;
@@ -157,6 +159,18 @@ class ApiHandler
             'max' => $pagerfanta->getNbResults(),
             'offes' => $pagerfanta->getMaxPerPage(),
         ];
+    }
+
+    public function updateEntry(array $params, $id, array $groups)
+    {
+        $entity = $this->repository->findOneById($id);
+
+        $view = $this->createView(
+            $this->patchAction($entity, $params),
+            $groups
+        );
+
+        return $this->viewhandler->createResponse($view, $this->request, 'json');
     }
 
     /**
