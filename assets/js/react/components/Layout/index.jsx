@@ -17,6 +17,7 @@ import Users from '../Users'
 import Cart from '../Cart'
 import Guild from '../Guild'
 import Collection from '../Collection'
+import GuildSquads from '../GuildSquads'
 
 class Main extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class Main extends React.Component {
     if (shouldUserCheck()) {
       this.props.getAccount()
         .then(() => {
+
         }).catch(() => {
           this.props.history.push('/login')
         })
@@ -62,11 +64,10 @@ class Main extends React.Component {
   }
 
   toggleFiltering = () => matchPath(this.props.history.location.pathname, {
-    path: '/(characters|guilds)',
+    path: '/(characters|guilds|collection)',
   })
 
   render() {
-
     const allow = this.toggleFiltering()
 
     return (
@@ -83,13 +84,14 @@ class Main extends React.Component {
             }
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
               <Route exact path="/" component={Dashboard} />
-              <AuthorizedRoute path="/guilds" component={Guild} />
+              <AuthorizedRoute exact path="/guilds" component={Guild} />
               <AuthorizedRoute path="/users/:code" component={Users} />
               <AuthorizedRoute path="/user/:code" component={User} />
               <AuthorizedRoute path="/characters" searchPhrase={this.state.phrase} component={Character} />
               <AuthorizedRoute path="/cart" component={Cart} />
               <AuthorizedRoute path="/account" component={Account} />
               <AuthorizedRoute path="/collection" searchPhrase={this.state.phrase} component={Collection} />
+              <AuthorizedRoute path="/guild-squads" searchPhrase={this.state.phrase} component={GuildSquads} />
               <Route path="/login" component={Login} />
             </main>
           </div>

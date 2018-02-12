@@ -54,7 +54,6 @@ const selector = createSelector(
 )
 
 function mapStateToProps(state) {
-
   return {
     collection: selector(state),
     isLoading: state.account.isLoading,

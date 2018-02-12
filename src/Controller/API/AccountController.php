@@ -6,7 +6,6 @@ use App\Entity\Account;
 use App\Entity\Guild;
 use App\Entity\User;
 use App\Handler\AccountHandler;
-use App\Handler\ApiHandler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -35,7 +34,7 @@ class AccountController extends FOSRestController
      */
     public function patchAction(Request $request)
     {
-        return $this->getHandler()->updateEntry($request->request->all(), $this->getUser()->getId(), ['account_show']);
+        return $this->getHandler()->updateEntry($this->getUser()->getId(), $request->request->all(), ['account_show']);
     }
 
     /**

@@ -2,6 +2,8 @@ import types from '../actionType/account'
 
 const initialState = {
   auth: [],
+  userCharacters: [],
+  isLoading: false,
 }
 
 function accountReducer(state = initialState, action) {

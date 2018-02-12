@@ -16,6 +16,8 @@ class ShopController extends Controller
      * @Route("/users/{code}", name="users")
      * @Route("/users", name="users")
      * @Route("/characters", name="characters")
+     * @Route("/guild-squads", name="guild_squads")
+     * @Route("/guild-squads/{action}", name="guild_squads_option")
      * @Route("/user/{code}", name="user-characters")
      */
     public function index()

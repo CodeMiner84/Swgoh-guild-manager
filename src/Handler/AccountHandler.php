@@ -12,6 +12,6 @@ class AccountHandler extends ApiHandler
     use RequestTrait;
 
     protected const ALLOWED_PARAMS = [
-        'uuid'
+        'uuid',
     ];
 }

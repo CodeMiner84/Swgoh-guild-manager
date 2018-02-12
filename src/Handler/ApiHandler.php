@@ -2,8 +2,6 @@
 
 namespace App\Handler;
 
-use App\Entity\EntityInterface;
-use App\Entity\RequestTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\View\View;
@@ -13,6 +11,7 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class ApiHandler.
@@ -20,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 class ApiHandler
 {
     private const MAX_RESULTS = 100;
+
+    private const ENTITY_PATTERN = 'App\Entity\%s';
 
     /**
      * @var ViewHandlerInterface
@@ -51,6 +52,8 @@ class ApiHandler
      */
     public $qb;
 
+    protected $user;
+
     /**
      * ApiHandler constructor.
      *
@@ -58,11 +61,12 @@ class ApiHandler
      * @param EntityManagerInterface $em
      * @param ViewHandlerInterface   $viewHandler
      */
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, ViewHandlerInterface $viewHandler)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, ViewHandlerInterface $viewHandler, TokenStorageInterface $tokenStorage)
     {
         $this->viewhandler = $viewHandler;
         $this->em = $em;
         $this->request = $requestStack->getCurrentRequest();
+        $this->user = $tokenStorage->getToken()->getUser();
     }
 
     /**
@@ -84,21 +88,25 @@ class ApiHandler
      *
      * @return mixed
      */
-    public function getResource($id, $groups)
+    public function getResource($id, $groups, $key = 'id')
     {
-        return $this->repository->findOneById($id);
+        return $this->repository->findOneBy([
+            $key => $id,
+        ]);
     }
 
     /**
-     * @param array $groups
+     * @param array       $groups
+     * @param string|null $id
+     * @param string      $key
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function collect(array $groups, string $id = null)
+    public function collect(array $groups, string $id = null, $key = 'id')
     {
         $view = $this->createView(
             $id ?
-                $this->getResource($id, $groups) :
+                $this->getResource($id, $groups, $key) :
                 $this->transformIterator($this->getPaginatedResult()),
             $groups
         );
@@ -176,12 +184,55 @@ class ApiHandler
         ];
     }
 
-    public function updateEntry(array $params, $id, array $groups)
+    /**
+     * @param array $params
+     * @param $id
+     * @param array $groups
+     *
+     * @return Response
+     */
+    public function updateEntry($id, array $params, array $groups)
     {
         $entity = $this->repository->findOneById($id);
 
         $view = $this->createView(
             $this->patchAction($entity, $params),
+            $groups
+        );
+
+        return $this->viewhandler->createResponse($view, $this->request, 'json');
+    }
+
+    /**
+     * @param array $params
+     * @param array $groups
+     *
+     * @return Response
+     */
+    public function createEntry(array $params, array $groups)
+    {
+        $entityClassName = $this->repository->getClassName();
+        $entity = $this->em->getClassMetadata($entityClassName)->newInstance();
+
+        foreach ($params as $param => $value) {
+            $setter = sprintf('set%s', ucfirst($param));
+            if (is_array($value)) {
+                foreach ($value as $subKey => $subValue) {
+                    $value = $this->em->getRepository(sprintf(self::ENTITY_PATTERN, ucfirst($param)))->findOneBy([
+                        $subKey => $subValue,
+                    ]);
+                    $entity->$setter($value);
+                }
+            } else {
+                $setter = sprintf('set%s', ucfirst($param));
+                $entity->$setter($value);
+            }
+        }
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        $view = $this->createView(
+            $entity,
             $groups
         );
 

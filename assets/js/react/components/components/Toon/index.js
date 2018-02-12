@@ -11,8 +11,8 @@ import FontAwesome from 'react-fontawesome'
 
 const Toon = ({ toon: { gear, level, stars, character } }) => (
   <div className="col-xs-6 col-sm-3 col-md-2">
-    <Box >
-      <Image>
+    <Box>
+      <Image side={character.side}>
         <img src={character.image} alt="" />
       </Image>
       <Details>

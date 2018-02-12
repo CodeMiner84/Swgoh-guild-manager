@@ -12,6 +12,9 @@ body {
         color: $white !important;
     }
 }
+.btn-secondary {
+    color: #FFFFFF !important;
+}
 /*
  * Sidebar
  */
@@ -85,8 +88,10 @@ body {
 }
 
 .form-control-dark:focus {
-    border-color: transparent;
+    background-color: #494E54;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    color: #FFF;
+    border-bottom: 1px solid #494E54;
 }
 
 /*

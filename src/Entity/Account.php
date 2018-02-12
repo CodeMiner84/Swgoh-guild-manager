@@ -3,13 +3,13 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
- * @ORM\Table(name="account")
  *
  * @JMS\ExclusionPolicy("all")
  */
@@ -22,7 +22,7 @@ class Account implements UserInterface, \Serializable, EntityInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @JMS\Groups({"account_show"})
+     * @JMS\Groups({"account_show", "guild_squad"})
      * @JMS\Expose
      */
     private $id;
@@ -90,10 +90,16 @@ class Account implements UserInterface, \Serializable, EntityInterface
     private $uuid;
 
     /**
+     * @ORM\OneToMany(targetEntity="GuildSquad", mappedBy="account")
+     */
+    private $guildSquads;
+
+    /**
      * Admin constructor.
      */
     public function __construct()
     {
+        $this->guildSquads = new ArrayCollection();
     }
 
     /**
@@ -342,5 +348,41 @@ class Account implements UserInterface, \Serializable, EntityInterface
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    /**
+     * Add guildSquad.
+     *
+     * @param GuildSquad $guildSquad
+     *
+     * @return Account
+     */
+    public function addGuildSquad(GuildSquad $guildSquad)
+    {
+        $this->guildSquads[] = $guildSquad;
+
+        return $this;
+    }
+
+    /**
+     * Remove guildSquad.
+     *
+     * @param GuildSquad $guildSquad
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeGuildSquad(GuildSquad $guildSquad)
+    {
+        return $this->guildSquads->removeElement($guildSquad);
+    }
+
+    /**
+     * Get guildSquads.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGuildSquads()
+    {
+        return $this->guildSquads;
     }
 }

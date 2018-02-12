@@ -4,8 +4,9 @@ export default styled.div`
     text-align: center;
     padding: 4px 0;
     img {
-      opacity: .8;
-      width: 60px;
-      height: 60px;
-      border-radius: 30px;
+      width: 80px;
+      height: 80px;
+      border-radius: 40px;
+      border: 3px solid ${props => (props.side === 0 ? '#b03233' : '#3f8cba')};
+    }
 `
