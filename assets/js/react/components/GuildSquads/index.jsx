@@ -8,6 +8,7 @@ import actions from '../../actions/user'
 import List from "./List";
 import BuildForm from "./Form";
 import EditForm from './EditForm'
+import Builder from "./Builder";
 
 class GuildSquads extends React.Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class GuildSquads extends React.Component {
           <Route exact path="/guild-squads" component={List} />
           <Route exact path="/guild-squads/add" component={BuildForm} />
           <Route exact path="/guild-squads/:id" component={EditForm} />
+          <Route exact path="/guild-squads/:id/builder" component={Builder} />
         </Switch>
       </div>
     )

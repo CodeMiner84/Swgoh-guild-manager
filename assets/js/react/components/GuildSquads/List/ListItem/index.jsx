@@ -9,7 +9,7 @@ const ListItem = ({ item }) => (
         {item.name}
       </div>
       <div className="col-2 text-right">
-        <Link className={'btn btn-danger btn-sm mr-2'} title={'Build squad'} to={`/guild-squads/${item.id}`}>
+        <Link className={'btn btn-danger btn-sm mr-2'} title={'Build squad'} to={`/guild-squads/${item.id}/builder`}>
           <FontAwesome name={'users'} />
         </Link>
         <Link className={'btn btn-info btn-sm'} title={'Edit name'} to={`/guild-squads/${item.id}`}>
