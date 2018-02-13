@@ -68,6 +68,7 @@ class Main extends React.Component {
   })
 
   render() {
+
     const allow = this.toggleFiltering()
 
     return (
