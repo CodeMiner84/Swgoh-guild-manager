@@ -7,7 +7,7 @@ function get(url, params) {
     ...params,
     headers: authHeader(),
   }).then(
-    (response) => { return response },
+    response => response,
     (error) => {
       if (error.response.data.error === undefined) {
         logout()

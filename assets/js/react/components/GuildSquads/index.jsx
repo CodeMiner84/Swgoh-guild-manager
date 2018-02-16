@@ -5,10 +5,10 @@ import { Route, withRouter, matchPath, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import actions from '../../actions/user'
-import List from "./List";
-import BuildForm from "./Form";
+import List from './List'
+import BuildForm from './Form'
 import EditForm from './EditForm'
-import Builder from "./Builder";
+import Builder from './Builder'
 
 class GuildSquads extends React.Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class GuildSquads extends React.Component {
           <Route exact path="/guild-squads" component={List} />
           <Route exact path="/guild-squads/add" component={BuildForm} />
           <Route exact path="/guild-squads/:id" component={EditForm} />
-          <Route exact path="/guild-squads/:id/builder" component={Builder} />
+          <Route exact path="/guild-squads/:id/builder" component={props => <Builder phrase={this.props.phrase} {...props} />} />
         </Switch>
       </div>
     )
@@ -72,11 +72,13 @@ const mapDispatchToProps = {
 
 GuildSquads.defaultProps = {
   auth: false,
+  phrase: '',
 }
 
 GuildSquads.propTypes = {
   updateAccount: PropTypes.func.isRequired,
   auth: PropTypes.shape(),
+  phrase: PropTypes.string,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuildSquads)
