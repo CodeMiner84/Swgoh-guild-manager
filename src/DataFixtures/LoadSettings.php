@@ -4,22 +4,27 @@ namespace App\DataFixtures;
 
 use App\Entity\Guild;
 use App\Entity\Setting;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * Class LoadSettings
- * @package App\DataFixtures
+ * Class LoadSettings.
  */
 class LoadSettings extends Fixture
 {
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
+
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $this->loadSettings($manager);
-        $this->loadGuild($manager);
+        $this->manager = $manager;
+        $this->loadSettings();
+        $this->loadGuild();
     }
 
     /**
@@ -28,7 +33,7 @@ class LoadSettings extends Fixture
     private function getData(): array
     {
         return [
-            ['SWGOH', 'swgoh', 'https://swgoh.gg', '/u', '/g']
+            ['SWGOH', 'swgoh', 'https://swgoh.gg', '/u', '/g'],
         ];
     }
 
@@ -38,14 +43,11 @@ class LoadSettings extends Fixture
     private function getGuildData(): array
     {
         return [
-            ['Tears of Wrath', '20375', 'tears-of-wrath']
+            ['Tears of Wrath', '20375', 'tears-of-wrath'],
         ];
     }
 
-    /**
-     * @param ObjectManager $manager
-     */
-    private function loadSettings(ObjectManager $manager): void
+    private function loadSettings(): void
     {
         foreach ($this->getData() as [$title, $code, $api, $user, $guild]) {
             $setting = new Setting();
@@ -55,29 +57,26 @@ class LoadSettings extends Fixture
                 ->setUserSuffix($user)
                 ->setGuildSuffix($guild);
 
-            $manager->persist($setting);
-            $this->addReference(sprintf("%s-api", $title), $setting);
+            $this->manager->persist($setting);
+            $this->addReference(sprintf('%s-api', $title), $setting);
         }
 
-        $manager->flush();
+        $this->manager->flush();
     }
 
-    /**
-     * @param ObjectManager $manager
-     */
-    private function loadGuild(ObjectManager $manager): void
+    private function loadGuild(): void
     {
-        foreach ($this->getGuildData() as [$title, $uuid, $code]) {
+        foreach ($this->getGuildData() as [$name, $uuid, $code]) {
             $setting = new Guild();
-            $setting->setUuid($title)
+            $setting->setUuid($name)
                 ->setUuid($uuid)
                 ->setCode($code)
-                ->setTitle($title);
+                ->setName($name);
 
-            $manager->persist($setting);
-            $this->addReference(sprintf("%s-guild", $code), $setting);
+            $this->manager->persist($setting);
+            $this->addReference(sprintf('%s-guild', $code), $setting);
         }
 
-        $manager->flush();
+        $this->manager->flush();
     }
 }

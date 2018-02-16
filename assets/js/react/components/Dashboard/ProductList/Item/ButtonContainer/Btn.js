@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export default styled.button`
   background-color: #18BC9C;
@@ -8,4 +8,4 @@ export default styled.button`
   border-radius: 2px;
   border-bottom: 1px solid #f1f1f1;
   margin: auto;
-`;
+`

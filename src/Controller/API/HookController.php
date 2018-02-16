@@ -3,15 +3,14 @@
 namespace App\Controller\API;
 
 use App\Entity\Guild;
-use App\Entity\Setting;
-use App\Handler\ApiHandler;
-use App\Utils\AbstractCrawler;
+use App\Entity\User;
 use App\Utils\CharacterCrawler;
 use App\Utils\GuildCrawler;
+use App\Utils\UserCharacterCrawler;
+use App\Utils\UserCrawler;
 use FOS\RestBundle\Controller\FOSRestController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -20,24 +19,43 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class HookController extends FOSRestController
 {
     /**
-     * @Route("/fetch-guild", name="api_guild_collect_users")
+     * @Route("/fetch-guilds", name="api_fetch_guilds")
      */
     public function fetchGuilds(GuildCrawler $crawler)
     {
-        $guilds = $this->getDoctrine()->getRepository(Guild::class)->findAll();
-        foreach ($guilds as $guild) {
-            $crawler->crawl($guild);
-        }
+        $crawler->crawl();
 
         return JsonResponse::create(['success']);
     }
+
     /**
      * @Route("/fetch-characters", name="api_collect_characters")
      */
     public function fetchCharacters(CharacterCrawler $crawler)
     {
-        $settings = $this->getDoctrine()->getRepository(Setting::class)->findOneByCode('swgoh');
-        $crawler->crawl($settings);
+        $crawler->crawl();
+
+        return JsonResponse::create(['success']);
+    }
+
+    /**
+     * @Route("/fetch-users/{guild}", name="api_fetch_guild")
+     * @ParamConverter("guild", options={"mapping"={"guild"="code"}})
+     */
+    public function fetchUsersFromGuild(Guild $guild, UserCrawler $crawler)
+    {
+        $crawler->setGuild($guild)->crawl();
+
+        return JsonResponse::create(['success']);
+    }
+
+    /**
+     * @Route("/fetch-user-character/{user}", name="api_fetch_user_characters")
+     * @ParamConverter("user", options={"mapping"={"user"="uuid"}})
+     */
+    public function fetchUserCharacters(User $user, UserCharacterCrawler $crawler)
+    {
+        $crawler->setUser($user)->crawl();
 
         return JsonResponse::create(['success']);
     }

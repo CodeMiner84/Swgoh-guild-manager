@@ -36,3 +36,4 @@
 .php_cs.cache
 yarn-error.log
 .idea
+.idea/*

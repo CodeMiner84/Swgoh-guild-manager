@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -40,7 +41,7 @@ class Guild
      * @JMS\Groups({"guild"})
      * @JMS\Expose
      */
-    private $title;
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="guild")
@@ -50,7 +51,8 @@ class Guild
      */
     private $users;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->users = new ArrayCollection();
     }
 
@@ -89,27 +91,27 @@ class Guild
     }
 
     /**
-     * Set title.
+     * Set name.
      *
-     * @param string $title
+     * @param string $name
      *
      * @return Guild
      */
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get title.
+     * Get name.
      *
      * @return string
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
@@ -139,11 +141,11 @@ class Guild
     /**
      * Add user.
      *
-     * @param \App\Entity\User $user
+     * @param User $user
      *
      * @return Guild
      */
-    public function addUser(\App\Entity\User $user)
+    public function addUser(User $user)
     {
         $this->users[] = $user;
 
@@ -153,11 +155,11 @@ class Guild
     /**
      * Remove user.
      *
-     * @param \App\Entity\User $user
+     * @param User $user
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
-    public function removeUser(\App\Entity\User $user)
+    public function removeUser(User $user)
     {
         return $this->users->removeElement($user);
     }
@@ -165,7 +167,7 @@ class Guild
     /**
      * Get users.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getUsers()
     {
