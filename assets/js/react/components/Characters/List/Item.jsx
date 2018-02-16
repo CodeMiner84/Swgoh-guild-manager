@@ -8,11 +8,10 @@ export default class RowItem extends React.Component {
 
   render() {
     return (
-      <div className="col-xs-4 col-sm-3 col-md-2">
+      <div className="col-xs-6 col-sm-3 col-md-2">
         <BoxItem>
-          <Image><img src={this.props.item.image} /></Image>
+          <Image side={this.props.item.side}><img src={this.props.item.image} /></Image>
           <Name>{this.props.item.name}</Name>
-          <Side>Side: {this.props.item.side ? 'Light side' : 'Dark side'}</Side>
         </BoxItem>
       </div>
     );

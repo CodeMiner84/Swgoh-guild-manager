@@ -7,11 +7,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class GuildRepository
- *
- * @package App\Repository
+ * Class GuildRepository.
  */
-class GuildRepository extends ServiceEntityRepository
+class GuildRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     /**
      * GuildRepository constructor.
@@ -21,5 +19,14 @@ class GuildRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Guild::class);
+    }
+
+    public function remove(): void
+    {
+        $this->createQueryBuilder('u')
+            ->delete()
+            ->getQuery()
+            ->execute()
+        ;
     }
 }

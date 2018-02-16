@@ -5,9 +5,7 @@ namespace App\Factory;
 use App\Entity\User;
 
 /**
- * Class UserFactory
- *
- * @package App\Factory
+ * Class UserFactory.
  */
 class UserFactory
 {
@@ -19,7 +17,7 @@ class UserFactory
     public function create(array $data)
     {
         $user = new User();
-        $user->setTitle($data['title'])
+        $user->setName($data['name'])
             ->setUuid($data['uuid'])
             ->setGuild($data['guild'])
             ;

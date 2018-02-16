@@ -1,8 +1,8 @@
-import types from '../actionType/dashboard';
+import types from '../actionType/dashboard'
 
 const initialState = {
   products: [],
-};
+}
 
 function dashboardReducer(state = initialState, action) {
   switch (action.type) {
@@ -10,10 +10,10 @@ function dashboardReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
 }
 
-export default dashboardReducer;
+export default dashboardReducer

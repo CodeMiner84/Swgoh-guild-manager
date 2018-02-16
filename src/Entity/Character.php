@@ -18,7 +18,7 @@ class Character
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @JMS\Groups({"characters"})
+     * @JMS\Groups({"characters", "guild_squad_collection"})
      * @JMS\Expose
      */
     private $id;
@@ -26,7 +26,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters"})
+     * @JMS\Groups({"characters", "user_character"})
      * @JMS\Expose
      */
     private $code = '';
@@ -34,7 +34,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters"})
+     * @JMS\Groups({"characters", "user_character"})
      * @JMS\Expose
      */
     private $name = '';
@@ -42,7 +42,7 @@ class Character
     /**
      * @ORM\Column(type="integer")
      *
-     * @JMS\Groups({"characters"})
+     * @JMS\Groups({"characters", "user_character"})
      * @JMS\Expose
      */
     private $side = 0;
@@ -50,7 +50,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters"})
+     * @JMS\Groups({"characters", "user_character"})
      * @JMS\Expose
      */
     private $image = '';
@@ -58,7 +58,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters"})
+     * @JMS\Groups({"characters", "user_character"})
      * @JMS\Expose
      */
     private $description = '';
@@ -67,6 +67,21 @@ class Character
      * @ORM\Column(type="json_array")
      */
     private $tags = '';
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserCharacter", inversedBy="character")
+     */
+    private $userCharacter;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GuildSquad", mappedBy="character")
+     */
+    private $guildSquadCollection;
+
+    public function __construct()
+    {
+        $this->guildSquadCollection = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -205,7 +220,7 @@ class Character
      *
      * @return Character
      */
-    public function setTags($tags)
+    public function setTags($tags): self
     {
         $this->tags = $tags;
 
@@ -215,10 +230,70 @@ class Character
     /**
      * Get tags.
      *
-     * @return array
+     * @return string
      */
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set userCharacter.
+     *
+     * @param \App\Entity\UserCharacter|null $userCharacter
+     *
+     * @return Character
+     */
+    public function setUserCharacter(\App\Entity\UserCharacter $userCharacter = null)
+    {
+        $this->userCharacter = $userCharacter;
+
+        return $this;
+    }
+
+    /**
+     * Get userCharacter.
+     *
+     * @return \App\Entity\UserCharacter|null
+     */
+    public function getUserCharacter()
+    {
+        return $this->userCharacter;
+    }
+
+    /**
+     * Add guildSquadCollection.
+     *
+     * @param \App\Entity\GuildSquad $guildSquadCollection
+     *
+     * @return Character
+     */
+    public function addGuildSquadCollection(\App\Entity\GuildSquad $guildSquadCollection)
+    {
+        $this->guildSquadCollection[] = $guildSquadCollection;
+
+        return $this;
+    }
+
+    /**
+     * Remove guildSquadCollection.
+     *
+     * @param \App\Entity\GuildSquad $guildSquadCollection
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeGuildSquadCollection(\App\Entity\GuildSquad $guildSquadCollection)
+    {
+        return $this->guildSquadCollection->removeElement($guildSquadCollection);
+    }
+
+    /**
+     * Get guildSquadCollection.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGuildSquadCollection()
+    {
+        return $this->guildSquadCollection;
     }
 }

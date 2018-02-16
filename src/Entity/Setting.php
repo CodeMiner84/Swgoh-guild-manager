@@ -176,4 +176,22 @@ class Setting
     {
         return $this->code;
     }
+
+    /**
+     * @return string
+     */
+    public function getUnitSuffix()
+    {
+        return $this->unitSuffix;
+    }
+
+    /**
+     * @param string $unitSuffix
+     */
+    public function setUnitSuffix($unitSuffix): self
+    {
+        $this->unitSuffix = $unitSuffix;
+
+        return $this;
+    }
 }
