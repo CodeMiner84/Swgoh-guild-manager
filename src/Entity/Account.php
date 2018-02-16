@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -80,6 +81,16 @@ class Account implements UserInterface, \Serializable, EntityInterface
     private $roles = [];
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $guildId;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $guildCode;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string")
@@ -90,6 +101,8 @@ class Account implements UserInterface, \Serializable, EntityInterface
     private $uuid;
 
     /**
+     * @var Collection
+     *
      * @ORM\OneToMany(targetEntity="GuildSquad", mappedBy="account")
      */
     private $guildSquads;
@@ -384,5 +397,53 @@ class Account implements UserInterface, \Serializable, EntityInterface
     public function getGuildSquads()
     {
         return $this->guildSquads;
+    }
+
+    /**
+     * Set guildId.
+     *
+     * @param int $guildId
+     *
+     * @return Account
+     */
+    public function setGuildId($guildId)
+    {
+        $this->guildId = $guildId;
+
+        return $this;
+    }
+
+    /**
+     * Get guildId.
+     *
+     * @return int
+     */
+    public function getGuildId()
+    {
+        return $this->guildId;
+    }
+
+    /**
+     * Set guildCode.
+     *
+     * @param string $guildCode
+     *
+     * @return Account
+     */
+    public function setGuildCode($guildCode)
+    {
+        $this->guildCode = $guildCode;
+
+        return $this;
+    }
+
+    /**
+     * Get guildCode.
+     *
+     * @return string
+     */
+    public function getGuildCode()
+    {
+        return $this->guildCode;
     }
 }
