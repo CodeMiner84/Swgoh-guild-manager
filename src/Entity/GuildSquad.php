@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -46,6 +47,16 @@ class GuildSquad implements EntityInterface
      * @JMS\Expose
      */
     private $position;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GuildSquad", mappedBy="guildSquad")
+     */
+    private $guildSquadCollection;
+
+    public function __construct()
+    {
+        $this->guildSquadCollection = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -127,5 +138,41 @@ class GuildSquad implements EntityInterface
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Add guildSquadCollection.
+     *
+     * @param \App\Entity\GuildSquad $guildSquadCollection
+     *
+     * @return GuildSquad
+     */
+    public function addGuildSquadCollection(\App\Entity\GuildSquad $guildSquadCollection)
+    {
+        $this->guildSquadCollection[] = $guildSquadCollection;
+
+        return $this;
+    }
+
+    /**
+     * Remove guildSquadCollection.
+     *
+     * @param \App\Entity\GuildSquad $guildSquadCollection
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeGuildSquadCollection(\App\Entity\GuildSquad $guildSquadCollection)
+    {
+        return $this->guildSquadCollection->removeElement($guildSquadCollection);
+    }
+
+    /**
+     * Get guildSquadCollection.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGuildSquadCollection()
+    {
+        return $this->guildSquadCollection;
     }
 }

@@ -64,19 +64,27 @@ class Main extends React.Component {
   }
 
   toggleFiltering = () => matchPath(this.props.history.location.pathname, {
-    path: '/(characters|guilds|collection)',
+    path: '/(characters|guilds|collection|)',
   })
 
-  render() {
+  matchRoute = () => {
+    const regex =  /guild-squads\/\d\/builder/g
+    const str = this.props.history.location.pathname
+    const match = str.match(regex)
 
+    return match !== null && match.length > 0 ? true : false
+  }
+
+  render() {
     const allow = this.toggleFiltering()
+    const showFiltering = (allow !== null && allow.isExact) || this.matchRoute(this.props.history.location.pathname)
 
     return (
       <div>
         <Topnav
           handleFiltering={this.handleFiltering}
           logoutUser={this.logoutUser}
-          filtering={allow !== null && allow.isExact}
+          filtering={showFiltering}
         />
         <div className="container-fluid">
           <div className="row">

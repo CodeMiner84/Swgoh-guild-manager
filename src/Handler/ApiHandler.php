@@ -104,6 +104,7 @@ class ApiHandler
      */
     public function collect(array $groups, string $id = null, $key = 'id')
     {
+        $groups = [];
         $view = $this->createView(
             $id ?
                 $this->getResource($id, $groups, $key) :

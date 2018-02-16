@@ -39,6 +39,44 @@ function update(id, params) {
   }
 }
 
+function updateCollection(id, params) {
+  return (dispatch) => {
+    dispatch({
+      type: types.REQUEST_SQUAD,
+    })
+
+    return patch(`/api/guild-squads-collection/${id}/collection`, params)
+      .then((response) => {
+        dispatch({
+          type: types.UPDATE_SQUAD_COLLECTION,
+          payload: response.data.data,
+        })
+      })
+      .catch(() => dispatch({
+        type: types.ERROR_SQUAD,
+      }))
+  }
+}
+
+function getCollection(id) {
+  return (dispatch) => {
+    dispatch({
+      type: types.REQUEST_SQUAD,
+    })
+
+    return get(`/api/guild-squads-collection/${id}/collection`)
+      .then((response) => {
+        dispatch({
+          type: types.RECV_SQUAD_COLLECTION,
+          payload: response.data.data,
+        })
+      })
+      .catch(() => dispatch({
+        type: types.ERROR_SQUAD,
+      }))
+  }
+}
+
 function getAll() {
   return (dispatch) => {
     dispatch({
@@ -62,4 +100,6 @@ export default {
   create,
   getAll,
   update,
+  updateCollection,
+  getCollection,
 }
