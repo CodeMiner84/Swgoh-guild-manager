@@ -13,12 +13,22 @@ let AccountForm = (props) => {
         </div>
       }
       <div className="form-group">
-        <label>First Name</label>
+        <label>Guild Id</label>
         <Field
-          name="favGuild"
+          name="guildId"
           component="input"
           type="text"
-          placeholder="Your guild"
+          placeholder="Guild id"
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <label>Guild code</label>
+        <Field
+          name="guildCode"
+          component="input"
+          type="text"
+          placeholder="Guild alias"
           className="form-control"
         />
       </div>
