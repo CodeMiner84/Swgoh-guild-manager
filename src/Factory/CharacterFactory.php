@@ -22,6 +22,7 @@ class CharacterFactory
             ->setDescription($data['description'])
             ->setSide($data['side'])
             ->setImage($data['image'])
+            ->setTags($data['tags'])
         ;
 
         return $character;

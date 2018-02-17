@@ -23,16 +23,22 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
      */
     private $user;
 
-    /**
-     * @param Settings $settings
-     * @param Guild    $guild
-     */
     public function crawl()
     {
         $crawler = new Crawler($this->getUserCharacters($this->user));
         $usersTableList = $crawler->filter('.collection-char');
 
         $this->fetchCharacters($this->user, $usersTableList);
+    }
+
+    public function crawlGuild()
+    {
+        foreach ($this->guild->getUsers() as $user) {
+            $crawler = new Crawler($this->getUserCharacters($user));
+            $usersTableList = $crawler->filter('.collection-char');
+
+            $this->fetchCharacters($user, $usersTableList);
+        }
     }
 
     /**
@@ -97,10 +103,12 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
             if (!isset($matchChar[3])) {
                 continue;
             }
-
             $characterCode = $matchChar[3];
 
             $character = $this->em->getRepository(Character::class)->findOneByCode($characterCode);
+            preg_match('/title\=\"Power (.*)\"/', $domHTML->filter('.collection-char')->html(), $powerMatch);
+            $power = explode('/', str_replace(',', '', $powerMatch[1]));
+
             $data = [
                 'stars' => count($domHTML->filter('div.star:not(.star-inactive)')),
                 'user' => $user,
@@ -108,7 +116,9 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
                 'active' => $active,
                 'level' => $domHTML->filter('.char-portrait-full-level')->text(),
                 'gear' => $this->mapGear($domHTML->filter('.char-portrait-full-gear-level')->text()),
+                'power' => trim(str_replace(',', '.', $power[0])),
             ];
+
             if ($this->characterExists($user, $character)) {
                 $this->repository->updateToon($user, $data);
             } else {

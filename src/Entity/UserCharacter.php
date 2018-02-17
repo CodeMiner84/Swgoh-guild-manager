@@ -16,13 +16,16 @@ class UserCharacter
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @JMS\Groups({"guild_users"})
+     * @JMS\Expose
      */
     private $id;
 
     /**
      * @ORM\Column(type="boolean")
      *
-     * @JMS\Groups({"user_character"})
+     * @JMS\Groups({"user_character", "guild_users"})
      * @JMS\Expose
      */
     private $active;
@@ -31,13 +34,13 @@ class UserCharacter
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="userCharacters")
      * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="CASCADE")
      *
-     * @JMS\Groups({"user_character"})
+     * @JMS\Groups({"user_character", "guild_users"})
      * @JMS\Expose
      */
     private $character;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="characters")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="userCharacters")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
@@ -65,6 +68,14 @@ class UserCharacter
      * @JMS\Expose
      */
     private $gear;
+
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @JMS\Groups({"user_character", "guild_users"})
+     * @JMS\Expose
+     */
+    private $power;
 
     /**
      * Get id.
@@ -218,5 +229,29 @@ class UserCharacter
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * Set power.
+     *
+     * @param int $power
+     *
+     * @return UserCharacter
+     */
+    public function setPower(int $power)
+    {
+        $this->power = $power;
+
+        return $this;
+    }
+
+    /**
+     * Get power.
+     *
+     * @return int
+     */
+    public function getPower()
+    {
+        return $this->power;
     }
 }

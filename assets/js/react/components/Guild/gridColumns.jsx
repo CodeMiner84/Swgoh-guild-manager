@@ -1,14 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+export default function getColumns(squads) {
+  if (squads === undefined) {
+    return []
+  }
+  const columns = [{
+    Header: '#',
+    accessor: 'name',
+  }]
 
-export default [{
-  Header: 'Code',
-  accessor: 'code',
-}, {
-  Header: 'Name',
-  accessor: 'name',
-  Cell: row =>
-    (
-      <Link to={`/users/${row.original.code}`}>{row.value}</Link>
-    ),
-}];
+  squads.map(squad => columns.push({ Header: squad.name, accessor: `${squad.id}` }))
+  return columns
+}

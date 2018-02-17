@@ -7,9 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class GuildSquadCollectionRepository
- *
- * @package App\Repository
+ * Class GuildSquadCollectionRepository.
  */
 class GuildSquadCollectionRepository extends ServiceEntityRepository
 {
@@ -44,7 +42,7 @@ class GuildSquadCollectionRepository extends ServiceEntityRepository
      */
     public function removeCollection(string $code): void
     {
-        list($guildSquadId, $characterId) = explode("-", $code);
+        list($guildSquadId, $characterId) = explode('-', $code);
 
         $this->createQueryBuilder('c')
             ->delete(GuildSquadCollection::class, 'c')

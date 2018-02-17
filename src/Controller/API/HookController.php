@@ -59,4 +59,15 @@ class HookController extends FOSRestController
 
         return JsonResponse::create(['success']);
     }
+
+    /**
+     * @Route("/fetch-guild-collection/{guild}", name="api_fetch_guild_collection")
+     * @ParamConverter("guild", options={"mapping"={"guild"="code"}})
+     */
+    public function fetchGuildCollection(Guild $guild, UserCharacterCrawler $crawler)
+    {
+        $crawler->setGuild($guild)->crawlGuild();
+
+        return JsonResponse::create(['success']);
+    }
 }

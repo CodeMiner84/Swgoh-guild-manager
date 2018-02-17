@@ -6,7 +6,6 @@ use App\Entity\Guild;
 use App\Entity\GuildSquad;
 use App\Entity\GuildSquadCollection;
 use App\Handler\GuildSquadCollectionHandler;
-use App\Handler\GuildSquadHandler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
