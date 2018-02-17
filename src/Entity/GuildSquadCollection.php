@@ -33,7 +33,7 @@ class GuildSquadCollection
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="guildSquadCollection")
      * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="CASCADE")
      *
-     * @JMS\Groups({"guild_squad_collection"})
+     * @JMS\Groups({"guild_squad_collection", "guild_squad"})
      * @JMS\Expose
      */
     private $character;

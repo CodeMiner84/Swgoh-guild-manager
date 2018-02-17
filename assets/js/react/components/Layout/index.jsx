@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { history as historyPropTypes } from 'history-prop-types'
-import { Route, withRouter, matchPath } from 'react-router-dom'
+import { Route, withRouter, matchPath, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import AuthorizedRoute from '../../router/AuthorizedRoute'
 import Navbar from './navbar'
@@ -16,6 +16,7 @@ import Login from '../Login'
 import Users from '../Users'
 import Cart from '../Cart'
 import Guild from '../Guild'
+import Guilds from '../Guilds'
 import Collection from '../Collection'
 import GuildSquads from '../GuildSquads'
 
@@ -93,15 +94,18 @@ class Main extends React.Component {
             }
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
               <Route exact path="/" component={Dashboard} />
-              <AuthorizedRoute exact path="/guilds" component={Guild} />
-              <AuthorizedRoute path="/users/:code" component={Users} />
-              <AuthorizedRoute path="/user/:code" component={User} />
-              <AuthorizedRoute path="/characters" searchPhrase={this.state.phrase} component={Character} />
-              <AuthorizedRoute path="/cart" component={Cart} />
-              <AuthorizedRoute path="/account" component={Account} />
-              <AuthorizedRoute path="/collection" searchPhrase={this.state.phrase} component={Collection} />
-              <AuthorizedRoute path="/guild-squads" searchPhrase={this.state.phrase} component={GuildSquads} />
-              <Route path="/login" component={Login} />
+              <Switch>
+                <AuthorizedRoute path="/users/:code" component={Users} />
+                <AuthorizedRoute path="/user/:code" component={User} />
+                <AuthorizedRoute path="/guild" component={Guild} />
+                <AuthorizedRoute path="/guilds" component={Guilds} />
+                <AuthorizedRoute path="/characters" searchPhrase={this.state.phrase} component={Character} />
+                <AuthorizedRoute path="/cart" component={Cart} />
+                <AuthorizedRoute path="/account" component={Account} />
+                <AuthorizedRoute path="/collection" searchPhrase={this.state.phrase} component={Collection} />
+                <AuthorizedRoute path="/guild-squads" component={GuildSquads} />
+                <Route path="/login" component={Login} />
+              </Switch>
             </main>
           </div>
         </div>

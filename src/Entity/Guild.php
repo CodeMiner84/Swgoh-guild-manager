@@ -24,6 +24,9 @@ class Guild
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @JMS\Groups({"guild"})
+     * @JMS\Expose
      */
     private $uuid;
 
@@ -46,7 +49,7 @@ class Guild
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="guild")
      *
-     * @JMS\Groups({"guild"})
+     * @JMS\Groups({"guild", "guild_users"})
      * @JMS\Expose
      */
     private $users;

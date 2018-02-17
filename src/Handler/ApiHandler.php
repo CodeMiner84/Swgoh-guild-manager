@@ -104,7 +104,6 @@ class ApiHandler
      */
     public function collect(array $groups, string $id = null, $key = 'id')
     {
-        $groups = [];
         $view = $this->createView(
             $id ?
                 $this->getResource($id, $groups, $key) :
@@ -138,7 +137,6 @@ class ApiHandler
     public function createView($data, array $groups, $status = Response::HTTP_OK): View
     {
         $view = View::create($data, $status);
-
         if (count($groups) > 0) {
             $context = $view->getContext();
             $context->setGroups($groups);

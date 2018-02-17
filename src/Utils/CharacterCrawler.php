@@ -18,9 +18,14 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
         $this->fetchCharacters($crawler->filter('li.character'));
     }
 
-    private function removeCharacters(): void
+    private function checkCharacter(string $code): Character
     {
-        $this->em->getRepository(Character::class)->remove();
+        return $this->em->getRepository(Character::class)->findOneByCode($code);
+    }
+
+    private function update(string $code, array $data): void
+    {
+        $this->em->getRepository(Character::class)->update($code, $data);
     }
 
     /**
@@ -29,24 +34,34 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
      */
     private function fetchCharacters($dom): void
     {
-        $this->removeCharacters();
         /* @var \DOMElement $item */
         foreach ($dom as $key => $domElement) {
             $html = $domElement->ownerDocument->saveHTML($domElement);
             $liCrawler = new Crawler($html);
 
             $side = explode('·', $liCrawler->filter('.media-heading > small > span')->html());
+            $tags = $liCrawler->filter('.media-heading > small')->text();
             preg_match("/\/characters\/(.*)\//", $liCrawler->filter('a')->getNode(0)->getAttribute('href'), $matches);
 
-            $character = CharacterFactory::create([
+            if ($this->checkCharacter($matches[1])) {
+                $this->update($matches[1], [
+                    'name' => $domElement->getAttribute('data-name-lower'),
+                    'description' => strip_tags($liCrawler->filter('p.character-description')->html()),
+                    'side' => 'Light Side' === trim($side[0]) ? 1 : 0,
+                    'image' => $liCrawler->filter('img.char-portrait-img')->getNode(0)->getAttribute('src'),
+                    'tags' => $tags,
+                ]);
+            } else {
+                $character = CharacterFactory::create([
                     'code' => $matches[1],
                     'name' => $domElement->getAttribute('data-name-lower'),
                     'description' => strip_tags($liCrawler->filter('p.character-description')->html()),
                     'side' => 'Light Side' === trim($side[0]) ? 1 : 0,
                     'image' => $liCrawler->filter('img.char-portrait-img')->getNode(0)->getAttribute('src'),
+                    'tags' => $tags,
                 ]);
-
-            $this->em->persist($character);
+                $this->em->persist($character);
+            }
         }
         $this->em->flush();
     }

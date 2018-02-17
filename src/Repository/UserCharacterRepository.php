@@ -36,6 +36,7 @@ class UserCharacterRepository extends ServiceEntityRepository implements Reposit
             ->set('u.level', ':level')
             ->set('u.gear', ':gear')
             ->set('u.active', ':active')
+            ->set('u.power', ':power')
             ->where('u.user = :user')
             ->andWhere('u.character = :character')
             ->setParameters([
@@ -45,6 +46,7 @@ class UserCharacterRepository extends ServiceEntityRepository implements Reposit
                 'active' => $data['active'],
                 'user' => $data['user']->getId(),
                 'character' => $data['character']->getId(),
+                'power' => $data['power'],
             ])
             ->getQuery()
             ->execute();

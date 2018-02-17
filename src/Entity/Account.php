@@ -23,7 +23,7 @@ class Account implements UserInterface, \Serializable, EntityInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @JMS\Groups({"account_show", "guild_squad"})
+     * @JMS\Groups({"account_show"})
      * @JMS\Expose
      */
     private $id;
@@ -82,11 +82,17 @@ class Account implements UserInterface, \Serializable, EntityInterface
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @JMS\Groups({"account_show"})
+     * @JMS\Expose
      */
     private $guildId;
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @JMS\Groups({"account_show"})
+     * @JMS\Expose
      */
     private $guildCode;
 

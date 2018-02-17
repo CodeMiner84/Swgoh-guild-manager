@@ -3,7 +3,7 @@
 namespace App\Controller\API;
 
 use App\Entity\Guild;
-use App\Handler\ApiHandler;
+use App\Handler\GuildHandler;
 use App\Utils\UserCrawler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -57,8 +57,26 @@ class GuildController extends FOSRestController
         return $this->getHandler()->collect(['guild']);
     }
 
+    /**
+     * @Route("/all/{guildId}/{guildCode}", name="api_guild_users")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns guild users",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @Model(type=Guild::class, groups={"guild_users"})
+     *     )
+     * )
+     * @SWG\Tag(name="guild_users")
+     */
+    public function getAll(string $guildId, string $guildCode)
+    {
+        return $this->getHandler()->collect(['guild_users']);
+    }
+
     public function getHandler()
     {
-        return $this->get(ApiHandler::class)->init(Guild::class);
+        return $this->get(GuildHandler::class)->init(Guild::class);
     }
 }

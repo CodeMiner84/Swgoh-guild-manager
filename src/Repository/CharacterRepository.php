@@ -30,7 +30,9 @@ class CharacterRepository extends ServiceEntityRepository implements RepositoryI
      */
     public function findByPhrase($qb, string $phrase): QueryBuilder
     {
-        return $qb->andWhere('name = :phrase')
+        return $qb->andWhere('name', ':phrase')
+            ->andWhere('side', ':phrase')
+            ->andWhere('tags', ':phrase')
             ->setParameter('phrase', $phrase)
             ;
     }
@@ -42,5 +44,31 @@ class CharacterRepository extends ServiceEntityRepository implements RepositoryI
             ->getQuery()
             ->execute()
         ;
+    }
+
+    /**
+     * @param string $code
+     * @param array  $data
+     */
+    public function update(string $code, array $data): void
+    {
+        $this->createQueryBuilder('c')
+            ->update($this->getEntityName(), 'c')
+            ->set('c.name', ':name')
+            ->set('c.description', ':description')
+            ->set('c.side', ':side')
+            ->set('c.image', ':image')
+            ->set('c.tags', ':tags')
+            ->where('c.code = :code')
+            ->setParameters([
+                'code' => $code,
+                'name' => $data['name'],
+                'description' => $data['description'],
+                'side' => $data['side'],
+                'image' => $data['image'],
+                'tags' => $data['tags'],
+            ])
+            ->getQuery()
+            ->execute();
     }
 }

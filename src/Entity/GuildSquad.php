@@ -26,16 +26,13 @@ class GuildSquad implements EntityInterface
     /**
      * @ORM\ManyToOne(targetEntity="Account", inversedBy="guildSquads")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
-     *
-     * @JMS\Groups({"guild_squad"})
-     * @JMS\Expose
      */
     private $account;
 
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"guild_squad"})
+     * @JMS\Groups({"guild_squad", "guild_squad_collection"})
      * @JMS\Expose
      */
     private $name;
@@ -49,7 +46,10 @@ class GuildSquad implements EntityInterface
     private $position;
 
     /**
-     * @ORM\OneToMany(targetEntity="GuildSquad", mappedBy="guildSquad")
+     * @ORM\OneToMany(targetEntity="GuildSquadCollection", mappedBy="guildSquad")
+     *
+     * @JMS\Groups({"guild_squad"})
+     * @JMS\Expose
      */
     private $guildSquadCollection;
 
@@ -159,7 +159,7 @@ class GuildSquad implements EntityInterface
      *
      * @param \App\Entity\GuildSquad $guildSquadCollection
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
     public function removeGuildSquadCollection(\App\Entity\GuildSquad $guildSquadCollection)
     {

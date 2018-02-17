@@ -14,6 +14,6 @@ class AccountHandler extends ApiHandler
     protected const ALLOWED_PARAMS = [
         'uuid',
         'guildId',
-        'guildCode'
+        'guildCode',
     ];
 }

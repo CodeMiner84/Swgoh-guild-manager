@@ -20,6 +20,7 @@ class GuildSquads extends React.Component {
     }
   }
 
+
   handleSubmit = (event) => {
     const params = {
       favGuild: event.favGuild,

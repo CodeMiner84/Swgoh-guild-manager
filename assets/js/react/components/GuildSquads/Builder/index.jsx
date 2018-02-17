@@ -2,9 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { createSelector } from 'reselect'
 import { connect } from 'react-redux'
+import ReactTimeout from 'react-timeout'
 import actions from '../../../actions/guild_squads'
 import List from './List'
 import Loader from '../../Loader'
+import Filtering from '../../Layout/filtering'
+
 
 class Builder extends React.Component {
   constructor(props) {
@@ -12,12 +15,14 @@ class Builder extends React.Component {
 
     this.state = {
       active: [],
+      phrase: '',
+      saving: false,
     }
   }
 
   componentDidMount() {
     if (undefined !== this.props.match.params.id) {
-      this.props.getCollection(this.props.match.params.id).then((respond) => {
+      this.props.getCollection(this.props.match.params.id).then(() => {
         const active = []
         const chars = this.props.characters
         this.props.squad.map(
@@ -32,12 +37,20 @@ class Builder extends React.Component {
     }
   }
 
+  handleFiltering = (e) => {
+    this.setState({
+      phrase: e.target.value,
+    })
+  }
+
   save = () => {
     const params = []
     this.state.active.map(item => params.push(item.id))
     this.props.saveSquad(this.props.match.params.id, {
       collection: params,
     })
+    this.setState({saving: true})
+    this.props.setTimeout(() => this.setState({saving: false}), 1000)
   }
 
   toggleHandle = (elem) => {
@@ -65,6 +78,11 @@ class Builder extends React.Component {
 
     return (
       <div >
+        <Filtering handleFiltering={(e) => this.handleFiltering(e)} />
+        {
+          this.state.saving &&
+          <div className={'alert alert-success'}>Squad updated!</div>
+        }
         <div className="card">
           <div className="list-group list-group-flush">
             <div className="card-header">
@@ -97,7 +115,7 @@ class Builder extends React.Component {
             <div className="list-group-item">
               <List
                 active={this.state.active}
-                phrase={this.props.phrase}
+                phrase={this.state.phrase}
                 characters={this.props.characters}
                 toggleHandle={this.toggleHandle}
               />
@@ -138,11 +156,12 @@ Builder.defaultProps = {
 Builder.propTypes = {
   saveSquad: PropTypes.func.isRequired,
   getSquad: PropTypes.func.isRequired,
-  phrase: PropTypes.string.isRequired,
   match: PropTypes.shape.isRequired,
   characters: PropTypes.shape.isRequired,
   squad: PropTypes.shape.isRequired,
   isLoading: PropTypes.bool,
+  getCollection: PropTypes.func.isRequired,
+  setTimeout: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Builder)
+export default connect(mapStateToProps, mapDispatchToProps)(ReactTimeout(Builder))

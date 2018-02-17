@@ -25,6 +25,7 @@ class UserCharacterFactory
             ->setLevel($data['level'])
             ->setGear($data['gear'])
             ->setActive($data['active'])
+            ->setPower($data['power'])
         ;
 
         return $user;

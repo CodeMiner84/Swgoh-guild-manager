@@ -6,8 +6,6 @@ use App\Entity\Character;
 use App\Entity\GuildSquad;
 use App\Entity\GuildSquadCollection;
 use App\Entity\RequestTrait;
-use App\Repository\GuildSquadCollectionRepository;
-use App\Repository\GuildSquadRepository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -17,10 +15,6 @@ class GuildSquadCollectionHandler extends ApiHandler
 {
     use RequestTrait;
 
-//    protected const ALLOWED_PARAMS = [
-//        'name',
-//    ];
-//
     /**
      * @return QueryBuilder
      */
@@ -42,7 +36,7 @@ class GuildSquadCollectionHandler extends ApiHandler
     {
         $data = $this->filterCollection($guildSquad);
         foreach ($request['collection'] as $characterId) {
-            $code = sprintf("%s-%s", $guildSquad->getId(), $characterId);
+            $code = sprintf('%s-%s', $guildSquad->getId(), $characterId);
             if (!($data[$code] ?? null)) {
                 $entity = new GuildSquadCollection();
                 $entity->setGuildSquad($guildSquad);

@@ -100,3 +100,29 @@ body {
 
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.card-header {
+    margin: 0;
+    h3 {
+        font-size: 14px;
+        margin: 0;
+        line-height: 30px;
+        font-weight: bold;
+    }
+}
+
+
+.filtering {
+    border: 1px solid #acacac;
+    background: #343A40;
+    padding: 10px;
+    span {
+        line-height: 36px;
+        color: #FFFFFF;
+        width: 100px;
+        float: left;
+    }
+    input {
+        width: calc(100% - 100px) !important;
+    }
+}

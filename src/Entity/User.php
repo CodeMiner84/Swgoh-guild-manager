@@ -24,7 +24,7 @@ class User
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"users", "guild"})
+     * @JMS\Groups({"users", "guild", "guild_users"})
      * @JMS\Expose
      */
     private $uuid;
@@ -32,7 +32,7 @@ class User
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"users", "guild"})
+     * @JMS\Groups({"users", "guild", "guild_users"})
      * @JMS\Expose
      */
     private $name;
@@ -48,9 +48,18 @@ class User
      */
     private $characters;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserCharacter", mappedBy="user")
+     *
+     * @JMS\Groups({"guild_users"})
+     * @JMS\Expose
+     */
+    private $userCharacters;
+
     public function __construct()
     {
         $this->characters = new ArrayCollection();
+        $this->userCharacters = new ArrayCollection();
     }
 
     /**
@@ -169,5 +178,41 @@ class User
     public function getCharacters()
     {
         return $this->characters;
+    }
+
+    /**
+     * Add userCharacter.
+     *
+     * @param \App\Entity\UserCharacter $userCharacter
+     *
+     * @return User
+     */
+    public function addUserCharacter(\App\Entity\UserCharacter $userCharacter)
+    {
+        $this->userCharacters[] = $userCharacter;
+
+        return $this;
+    }
+
+    /**
+     * Remove userCharacter.
+     *
+     * @param \App\Entity\UserCharacter $userCharacter
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeUserCharacter(\App\Entity\UserCharacter $userCharacter)
+    {
+        return $this->userCharacters->removeElement($userCharacter);
+    }
+
+    /**
+     * Get userCharacters.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserCharacters()
+    {
+        return $this->userCharacters;
     }
 }

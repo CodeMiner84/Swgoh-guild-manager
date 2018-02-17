@@ -13,6 +13,8 @@ class ShopController extends Controller
      * @Route("/account", name="app_account")
      * @Route("/collection", name="app_collection")
      * @Route("/shop", name="guilds")
+     * @Route("/guild", name="guild")
+     * @Route("/guilds", name="guilds")
      * @Route("/users/{code}", name="users")
      * @Route("/users", name="users")
      * @Route("/characters", name="characters")
