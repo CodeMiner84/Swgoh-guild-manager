@@ -14,7 +14,7 @@ class Item extends React.Component {
     return (
       <Outer className="col-xs-4">
         <StyledItem>
-          <Title>{item.title}</Title>
+          <Title>{item.name}</Title>
           <Price>{item.price}</Price>
           <Description>{item.description}</Description>
           <ButtonContainer>

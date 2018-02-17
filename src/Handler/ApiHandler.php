@@ -2,27 +2,25 @@
 
 namespace App\Handler;
 
-use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Class ApiHandler
- *
- * @package App\Handler
+ * Class ApiHandler.
  */
 class ApiHandler
 {
-    /**
-     *
-     */
     private const MAX_RESULTS = 100;
+
+    private const ENTITY_PATTERN = 'App\Entity\%s';
 
     /**
      * @var ViewHandlerInterface
@@ -45,22 +43,35 @@ class ApiHandler
     public $repository;
 
     /**
+     * @var array
+     */
+    private $params = [];
+
+    /**
+     * @var QueryBuilder
+     */
+    public $qb;
+
+    protected $user;
+
+    /**
      * ApiHandler constructor.
      *
-     * @param RequestStack $requestStack
+     * @param RequestStack           $requestStack
      * @param EntityManagerInterface $em
-     * @param ViewHandlerInterface $viewHandler
+     * @param ViewHandlerInterface   $viewHandler
      */
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, ViewHandlerInterface $viewHandler)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, ViewHandlerInterface $viewHandler, TokenStorageInterface $tokenStorage)
     {
         $this->viewhandler = $viewHandler;
         $this->em = $em;
         $this->request = $requestStack->getCurrentRequest();
+        $this->user = $tokenStorage->getToken()->getUser();
     }
 
     /**
      * @param string $entity
-     * 
+     *
      * @return $this
      */
     public function init(string $entity)
@@ -72,32 +83,61 @@ class ApiHandler
     }
 
     /**
-     * @param array $groups
-     * @param array $routeParams
+     * @param $id
+     * @param $groups
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return mixed
      */
-    public function collect(array $groups, array $routeParams = array())
+    public function getResource($id, $groups, $key = 'id')
+    {
+        return $this->repository->findOneBy([
+            $key => $id,
+        ]);
+    }
+
+    /**
+     * @param array       $groups
+     * @param string|null $id
+     * @param string      $key
+     *
+     * @return Response
+     */
+    public function collect(array $groups, string $id = null, $key = 'id')
     {
         $view = $this->createView(
-            $this->transformIterator($this->getPaginatedResult()),
+            $id ?
+                $this->getResource($id, $groups, $key) :
+                $this->transformIterator($this->getPaginatedResult()),
             $groups
         );
 
-        return $this->viewhandler->createResponse($view, $this->request,'json');
+        return $this->viewhandler->createResponse($view, $this->request, 'json');
+    }
+
+    /**
+     * @param array $groups
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function badResponse()
+    {
+        $view = $this->createView([
+            'error' => true,
+        ], [], Response::HTTP_BAD_REQUEST);
+
+        return $this->viewhandler->createResponse($view, $this->request, 'json');
     }
 
     /**
      * @param $data
      * @param array $groups
      *
-     * @return static
+     * @return View
      */
-    public function createView($data, array $groups)
+    public function createView($data, array $groups, $status = Response::HTTP_OK): View
     {
-        $view = View::create($data);
-
-        if ($groups) {
+        $view = View::create($data, $status);
+        if (count($groups) > 0) {
             $context = $view->getContext();
             $context->setGroups($groups);
         }
@@ -105,27 +145,25 @@ class ApiHandler
         return $view;
     }
 
-
     /**
      * @return Pagerfanta
      */
     private function getPaginatedResult(): Pagerfanta
     {
         $adapter = new DoctrineORMAdapter($this->getQueryBuilder());
-        
+
         $pagerfanta = new Pagerfanta($adapter);
 
         $pagerfanta
             ->setMaxPerPage($this->request->query->get('limit', self::MAX_RESULTS))
             ->setCurrentPage($this->request->query->get('page', 1));
 
-        if ($this->request->query->get('noLimit') !== null) {
+        if (null !== $this->request->query->get('noLimit')) {
             $pagerfanta->setMaxPerPage(999999);
         }
 
         return $pagerfanta;
     }
-
 
     /**
      * Create final return array with data needed + items per page etc.
@@ -136,8 +174,6 @@ class ApiHandler
      */
     public function transformIterator(Pagerfanta $pagerfanta): array
     {
-        $pagerfanta = $this->getPaginatedResult();
-
         return [
             'data' => iterator_to_array($pagerfanta->getCurrentPageResults()),
             'page' => $pagerfanta->getCurrentPage(),
@@ -145,6 +181,79 @@ class ApiHandler
             'max' => $pagerfanta->getNbResults(),
             'offes' => $pagerfanta->getMaxPerPage(),
         ];
+    }
+
+    /**
+     * @param array $params
+     * @param $id
+     * @param array $groups
+     *
+     * @return Response
+     */
+    public function updateEntry($id, array $params, array $groups)
+    {
+        $entity = $this->repository->findOneById($id);
+
+        $view = $this->createView(
+            $this->patchAction($entity, $params),
+            $groups
+        );
+
+        return $this->viewhandler->createResponse($view, $this->request, 'json');
+    }
+
+    /**
+     * @param array $params
+     * @param array $groups
+     *
+     * @return Response
+     */
+    public function createEntry(array $params, array $groups)
+    {
+        $entityClassName = $this->repository->getClassName();
+        $entity = $this->em->getClassMetadata($entityClassName)->newInstance();
+
+        foreach ($params as $param => $value) {
+            $setter = sprintf('set%s', ucfirst($param));
+            if (is_array($value)) {
+                foreach ($value as $subKey => $subValue) {
+                    $value = $this->em->getRepository(sprintf(self::ENTITY_PATTERN, ucfirst($param)))->findOneBy([
+                        $subKey => $subValue,
+                    ]);
+                    $entity->$setter($value);
+                }
+            } else {
+                $setter = sprintf('set%s', ucfirst($param));
+                $entity->$setter($value);
+            }
+        }
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        $view = $this->createView(
+            $entity,
+            $groups
+        );
+
+        return $this->viewhandler->createResponse($view, $this->request, 'json');
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams(array $params): self
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams(): array
+    {
+        return $this->params;
     }
 
     /**

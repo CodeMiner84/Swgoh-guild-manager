@@ -1,14 +1,14 @@
-import axios from 'axios';
-import types from '../actionType/character';
+import { get } from '../utils/requests'
+import types from '../actionType/character'
 
 function fetchCharacters(phrase) {
-  return dispatch => axios.get(`api/characters?noLimit`)
+  return dispatch => get('api/characters?noLimit')
       .then((response) => {
         dispatch({
           type: types.CHARACTER_LIST,
           payload: response.data.data,
-        });
-      });
+        })
+      })
 }
 
 function filterCharacters(phrase) {
@@ -16,10 +16,10 @@ function filterCharacters(phrase) {
     dispatch({
       type: types.FILTER_CHARACTER,
       payload: phrase,
-    });
+    })
 }
 
 export default {
   fetchCharacters,
   filterCharacters,
-};
+}

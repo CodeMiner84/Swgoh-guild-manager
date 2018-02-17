@@ -1,8 +1,8 @@
-import types from '../actionType/character';
+import types from '../actionType/character'
 
 const initialState = {
   characters: [],
-};
+}
 
 function characterReducer(state = initialState, action) {
   switch (action.type) {
@@ -10,10 +10,10 @@ function characterReducer(state = initialState, action) {
       return {
         ...state,
         characters: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
 }
 
-export default characterReducer;
+export default characterReducer

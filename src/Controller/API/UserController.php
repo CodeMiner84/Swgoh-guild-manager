@@ -5,10 +5,9 @@ namespace App\Controller\API;
 use App\Entity\Guild;
 use App\Entity\User;
 use App\Handler\ApiHandler;
-use App\Utils\GuildCrawler;
 use FOS\RestBundle\Controller\FOSRestController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
 
 /**
