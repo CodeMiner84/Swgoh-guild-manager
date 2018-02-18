@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form'
 
 let AccountForm = (props) => {
   const { handleSubmit, pristine, submitting, saved } = props
+
   return (
     <form onSubmit={handleSubmit}>
       {saved &&
@@ -15,7 +16,7 @@ let AccountForm = (props) => {
       <div className="form-group">
         <label>Guild Id</label>
         <Field
-          name="guildId"
+          name="guild_id"
           component="input"
           type="text"
           placeholder="Guild id"
@@ -25,7 +26,7 @@ let AccountForm = (props) => {
       <div className="form-group">
         <label>Guild code</label>
         <Field
-          name="guildCode"
+          name="guild_code"
           component="input"
           type="text"
           placeholder="Guild alias"

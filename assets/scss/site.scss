@@ -111,6 +111,12 @@ body {
     }
 }
 
+.checkbox-group {
+    input {
+        margin: 4px 0 0 4px;
+    }
+}
+
 
 .filtering {
     border: 1px solid #acacac;
@@ -125,4 +131,13 @@ body {
     input {
         width: calc(100% - 100px) !important;
     }
+}
+
+.ReactTable .rt-th, .ReactTable .rt-td {
+    overflow: visible;
+}
+
+
+.fade.in {
+    opacity: 1;
 }

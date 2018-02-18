@@ -17,8 +17,8 @@ function get(url, params) {
 }
 function post(url, params) {
   return axios.post(url, {
-    ...params,
-  },
+      ...params,
+    },
     {
       headers: authHeader(),
     },
@@ -33,9 +33,17 @@ function patch(url, params) {
     },
   )
 }
+function remove(url, params) {
+  return axios.delete(url,
+    {
+      headers: authHeader(),
+    },
+  )
+}
 
 export {
   get,
   patch,
   post,
+  remove,
 }

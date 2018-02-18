@@ -22,6 +22,16 @@ let SquadForm = (props) => {
           className={'form-control'}
         />
       </div>
+      <div className={'form-group checkbox-group'}>
+        <label htmlFor={'name'}>Full squad</label>
+        <Field
+          name={'full_squad'}
+          component={'input'}
+          type={'checkbox'}
+          placeholder={'Full Squad'}
+          className={'checkbox'}
+        />
+      </div>
       <div>
         <button type={'submit'} disabled={pristine || submitting} className={'btn btn-primary btn-sm'}>Submit</button>
 

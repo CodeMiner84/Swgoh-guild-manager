@@ -31,7 +31,7 @@ class UserCharacter
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="userCharacters")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="userCharacters", cascade={"persist"})
      * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="CASCADE")
      *
      * @JMS\Groups({"user_character", "guild_users"})
@@ -40,7 +40,7 @@ class UserCharacter
     private $character;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="userCharacters")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="userCharacters", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;

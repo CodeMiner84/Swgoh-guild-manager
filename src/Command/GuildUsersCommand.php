@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Guild;
+use App\Entity\User;
 use App\Utils\UserCharacterCrawler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -65,10 +66,20 @@ class GuildUsersCommand extends Command
         if (!$guild instanceof Guild) {
             throw new \Exception('NO GUILD FOUND !');
         }
+        $users = $this->entityManager->getRepository(User::class)->findByGuild($guild);
 
-        $progress = new ProgressBar($output);
+        $progress = new ProgressBar($output, count($users));
+        $progress->setFormatDefinition('custom', ' %current%/%max% -- %message% (%user%)');
+        $progress->setFormat('custom');
 
-        $this->userCrawler->setGuild($guild)->crawlGuild();
+        $crawler = $this->userCrawler->setGuild($guild);
+        foreach ($users as $user) {
+            $progress->setMessage('Importing...');
+            $progress->setMessage($user->getName(), 'user');
+            $crawler->crawlGuildUser($user);
+            $progress->advance();
+        }
+
         $io->success('IMPORT SUCCESSFULL');
     }
 }

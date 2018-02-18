@@ -29,4 +29,20 @@ class GuildRepository extends ServiceEntityRepository implements RepositoryInter
             ->execute()
         ;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return array
+     */
+    public function check(int $id): array
+    {
+        return $this->createQueryBuilder('s')
+            ->select('CONCAT(IDENTITY(s.guildSquad),CONCAT(\'-\', IDENTITY(s.character))) as squad')
+            ->where('s.guildSquad = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getArrayResult()
+            ;
+    }
 }

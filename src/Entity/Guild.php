@@ -47,7 +47,7 @@ class Guild
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="guild")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="guild", cascade={"persist"})
      *
      * @JMS\Groups({"guild", "guild_users"})
      * @JMS\Expose

@@ -17,8 +17,8 @@ class Dashboard extends React.Component {
 
   handleSubmit = (event) => {
     const params = {
-      guildId: event.guildId,
-      guildCode: event.guildCode,
+      guildId: event.guild_id,
+      guildCode: event.guild_code,
       uuid: event.uuid,
     }
 

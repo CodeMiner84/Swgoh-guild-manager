@@ -8,6 +8,20 @@ import squadActions from '../../actions/guild_squads'
 import Loader from '../../components/Loader'
 import gridColumns from '../Guild/gridColumns'
 
+function sortProperties(obj) {
+  // convert object into array
+  const sortable = []
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) { sortable.push([key, obj[key]]) }
+  } // each item is an array in format [key, value]
+
+  // sort items by value
+  sortable.sort((a, b) => {
+    let x = a[1], y = b[1]
+    return !(x < y ? -1 : x > y ? 1 : 0)
+  })
+  return sortable // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
+}
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -15,14 +29,12 @@ class Dashboard extends React.Component {
 
     props.getSquads()
     if (props.user.guild_code !== undefined || props.user.guild_id !== undefined) {
-      props.getUsers(props.user.guild_id, props.user.guild_code).then(() => {
-        console.log('props', props)
-      })
+      props.getUsers(props.user.guild_id, props.user.guild_code)
     }
   }
 
   render() {
-    if (this.props.isLoading ) {
+    if (this.props.isLoading) {
       return <Loader />
     }
     const account = this.props.user
@@ -78,20 +90,52 @@ const selector = createSelector(
 
         if (Object.keys(squad.guild_squad_collection).length > 0) {
           squad.guild_squad_collection.map((gsc) => {
-            squadCharacters.push(gsc.character.id)
+            squadCharacters.push(gsc.character)
           })
         }
 
         if (Object.keys(squadCharacters).length > 0) {
           const coll = []
           userRow.user_characters.map((userCollection) => {
-            squadCharacters.map((characterId) => userCollection.character.id === characterId ? coll.push(userCollection.power) : 0)
+            squadCharacters.map(characterItem => userCollection.character.id === characterItem.id ? coll.push(userCollection) : 0)
           })
-          let value = coll.length > 0 ? coll.reduce((prev, curr) => Number(prev) + Number(curr)) : 0
 
-          row[squad.id] = value
+          const squadChars = {}
+
+          coll.map((character) => {
+            squadChars[character.character.name] = character.power
+          })
+
+          if (squad.full_squad) {
+            let value = 0
+           coll.length > 0 ? coll.map(item => value = value + item.power) : 0
+
+            const sortable = []
+            for (const key in squadChars) {
+              if (squadChars.hasOwnProperty(key)) { sortable.push([key, squadChars[key]]) }
+            }
+
+            row[squad.id] = {
+              val: value,
+              chars: sortable,
+            }
+
+          } else {
+            let value = 0
+
+            let bestCharacters = sortProperties(squadChars).slice(0, 5)
+            bestCharacters.map(item => {
+              if (item !== undefined) {
+                value += Number(item[1])
+              }
+            })
+
+            row[squad.id] = {
+              val: value,
+              chars: bestCharacters,
+            }
+          }
         }
-
       })
       dataMapper.push(row)
     })

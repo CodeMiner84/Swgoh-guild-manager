@@ -74,6 +74,25 @@ class GuildSquadController extends FOSRestController
         return $this->getHandler()->updateEntry($guildSquad->getId(), $request->request->all(), ['guild_squad']);
     }
 
+    /**
+     * @Route("/{id}", name="api_delete_guild_squad")
+     * @Method("DELETE")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="DELETE guild squad",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @Model(type=GuildSquad::class, groups={"users"})
+     *     )
+     * )
+     * @SWG\Tag(name="guild")
+     */
+    public function delete(GuildSquad $guildSquad, Request $request)
+    {
+        return $this->getHandler()->remove($guildSquad)->collect(['guild_squad']);
+    }
+
     public function getHandler()
     {
         return $this->get(GuildSquadHandler::class)->init(GuildSquad::class);

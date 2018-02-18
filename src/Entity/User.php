@@ -62,6 +62,11 @@ class User
         $this->userCharacters = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     /**
      * Get id.
      *
@@ -189,7 +194,7 @@ class User
      */
     public function addUserCharacter(\App\Entity\UserCharacter $userCharacter)
     {
-        $this->userCharacters[] = $userCharacter;
+        $this->userCharacters;
 
         return $this;
     }

@@ -28,8 +28,8 @@ class RowItem extends React.Component {
     }
 
     return (
-      <div className="col-xs-6 col-sm-3 col-md-2" onClick={() => this.toggle()} >
-        <BoxItem active={active} chosen={this.props.chosen}>
+      <div className="col-xs-6 col-sm-4 col-md-3 col-lg-2" onClick={() => this.toggle()} >
+        <BoxItem active={active}>
           <Image side={this.props.item.side}><img alt={''} src={this.props.item.image} /></Image>
           <Name>{this.props.item.name}</Name>
         </BoxItem>
@@ -42,7 +42,6 @@ RowItem.propTypes = {
   toggleHandle: PropTypes.func.isRequired,
   item: PropTypes.shape.isRequired,
   active: PropTypes.shape.isRequired,
-  chosen: PropTypes.bool.isRequired,
 };
 
 export default RowItem

@@ -28,8 +28,7 @@ class List extends React.Component {
         {items.map(item => <Item
           key={item.code}
           active={this.props.active}
-          chosen={this.props.chosen || this.state.active}
-          toggleHandle={item => !this.props.chosen && this.props.toggleHandle(item)}
+          toggleHandle={item => this.props.toggleHandle(item)}
           item={item}
         />)}
       </div>
@@ -46,8 +45,8 @@ List.propTypes = {
   item: PropTypes.shape.isRequired,
   active: PropTypes.shape.isRequired,
   characters: PropTypes.shape.isRequired,
-  chosen: PropTypes.bool.isRequired,
   phrase: PropTypes.string.isRequired,
+  disabledHover: PropTypes.string.isRequired,
 }
 
 export default List

@@ -35,6 +35,12 @@ function guildSquadReducer(state = initialState, action) {
         guild_squads: action.payload,
         isLoading: false,
       }
+    case types.REMOVE_SQUAD:
+      return {
+        ...state,
+        guild_squads: action.payload,
+        isLoading: false,
+      }
     default:
       return state
   }

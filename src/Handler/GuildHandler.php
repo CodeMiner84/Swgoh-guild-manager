@@ -29,10 +29,7 @@ class GuildHandler extends ApiHandler
             $qb->setParameters([
                 'guildId' => $guildId,
                 'guildCode' => $guildCode,
-                'ziul' => 'ziul',
             ])
-            ->join($alias.'.users', 'u')
-                ->andWhere('u.uuid = :ziul')
             ->setMaxResults(1);
         }
 

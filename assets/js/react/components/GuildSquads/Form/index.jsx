@@ -18,6 +18,7 @@ class BuildForm extends React.Component {
   handleSubmit = (event) => {
     const params = {
       name: event.name,
+      fullSquad: event.full_squad,
       account: {
         id: this.props.auth.id,
       },

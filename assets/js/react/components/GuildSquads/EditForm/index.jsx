@@ -35,6 +35,7 @@ class BuildForm extends React.Component {
   handleSubmit = (event) => {
     const params = {
       name: event.name,
+      fullSquad: event.full_squad,
     }
 
     this.props.updateSquad(this.state.squad.id, params).then(() => {
