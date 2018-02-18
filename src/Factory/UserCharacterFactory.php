@@ -15,7 +15,7 @@ class UserCharacterFactory
      *
      * @return UserCharacter
      */
-    public function create(array $data)
+    public static function create(array $data)
     {
         $user = new UserCharacter();
         $user

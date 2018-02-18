@@ -23,6 +23,17 @@ let SquadForm = (props) => {
           className={'form-control'}
         />
       </div>
+      <div className={'form-group checkbox-group'}>
+        <label htmlFor={'name'}>Full squad</label>
+        <Field
+          name={'full_squad'}
+          component={'input'}
+          type={'checkbox'}
+          placeholder={'Full Squad'}
+          className={'checkbox'}
+        />
+        <small id="emailHelp" class="form-text text-muted">By checking this option all of your toon in this squad will be shown in guild squad. By default only power of 5 strongest characters will count</small>
+      </div>
       <div>
         <button type={'submit'} disabled={pristine || submitting} className={'btn btn-primary btn-sm'}>Submit</button>
       </div>
@@ -45,6 +56,7 @@ SquadForm = connect(
   (state, props) => ({
     initialValues: {
       name: props.data.name,
+      full_squad: props.data.full_squad,
     },
   }),
 )(SquadForm)

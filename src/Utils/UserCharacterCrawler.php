@@ -41,6 +41,14 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
         }
     }
 
+    public function crawlGuildUser(User $user)
+    {
+        $crawler = new Crawler($this->getUserCharacters($user));
+        $usersTableList = $crawler->filter('.collection-char');
+
+        $this->fetchCharacters($user, $usersTableList);
+    }
+
     /**
      * @param Guild $guild
      *
@@ -72,7 +80,7 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
      */
     private function getUserCharacters(User $user): string
     {
-        return file_get_contents(sprintf('%s%s/%s/collection/',
+        return @file_get_contents(sprintf('%s%s/%s/collection/',
             $this->settings->getApi(),
             $this->settings->getUserSuffix(),
             $user->getUuid()
@@ -94,35 +102,42 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
      */
     private function fetchCharacters(User $user, Crawler $usersList): void
     {
+        ini_set('dispaly_errors', 0);
         foreach ($usersList as $collectionHtml) {
-            $domHTML = new Crawler($collectionHtml);
+            try {
+                $domHTML = new Crawler($collectionHtml);
 
-            $active = !preg_match('/collection\-char\-missing/', $collectionHtml->getAttribute('class'));
-            preg_match('/u\/(.*)\/collection\/(.*)\/(.*)\//', $domHTML->filter('a')->getNode(0)->getAttribute('href'), $matchChar);
+                $active = !preg_match('/collection\-char\-missing/', $collectionHtml->getAttribute('class'));
+                preg_match('/u\/(.*)\/collection\/(.*)\/(.*)\//',
+                    $domHTML->filter('a')->getNode(0)->getAttribute('href'), $matchChar);
 
-            if (!isset($matchChar[3])) {
-                continue;
-            }
-            $characterCode = $matchChar[3];
+                if (!isset($matchChar[3])) {
+                    continue;
+                }
+                $characterCode = $matchChar[3];
 
-            $character = $this->em->getRepository(Character::class)->findOneByCode($characterCode);
-            preg_match('/title\=\"Power (.*)\"/', $domHTML->filter('.collection-char')->html(), $powerMatch);
-            $power = explode('/', str_replace(',', '', $powerMatch[1]));
+                $character = $this->em->getRepository(Character::class)->findOneByCode($characterCode);
+                preg_match('/title\=\"Power (.*)\"/', $domHTML->filter('.collection-char')->html(), $powerMatch);
+                $power = explode('/', str_replace(',', '', $powerMatch[1]));
 
-            $data = [
-                'stars' => count($domHTML->filter('div.star:not(.star-inactive)')),
-                'user' => $user,
-                'character' => $character,
-                'active' => $active,
-                'level' => $domHTML->filter('.char-portrait-full-level')->text(),
-                'gear' => $this->mapGear($domHTML->filter('.char-portrait-full-gear-level')->text()),
-                'power' => trim(str_replace(',', '.', $power[0])),
-            ];
+                $data = [
+                    'stars' => count($domHTML->filter('div.star:not(.star-inactive)')),
+                    'user' => $user,
+                    'character' => $character,
+                    'active' => $active,
+                    'level' => $domHTML->filter('.char-portrait-full-level')->text(),
+                    'gear' => $this->mapGear($domHTML->filter('.char-portrait-full-gear-level')->text()),
+                    'power' => trim(str_replace(',', '.', $power[0])),
+                ];
 
-            if ($this->characterExists($user, $character)) {
-                $this->repository->updateToon($user, $data);
-            } else {
-                $this->em->persist(UserCharacterFactory::create($data));
+                if ($this->characterExists($user, $character)) {
+                    $this->repository->updateToon($user, $data);
+                } else {
+                    $this->em->persist(UserCharacterFactory::create($data));
+                }
+            } catch (\Exception $e) {
+                var_dump($e->getMessage());
+                //die();
             }
         }
         $this->em->flush();

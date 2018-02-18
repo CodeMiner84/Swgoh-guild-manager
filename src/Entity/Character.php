@@ -26,7 +26,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users"})
      * @JMS\Expose
      */
     private $code = '';
@@ -34,7 +34,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters", "user_character", "guild_squad_collection"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users"})
      * @JMS\Expose
      */
     private $name = '';
@@ -50,7 +50,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters", "user_character", "guild_squad_collection"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection"})
      * @JMS\Expose
      */
     private $image = '';

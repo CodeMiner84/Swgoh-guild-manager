@@ -12,7 +12,7 @@ export default styled.div`
     ${props => props.active && !props.chosen ? `
     background: #ccc;
     cursor: pointer;` :
-  (props.chosen ? '' : `&:hover, &:focus {
+  (props.diableHover ? '' : `&:hover, &:focus {
         background: #FFF;
         cursor: pointer;
         box-shadow: none;

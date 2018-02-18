@@ -1,4 +1,4 @@
-import { post, get, patch } from '../utils/requests'
+import { post, get, patch, remove } from '../utils/requests'
 import types from '../actionType/guild_squads'
 
 function create(params) {
@@ -96,10 +96,30 @@ function getAll() {
   }
 }
 
+function removeSquad(id) {
+  return (dispatch) => {
+    dispatch({
+      type: types.REQUEST_SQUAD,
+    })
+
+    return remove(`/api/guild-squads/${id}`)
+      .then((response) => {
+        dispatch({
+          type: types.REMOVE_SQUAD,
+          payload: response.data.data,
+        })
+      })
+      .catch(() => dispatch({
+        type: types.ERROR_SQUAD,
+      }))
+  }
+}
+
 export default {
   create,
   getAll,
   update,
   updateCollection,
   getCollection,
+  removeSquad,
 }

@@ -43,6 +43,12 @@ class Builder extends React.Component {
     })
   }
 
+  clear = () => {
+    this.setState({
+      active: [],
+    })
+  }
+
   save = () => {
     const params = []
     this.state.active.map(item => params.push(item.id))
@@ -50,7 +56,7 @@ class Builder extends React.Component {
       collection: params,
     })
     this.setState({saving: true})
-    this.props.setTimeout(() => this.setState({saving: false}), 1000)
+    this.props.setTimeout(() => this.setState({saving: false}), 4000)
   }
 
   toggleHandle = (elem) => {
@@ -67,6 +73,12 @@ class Builder extends React.Component {
     }
   }
 
+  activeToggleHandle = (elem) => {
+    this.setState({
+      active: this.state.active.filter(item => item.id !== elem.id),
+    })
+  }
+
   render() {
     if (this.props.isLoading) {
       return <Loader />
@@ -78,7 +90,6 @@ class Builder extends React.Component {
 
     return (
       <div >
-        <Filtering handleFiltering={(e) => this.handleFiltering(e)} />
         {
           this.state.saving &&
           <div className={'alert alert-success'}>Squad updated!</div>
@@ -86,31 +97,39 @@ class Builder extends React.Component {
         <div className="card">
           <div className="list-group list-group-flush">
             <div className="card-header">
-              <h3 className={'pull-left'}>Selected characters</h3>
+              <h3 className={'pull-left'}>Selected characters <small>Order of list doesn't count. What's really count is Power of each character!</small></h3>
+              <input
+                type={'submit'}
+                className={'btn btn-info btn-sm pull-right'}
+                onClick={() => this.save()}
+                value={'Save squad'}
+              />
               {this.state.active.length > 0 &&
-                <input
-                  type={'submit'}
-                  className={'btn btn-info btn-sm pull-right'}
-                  onClick={() => this.save()}
-                  value={'Save squad'}
-                />
+                <div className="pull-right">
+                  <input
+                    type={'submit'}
+                    className={'btn btn-warning btn-sm pull-right mr-2'}
+                    onClick={() => this.clear()}
+                    value={'Clear squad'}
+                  />
+                </div>
               }
             </div>
             <div className="list-group-item">
               <List
                 phrase={''}
-                chosen
                 active={[]}
                 characters={this.state.active}
-                toggleHandle={this.toggleHandle}
+                toggleHandle={this.activeToggleHandle}
               />
             </div>
           </div>
         </div>
-        <div className="card mt-5">
+        <Filtering className={'mt-5 mb-1'} handleFiltering={(e) => this.handleFiltering(e)} />
+        <div className="card">
           <div className="list-group list-group-flush">
             <div className="card-header">
-              <h3>Your collection</h3>
+              <h3>Your collection <small>sorted alphabetical</small></h3>
             </div>
             <div className="list-group-item">
               <List

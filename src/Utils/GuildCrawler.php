@@ -16,21 +16,29 @@ class GuildCrawler extends BaseCrawler implements CrawlerInterface
     {
         $this->collectGuildsDOM($this->settings->getApi().$this->settings->getGuildSuffix(), 1);
 
-        $this->removeGuilds();
-
         foreach ($this->buffer as $collectionHtml) {
             $crawler = new Crawler($collectionHtml);
             preg_match('/\/g\/(\d+)\/(.*)\//', $crawler->filter('a')->getNode(0)->getAttribute('href'), $match);
 
-            $guild = GuildFactory::create([
-                'name' => $crawler->filter('h3')->text(),
-                'uuid' => $match[1],
-                'code' => $match[2],
-            ]);
+            if (!$this->checkGuild($match[2], $match[1])) {
+                $guild = GuildFactory::create([
+                    'name' => $crawler->filter('h3')->text(),
+                    'uuid' => $match[1],
+                    'code' => $match[2],
+                ]);
+                $this->em->persist($guild);
+            }
 
-            $this->em->persist($guild);
         }
         $this->em->flush();
+    }
+
+    public function checkGuild(string $code, string $uuid)
+    {
+        return $this->em->getRepository(Guild::class)->findOneBy([
+            'code' => $code,
+            'uuid' => $uuid,
+        ]);
     }
 
     private function removeGuilds(): void

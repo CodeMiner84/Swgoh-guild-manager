@@ -46,6 +46,14 @@ class GuildSquad implements EntityInterface
     private $position;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @JMS\Groups({"guild_squad"})
+     * @JMS\Expose
+     */
+    private $fullSquad = false;
+
+    /**
      * @ORM\OneToMany(targetEntity="GuildSquadCollection", mappedBy="guildSquad")
      *
      * @JMS\Groups({"guild_squad"})
@@ -174,5 +182,29 @@ class GuildSquad implements EntityInterface
     public function getGuildSquadCollection()
     {
         return $this->guildSquadCollection;
+    }
+
+    /**
+     * Set fullSquad.
+     *
+     * @param bool $fullSquad
+     *
+     * @return GuildSquad
+     */
+    public function setFullSquad($fullSquad): self
+    {
+        $this->fullSquad = $fullSquad;
+
+        return $this;
+    }
+
+    /**
+     * Get fullSquad.
+     *
+     * @return bool
+     */
+    public function getFullSquad(): bool
+    {
+        return $this->fullSquad;
     }
 }

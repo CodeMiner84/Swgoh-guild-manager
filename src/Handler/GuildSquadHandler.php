@@ -2,6 +2,7 @@
 
 namespace App\Handler;
 
+use App\Entity\GuildSquad;
 use App\Entity\RequestTrait;
 use Doctrine\ORM\QueryBuilder;
 
@@ -14,6 +15,7 @@ class GuildSquadHandler extends ApiHandler
 
     protected const ALLOWED_PARAMS = [
         'name',
+        'fullSquad'
     ];
 
     /**
@@ -33,5 +35,13 @@ class GuildSquadHandler extends ApiHandler
         $qb->orderBy(sprintf('%s.name', $alias));
 
         return $qb;
+    }
+
+    public function remove(GuildSquad $guildSquad)
+    {
+        $this->em->remove($guildSquad);
+        $this->em->flush();
+
+        return $this;
     }
 }
