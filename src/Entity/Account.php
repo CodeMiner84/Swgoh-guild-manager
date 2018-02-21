@@ -81,7 +81,7 @@ class Account implements UserInterface, \Serializable, EntityInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @JMS\Groups({"account_show"})
      * @JMS\Expose
@@ -89,7 +89,7 @@ class Account implements UserInterface, \Serializable, EntityInterface
     private $guildId;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @JMS\Groups({"account_show"})
      * @JMS\Expose
@@ -99,7 +99,7 @@ class Account implements UserInterface, \Serializable, EntityInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @JMS\Groups({"account_show"})
      * @JMS\Expose

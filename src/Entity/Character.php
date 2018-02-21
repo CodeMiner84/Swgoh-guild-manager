@@ -42,7 +42,7 @@ class Character
     /**
      * @ORM\Column(type="integer")
      *
-     * @JMS\Groups({"characters", "user_character", "guild_squad_collection"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection"})
      * @JMS\Expose
      */
     private $side = 0;

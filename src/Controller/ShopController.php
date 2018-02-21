@@ -8,7 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ShopController extends Controller
 {
     /**
+     * @Route("/test", name="test")
      * @Route("/login", name="app_login")
+     * @Route("/register", name="app_register")
      * @Route("/logout", name="app_logout")
      * @Route("/account", name="app_account")
      * @Route("/collection", name="app_collection")
@@ -25,6 +27,7 @@ class ShopController extends Controller
      */
     public function index()
     {
+
         // replace this line with your own code!
         return $this->render('shop/index.html.twig', [
             ]);

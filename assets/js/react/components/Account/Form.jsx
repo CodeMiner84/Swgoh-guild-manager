@@ -22,6 +22,7 @@ let AccountForm = (props) => {
           placeholder="Guild id"
           className="form-control"
         />
+        <small>Guild id can be get from https://swgoh.gg/g/GUILD_ID/GUILD_ALIAS/</small>
       </div>
       <div className="form-group">
         <label>Guild code</label>
@@ -32,6 +33,7 @@ let AccountForm = (props) => {
           placeholder="Guild alias"
           className="form-control"
         />
+        <small>Guild code can be get from https://swgoh.gg/g/GUILD_ID/GUILD_ALIAS/</small>
       </div>
       <div className="form-group">
         <label>Your swgoh code</label>

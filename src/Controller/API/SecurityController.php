@@ -16,6 +16,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -52,7 +53,25 @@ class SecurityController extends AbstractController
     ) {
         if ($accountRepository->findOneBy(['email' => $request->request->get('email')]) ||
             $accountRepository->findOneBy(['username' => $request->request->get('username')])) {
-            throw new DuplicateUserException();
+            return JsonResponse::create([
+                'message' => 'Error! Username already exist',
+                'code' => Response::HTTP_BAD_REQUEST,
+                'success' => false,
+            ], 404);
+        }
+        if (!$request->request->get('email') || !$request->request->get('username') || !$request->request->get('password')) {
+            return JsonResponse::create([
+                'message' => 'Error! All data required',
+                'code' => Response::HTTP_BAD_REQUEST,
+                'success' => false,
+            ], 404);
+        }
+        if (!filter_var($request->request->get('email'), FILTER_VALIDATE_EMAIL)) {
+            return JsonResponse::create([
+                'message' => 'Error! E-mail is wrong!',
+                'code' => Response::HTTP_BAD_REQUEST,
+                'success' => false,
+            ], 404);
         }
 
         $user = new Account();

@@ -16,6 +16,7 @@ import Login from '../Login'
 import Users from '../Users'
 import Cart from '../Cart'
 import Guild from '../Guild'
+import Register from '../Register'
 import Guilds from '../Guilds'
 import Collection from '../Collection'
 import GuildSquads from '../GuildSquads'
@@ -32,7 +33,7 @@ class Main extends React.Component {
 
   componentWillMount() {
     const shouldUserCheck = () => !matchPath(this.props.history.location.pathname, {
-      path: '/(login|logout)',
+      path: '/(login|logout|register)',
     })
     if (shouldUserCheck()) {
       this.props.getAccount()
@@ -95,6 +96,8 @@ class Main extends React.Component {
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
               <Route exact path="/" component={Dashboard} />
               <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
                 <AuthorizedRoute path="/users/:code" component={Users} />
                 <AuthorizedRoute path="/user/:code" component={User} />
                 <AuthorizedRoute path="/guild" component={Guild} />
@@ -104,7 +107,6 @@ class Main extends React.Component {
                 <AuthorizedRoute path="/account" component={Account} />
                 <AuthorizedRoute path="/collection" searchPhrase={this.state.phrase} component={Collection} />
                 <AuthorizedRoute path="/guild-squads" component={GuildSquads} />
-                <Route path="/login" component={Login} />
               </Switch>
             </main>
           </div>
