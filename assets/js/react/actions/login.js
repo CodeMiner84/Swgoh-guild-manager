@@ -24,6 +24,34 @@ function login(username, password) {
   }
 }
 
+function register(username, email, password) {
+  return (dispatch) => {
+    dispatch({
+      error: false,
+      type: types.REGISTER_REQUEST,
+    })
+
+    return axios.post('/api/register', {
+      username, email, password,
+    })
+      .then((response) => {
+        if (response.data && response.data.token) {
+          setToken(response.data.token)
+          dispatch({
+            type: types.REGISTER_SUCCESS,
+            payload: response.data,
+          })
+        }
+      }).catch((response) => {
+        dispatch({
+          type: types.REGISTER_ERROR,
+          payload: response.response.data,
+        })
+      })
+  }
+}
+
 export default {
   login,
+  register,
 }

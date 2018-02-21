@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { createSelector } from 'reselect'
 import PropTypes from 'prop-types'
 import actions from '../../actions/login'
-import Main from '../Layout'
 import Form from './Form'
+import Loader from '../Loader'
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,17 +27,16 @@ class Login extends React.Component {
     e.preventDefault()
     this.setState({ submitted: true })
     this.props.login(this.state.username, this.state.password).then(
-      //() => window.location.replace('/')
       () => this.props.history.push('/')
     )
   }
 
   render() {
+    if (this.state.submitted) {
+      return <Loader />
+    }
     return (
       <div>
-        {this.props.submitted &&
-          <div>... LOADING</div>
-        }
         <Form
           handleSubmit={this.handleSubmit}
           onChange={this.onChange}

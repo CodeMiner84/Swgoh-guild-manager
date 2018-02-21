@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { createSelector } from 'reselect'
 import ReactTable from 'react-table'
 import actions from '../../actions/guild'
@@ -40,7 +41,10 @@ class Dashboard extends React.Component {
     const account = this.props.user
 
     if (account.guild_code === undefined || account.guild_id === undefined) {
-      return <div className="alert alert-danger">Please complete guild data in your account</div>
+      return <div className="alert alert-danger">
+        Please complete guild data in your account
+        <Link className={'btn btn-primary btn-sm ml-2'} title={'Build squad'} to={'/account'}>HERE</Link>
+      </div>
     }
 
     if (Object.keys(this.props.dataMapper).length == 0) {
@@ -162,6 +166,7 @@ Dashboard.defaultProps = {
 Dashboard.propTypes = {
   user: PropTypes.shape,
   getUsers: PropTypes.func.isRequired,
+  getSquads: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
