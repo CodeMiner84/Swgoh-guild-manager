@@ -8,12 +8,10 @@ function create(params) {
     })
 
     return post('/api/guild-squads/', params)
-      .then((response) => {
-        dispatch({
-          type: types.ADD_SQUADS,
-          payload: response.data.data,
-        })
-      })
+      .then(response => dispatch({
+        type: types.ADD_SQUADS,
+        payload: response.data,
+      }))
       .catch(() => dispatch({
         type: types.ERROR_SQUAD,
       }))
