@@ -14,7 +14,15 @@ const Row = ({ item }) => (
     )
 
 Row.propTypes = {
-  item: PropTypes.shape.isRequired,
+  item: PropTypes.shape({
+    character: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      code: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      side: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
 }
 
 export default Row

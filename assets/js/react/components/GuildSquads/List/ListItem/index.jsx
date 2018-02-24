@@ -7,16 +7,11 @@ import { confirmAlert } from 'react-confirm-alert'
 import Item from './Item'
 
 class ListItem extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   removeAction = () => {
     confirmAlert({
       title: 'Confirm to submit',
       message: 'Are you sure you wan\'t to remove this squad?',
       confirmLabel: 'Confirm',
-      cancelLabel: 'Cancel',
       onConfirm: () => this.props.removeSquad(this.props.item.id),
     })
   };
@@ -50,7 +45,7 @@ class ListItem extends React.Component {
           <div className="list-group-item">
             {Object.keys(item.guild_squad_collection).length > 0 &&
             <div className={'row'}>
-              {item.guild_squad_collection.map(item => <Item item={item.character} />)}
+              {item.guild_squad_collection.map(itemCharacter => <Item key={itemCharacter.character.id} item={itemCharacter.character} />)}
             </div>
             }
             {Object.keys(item.guild_squad_collection).length === 0 &&

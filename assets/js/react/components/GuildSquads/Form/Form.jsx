@@ -34,8 +34,6 @@ let SquadForm = (props) => {
       </div>
       <div>
         <button type={'submit'} disabled={pristine || submitting} className={'btn btn-primary btn-sm'}>Submit</button>
-
-        <a title={'Cancel'} className={'btn btn-secondary pull-right btn-sm'}>Cancel</a>
       </div>
     </form>
   )

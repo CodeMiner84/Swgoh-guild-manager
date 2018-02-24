@@ -36,4 +36,8 @@ const mapDispatchToProps = {
   getCharacters: characterActions.fetchCharacters,
 }
 
+Dashboard.propTypes = {
+  getCharacters: PropTypes.func.isRequired,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

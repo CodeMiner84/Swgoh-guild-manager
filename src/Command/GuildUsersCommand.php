@@ -49,20 +49,22 @@ class GuildUsersCommand extends Command
     {
         $this
             ->setDescription('Fetch all guild users squad')
-            ->addArgument('guild', InputArgument::REQUIRED, 'Guild code')
+            ->addArgument('code', InputArgument::REQUIRED, 'Guild code')
+            ->addArgument('uuid', InputArgument::REQUIRED, 'Guild uuid')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $guildCode = $input->getArgument('guild');
+        $guildUuid = $input->getArgument('uuid');
+        $guildCode = $input->getArgument('code');
 
-        if (!$guildCode) {
-            $io->success('IMPORT FINISHED');
-        }
+        $guild = $this->entityManager->getRepository(Guild::class)->findOneBy([
+            'code' => $guildCode,
+            'uuid' => $guildUuid,
+        ]);
 
-        $guild = $this->entityManager->getRepository(Guild::class)->findOneByCode($guildCode);
         if (!$guild instanceof Guild) {
             throw new \Exception('NO GUILD FOUND !');
         }

@@ -16,6 +16,7 @@ class BuildForm extends React.Component {
   }
 
   handleSubmit = (event) => {
+    console.log('this.props.auth', this.props.auth);
     const params = {
       name: event.name,
       fullSquad: event.full_squad,
@@ -62,6 +63,12 @@ const mapDispatchToProps = {
 
 BuildForm.propTypes = {
   createSquad: PropTypes.func.isRequired,
+  auth: PropTypes.shape({
+    guild_code: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+    uuid: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildForm)
