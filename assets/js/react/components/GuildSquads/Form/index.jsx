@@ -1,9 +1,9 @@
 import React from 'react'
-import Form from './Form'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { createSelector } from 'reselect'
 import actions from '../../../actions/guild_squads'
+import Form from './Form'
 
 class BuildForm extends React.Component {
   constructor(props) {
@@ -24,11 +24,7 @@ class BuildForm extends React.Component {
       },
     }
 
-    this.props.createSquad(params).then(() => {
-      this.setState({
-        saved: true,
-      })
-    })
+    this.props.createSquad(params).then(response => this.props.history.push(`/guild-squads/${response.payload.id}/builder`))
   }
 
   render() {

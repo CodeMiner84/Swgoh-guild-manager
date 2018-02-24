@@ -14,6 +14,10 @@ function guildSquadReducer(state = initialState, action) {
         ...state,
         isLoading: true,
       }
+    case types.ADD_SQUADS:
+      return {
+        ...state,
+      }
     case types.UPDATE_SQUAD:
       return {
         ...state,
