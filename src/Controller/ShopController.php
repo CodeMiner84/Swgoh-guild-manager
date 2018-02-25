@@ -24,10 +24,12 @@ class ShopController extends Controller
      * @Route("/guild-squads/{action}", name="guild_squads_option")
      * @Route("/guild-squads/{action}/builder", name="guild_squads_builder")
      * @Route("/user/{code}", name="user-characters")
+     * @Route("/user-squad-group", name="user-squad-group")
+     * @Route("/user-squad-group/add", name="user-squad-group-add")
+     * @Route("/user-squad-group/edit/{id}", name="user-squad-group-edit")
      */
     public function index()
     {
-
         // replace this line with your own code!
         return $this->render('shop/index.html.twig', [
             ]);

@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom'
 import { Route, withRouter, matchPath, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import actions from '../../actions/user'
-import List from './List'
-import BuildForm from './Form'
-import EditForm from './EditForm'
-import Builder from './Builder'
+import actions from '../../actions/user_squad_group'
+import UserSquadList from './UserSquadList'
+import AddUserSquadGroupForm from './AddUserSquadGroupForm'
+import EditUserSquadGroupForm from './EditUserSquadGroupForm'
 
 class GuildSquads extends React.Component {
   constructor(props) {
@@ -20,14 +19,13 @@ class GuildSquads extends React.Component {
     }
   }
 
-
   handleSubmit = (event) => {
     const params = {
       favGuild: event.favGuild,
       uuid: event.uuid,
     }
 
-    this.props.updateAccount(params).then(() => {
+    this.props.createSquad(params).then(() => {
       this.setState({
         saved: true,
       })
@@ -39,15 +37,15 @@ class GuildSquads extends React.Component {
       <div>
         <div className={'row'}>
           <div className={'btn-group mb-3'}>
-            <Link to={'/guild-squads'} className={'btn btn-info btn-sm'}>View squads</Link>
-            <Link to={'/guild-squads/add'} className={'btn btn-info btn-sm'}>Add squad</Link>
+            <Link to={'/user-squad-group'} className={'btn btn-info btn-sm'}>View squads</Link>
+            <Link to={'/user-squad-group/add'} className={'btn btn-info btn-sm'}>Add squad</Link>
           </div>
         </div>
         <Switch >
-          <Route exact path="/guild-squads" component={List} />
-          <Route exact path="/guild-squads/add" component={BuildForm} />
-          <Route exact path="/guild-squads/:id" component={EditForm} />
-          <Route exact path="/guild-squads/:id/builder" component={props => <Builder phrase={this.props.phrase} {...props} />} />
+          <Route exact path="/user-squad-group" component={UserSquadList} />
+          <Route exact path="/user-squad-group/add" component={AddUserSquadGroupForm} />
+          <Route exact path="/user-squad-group/edit/:id" component={EditUserSquadGroupForm} />
+          {/*<Route exact path="/user-squad/:id/builder" component={props => <Builder phrase={this.props.phrase} {...props} />} />*/}
         </Switch>
       </div>
     )
@@ -68,7 +66,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  updateAccount: actions.updateAccount,
+  createSquad: actions.create,
 }
 
 GuildSquads.defaultProps = {

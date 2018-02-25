@@ -8,6 +8,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -115,6 +116,19 @@ class ApiHandler
     }
 
     /**
+     * @param string $message
+     *
+     * @return static
+     */
+    public function success($message = ''): JsonResponse
+    {
+        return JsonResponse::create([
+            'successs' => true,
+            'message' => $message,
+        ], Response::HTTP_OK);
+    }
+
+    /**
      * @param array $groups
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -208,7 +222,7 @@ class ApiHandler
      *
      * @return Response
      */
-    public function createEntry(array $params, array $groups)
+    public function createEntry(array $params, array $groups, $auth = false)
     {
         $entityClassName = $this->repository->getClassName();
         $entity = $this->em->getClassMetadata($entityClassName)->newInstance();
@@ -226,6 +240,9 @@ class ApiHandler
                 $setter = sprintf('set%s', ucfirst($param));
                 $entity->$setter($value);
             }
+        }
+        if ($auth) {
+            $entity->setAccount($this->user);
         }
         $this->em->persist($entity);
         $this->em->flush();

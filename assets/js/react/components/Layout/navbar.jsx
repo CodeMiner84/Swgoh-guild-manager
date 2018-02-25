@@ -25,6 +25,12 @@ const Navbar = () => (
           </Link>
         </li>
         <li className="nav-item">
+          <Link to={'/user-squad-group'} className="nav-link">
+            <FontAwesome name="users" className="mr-1" />
+            User squads
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link to={'/guild-squads'} className="nav-link">
             <FontAwesome name="users" className="mr-1" />
             Guild squads
