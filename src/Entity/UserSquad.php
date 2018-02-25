@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserSquadRepository")
+ *
+ * @JMS\ExclusionPolicy("all")
  */
-class UserSquad
+class UserSquad implements EntityInterface
 {
     use TimestampableEntity;
 
@@ -16,6 +19,9 @@ class UserSquad
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @JMS\Groups({"user_squad_list"})
+     * @JMS\Expose
      */
     private $id;
 
@@ -26,7 +32,16 @@ class UserSquad
     private $account;
 
     /**
+     * @ORM\ManyToOne(targetEntity="UserSquadGroup")
+     * @ORM\JoinColumn(fieldName="group_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $group;
+
+    /**
      * @ORM\Column(type="string")
+     *
+     * @JMS\Groups({"user_squad_list"})
+     * @JMS\Expose
      */
     private $name;
 
@@ -86,5 +101,29 @@ class UserSquad
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set group.
+     *
+     * @param \App\Entity\UserSquadGroup|null $group
+     *
+     * @return UserSquad
+     */
+    public function setGroup(\App\Entity\UserSquadGroup $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group.
+     *
+     * @return \App\Entity\UserSquadGroup|null
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

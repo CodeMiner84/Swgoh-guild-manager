@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { createSelector } from 'reselect'
-import actions from '../../../actions/guild_squads'
+import actions from '../../../actions/user_squad'
 import Form from './Form'
 
 class BuildForm extends React.Component {
@@ -13,18 +13,16 @@ class BuildForm extends React.Component {
       submitting: false,
       saved: false,
     }
+
+    this.groupId = this.props.match.params.groupId
   }
 
   handleSubmit = (event) => {
     const params = {
       name: event.name,
-      fullSquad: event.full_squad,
-      account: {
-        id: this.props.auth.id,
-      },
     }
 
-    this.props.createSquad(params).then(response => this.props.history.push(`/guild-squads/${response.payload.id}/builder`))
+    this.props.createSquadGroup(this.groupId, params).then(response => this.props.history.push(`/user-squad/${this.groupId}`))
   }
 
   render() {
@@ -34,12 +32,10 @@ class BuildForm extends React.Component {
           saved={this.state.saved}
           onSubmit={this.handleSubmit}
           submitting={this.state.submitting}
-          data={this.props.auth}
         />
       </div>
     )
   }
-
 }
 
 const getAccount = state => state.guild_squads.squads
@@ -52,22 +48,15 @@ const selector = createSelector(
 function mapStateToProps(state) {
   return {
     squads: selector(state),
-    auth: state.account.auth,
   }
 }
 
 const mapDispatchToProps = {
-  createSquad: actions.create,
+  createSquadGroup: actions.create,
 }
 
 BuildForm.propTypes = {
-  createSquad: PropTypes.func.isRequired,
-  auth: PropTypes.shape({
-    guild_code: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    username: PropTypes.string.isRequired,
-    uuid: PropTypes.string.isRequired,
-  }).isRequired,
+  createSquadGroup: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildForm)

@@ -5,6 +5,7 @@ namespace App\Handler;
 use App\Entity\RequestTrait;
 use App\Entity\UserSquadGroup;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 /**
  * Class UserSquadGroupHandler.
@@ -47,6 +48,8 @@ class UserSquadGroupHandler extends ApiHandler
         if ($userSquadGroup->getAccount() === $this->user) {
             $this->em->remove($userSquadGroup);
             $this->em->flush();
+        } else {
+            throw new AccessDeniedException();
         }
 
         return $this;

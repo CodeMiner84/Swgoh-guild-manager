@@ -36,9 +36,7 @@ class Register extends React.Component {
     if (this.validation) {
       this.props.register(this.state.username, this.state.email, this.state.password).then(
         (respond) => {
-          console.log('_____', this.props.registerResponse);
           if (this.props.registerResponse === null) {
-            console.log('this.props.registerResponse', this.props.registerResponse);
             this.props.history.push('/')
           }
         },
@@ -50,7 +48,6 @@ class Register extends React.Component {
     if (this.props.submitted) {
       return <Loader />
     }
-    console.log('state.props', this.props)
 
     return (
       <div>

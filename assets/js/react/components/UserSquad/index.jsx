@@ -5,9 +5,9 @@ import { Route, withRouter, matchPath, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import actions from '../../actions/user_squad'
-import GroupsList from './GroupsList'
 import AddUserSquadGroupForm from './AddUserSquadGroupForm'
 import EditUserSquadGroupForm from './EditUserSquadGroupForm'
+import SquadsLists from './SquadsLists'
 
 class GuildSquads extends React.Component {
   constructor(props) {
@@ -33,18 +33,22 @@ class GuildSquads extends React.Component {
   }
 
   render() {
+    const groupId = this.props.match.params.groupId
+
     return (
       <div>
         <div className={'row'}>
           <div className={'btn-group mb-3'}>
             <Link to={'/user-squad-group'} className={'btn btn-info btn-sm'}>View groups</Link>
-            <Link to={'/user-squad-group/add'} className={'btn btn-info btn-sm'}>Add group</Link>
+            <Link to={`/user-squad/${groupId}`} className={'btn btn-info btn-sm'}>View squads</Link>
+            <Link to={`/user-squad/${groupId}/add`} className={'btn btn-info btn-sm'}>Add squad</Link>
           </div>
         </div>
         <Switch >
-          <Route exact path="/user-squad-group" component={GroupsList} />
-          <Route exact path="/user-squad-group/add" component={AddUserSquadGroupForm} />
-          <Route exact path="/user-squad-group/edit/:id" component={EditUserSquadGroupForm} />
+          <Route exact path={`/user-squad/:groupId`} groupId={groupId} component={SquadsLists} />
+          <Route exact path={`/user-squad/:groupId/add`} groupId={groupId} component={AddUserSquadGroupForm} />
+          <Route exact path={`/user-squad/:groupId/edit/:id`} groupId={groupId} component={EditUserSquadGroupForm} />
+          {/*<Route exact path="/user-squad/:id/builder" component={props => <Builder phrase={this.props.phrase} {...props} />} />*/}
         </Switch>
       </div>
     )

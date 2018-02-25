@@ -18,8 +18,6 @@ class Dashboard extends React.Component {
       return (<div />);
     }
 
-    console.log('this.props.guilds', this.props.guilds);
-
     return (
       <ReactTable
         data={this.props.guilds}

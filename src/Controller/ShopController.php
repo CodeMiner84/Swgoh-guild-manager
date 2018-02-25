@@ -27,6 +27,9 @@ class ShopController extends Controller
      * @Route("/user-squad-group", name="user-squad-group")
      * @Route("/user-squad-group/add", name="user-squad-group-add")
      * @Route("/user-squad-group/edit/{id}", name="user-squad-group-edit")
+     * @Route("/user-squad/{squad}", name="user-squad")
+     * @Route("/user-squad/{squad}/{action}", name="action-squad")
+     * @Route("/user-squad/{squad}/{action}/{id}", name="action-squad-edit")
      */
     public function index()
     {

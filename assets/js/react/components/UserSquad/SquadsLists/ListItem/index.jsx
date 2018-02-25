@@ -7,7 +7,6 @@ import { confirmAlert } from 'react-confirm-alert'
 
 class ListItem extends React.Component {
   removeAction = () => {
-    console.log('this.props', this.props);
     confirmAlert({
       title: 'Confirm to submit',
       message: 'Are you sure you wan\'t to remove this squad?',
@@ -18,7 +17,8 @@ class ListItem extends React.Component {
   };
 
   render() {
-    const { item } = this.props
+    console.log('state.props', this.props)
+    const { item, groupId } = this.props
 
     return (
       <div className={'card'}>
@@ -27,7 +27,7 @@ class ListItem extends React.Component {
             <h3 className={'pull-left'}>{item.name}</h3>
 
             <div className="pull-right">
-              <Link className={'btn btn-info btn-sm'} title={'Edit name'} to={`/user-squad-group/edit/${item.id}`}>
+              <Link className={'btn btn-info btn-sm'} title={'Edit name'} to={`/user-squad/${groupId}/edit/${item.id}`}>
                 Edit&nbsp;&nbsp;<FontAwesome name={'pencil'} />
               </Link>
               <Button className={'btn btn-danger btn-sm ml-2'} onClick={() => this.removeAction()}>

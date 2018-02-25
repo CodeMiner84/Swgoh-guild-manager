@@ -9,6 +9,7 @@ import characterReducer from './character'
 import loginReducer from './login'
 import accountReducer from './account'
 import userSquadGroupReducer from './user_squad_group'
+import userSquadReducer from './user_squad'
 
 const rootReducer = combineReducers({
   dashboard: dashboardReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   account: accountReducer,
   user_squad_group: userSquadGroupReducer,
+  user_squad: userSquadReducer,
 })
 
 export default rootReducer

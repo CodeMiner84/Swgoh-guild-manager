@@ -21,6 +21,7 @@ import Guilds from '../Guilds'
 import Collection from '../Collection'
 import GuildSquads from '../GuildSquads'
 import UserSquadGroup from '../UserSquadGroup'
+import UserSquad from '../UserSquad'
 
 class Main extends React.Component {
   constructor(props) {
@@ -109,6 +110,7 @@ class Main extends React.Component {
                 <AuthorizedRoute path="/collection" searchPhrase={this.state.phrase} component={Collection} />
                 <AuthorizedRoute path="/guild-squads" component={GuildSquads} />
                 <AuthorizedRoute path="/user-squad-group" component={UserSquadGroup} />
+                <AuthorizedRoute path="/user-squad/:groupId" component={UserSquad} />
               </Switch>
             </main>
           </div>

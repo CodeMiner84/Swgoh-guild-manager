@@ -10,27 +10,27 @@ let SquadForm = (props) => {
     <form onSubmit={handleSubmit}>
       {saved &&
       <div className={'alert alert-success'}>
-        Squad has been sucessfully added.
+        Group has been sucessfully added.
       </div>
       }
       <div className={'form-group'}>
-        <label htmlFor={'name'}>Squad name</label>
+        <label htmlFor={'name'}>Group name</label>
         <Field
           name={'name'}
           component={'input'}
           type={'text'}
-          placeholder={'Squad name'}
+          placeholder={'Group name'}
           className={'form-control'}
         />
       </div>
       <div className={'form-group'}>
-        <label htmlFor={'name'}>Squad type</label>
+        <label htmlFor={'name'}>Group type</label>
         <Field
           id={'type'}
           name={'type'}
           component={'select'}
           type={'select'}
-          placeholder={'Squad type'}
+          placeholder={'Group type'}
           className={'form-control'}
         >
           <option value={0}>Both side</option>

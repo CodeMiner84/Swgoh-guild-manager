@@ -22,7 +22,6 @@ class UserSquadList extends React.Component {
   removeSquad = (id) => {
     this.props.remove(id).then(() => {
       this.setState({removed: true})
-      console.log('propsss', this.props);
       this.props.setTimeout(() => this.setState({removed: false}), 4000)
     }, this)
   }

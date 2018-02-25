@@ -25,11 +25,14 @@ class UserSquadHandler extends ApiHandler
         /** @var QueryBuilder $qb */
         $qb = $this->qb;
         $userId = $this->user->getId();
+        $groupId = $this->getParam('squad_id');
 
         $alias = current($qb->getRootAliases());
-        $qb->add('where',
-            $qb->expr()->eq($alias.'.account', $userId)
-        );
+
+        $qb->andWhere($qb->expr()->andX(
+            $qb->expr()->eq($alias.'.account', $userId),
+            $qb->expr()->eq($alias.'.group', $groupId)
+        ));
 
         $qb->orderBy(sprintf('%s.name', $alias));
 

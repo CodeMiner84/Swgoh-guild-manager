@@ -18,10 +18,8 @@ class BuildForm extends React.Component {
   handleSubmit = (event) => {
     const params = {
       name: event.name,
-      type: event.type,
+      type: parseInt(event.type || 0, 10),
     }
-
-    console.log('params', params);
 
     this.props.createSquadGroup(params).then(response => this.props.history.push(`/user-squad-group`))
   }

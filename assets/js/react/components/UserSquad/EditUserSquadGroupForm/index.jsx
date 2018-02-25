@@ -4,7 +4,7 @@ import { history as historyPropTypes } from 'history-prop-types'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import Form from './Form'
-import actions from '../../../actions/user_squad_group'
+import actions from '../../../actions/user_squad'
 
 class EditForm extends React.Component {
   constructor(props) {
@@ -15,6 +15,8 @@ class EditForm extends React.Component {
       saved: false,
       squad: {},
     }
+
+    this.groupId = this.props.match.params.groupId
   }
 
   componentDidMount() {
@@ -25,7 +27,7 @@ class EditForm extends React.Component {
     const currentId = this.props.match.params.id
 
     let squad = {}
-    this.props.user_squad_groups.filter(item => (parseInt(item.id, 10) === parseInt(currentId, 10) ? squad = item : false))
+    this.props.user_squad.filter(item => (parseInt(item.id, 10) === parseInt(currentId, 10) ? squad = item : false))
 
     this.setState({
       squad,
@@ -38,13 +40,13 @@ class EditForm extends React.Component {
       type: parseInt(event.type || 0, 10),
     }
 
-    this.props.updateSquad(this.state.squad.id, params).then(() => {
-      this.props.history.push('/user-squad-group')
+    this.props.updateSquad(this.groupId, this.state.squad.id, params).then(() => {
+      this.props.history.push(`/user-squad/${this.groupId}`)
     })
   }
 
   render() {
-    if (this.props.user_squad_groups.length === 0) {
+    if (this.props.user_squad.length === 0) {
       this.props.history.push('/user-squad-group')
     }
 
@@ -68,7 +70,7 @@ class EditForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user_squad_groups: state.user_squad_group.user_squad_groups,
+    user_squad: state.user_squad.user_squad,
     auth: state.account.auth,
   }
 }

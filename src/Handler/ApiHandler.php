@@ -222,7 +222,7 @@ class ApiHandler
      *
      * @return Response
      */
-    public function createEntry(array $params, array $groups, $auth = false)
+    public function createEntry(array $params, array $groups, $auth = false, array $additional = [])
     {
         $entityClassName = $this->repository->getClassName();
         $entity = $this->em->getClassMetadata($entityClassName)->newInstance();
@@ -243,6 +243,9 @@ class ApiHandler
         }
         if ($auth) {
             $entity->setAccount($this->user);
+        }
+        foreach ($additional as $method => $val) {
+            $entity->$method($val);
         }
         $this->em->persist($entity);
         $this->em->flush();
@@ -271,6 +274,16 @@ class ApiHandler
     public function getParams(): array
     {
         return $this->params;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function getParam(string $key)
+    {
+        return $this->request->attributes->get($key, null);
     }
 
     /**
