@@ -25,13 +25,11 @@ const fetchSquadGroup = response => ({
   payload: response.data,
 })
 
-const removeSquadGroupType = (response, id) => {
-  return {
-    type: types.REMOVE_USER_SQUAD_GROUP,
-    payload: response.data,
-    id,
-  }
-}
+const removeSquadGroupType = (response, id) => ({
+  type: types.REMOVE_USER_SQUAD_GROUP,
+  payload: response.data,
+  id,
+})
 
 function create(params) {
   return (dispatch) => {

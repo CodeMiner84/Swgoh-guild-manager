@@ -10,7 +10,7 @@ function get(url, params) {
     response => response,
     (error) => {
       if (error.response.data.error === undefined) {
-        //logout()
+        // logout()
       }
     },
     )

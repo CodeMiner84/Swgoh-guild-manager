@@ -2,7 +2,6 @@
 
 namespace App\Handler;
 
-use App\Entity\GuildSquad;
 use App\Entity\RequestTrait;
 use App\Entity\UserSquad;
 use Doctrine\ORM\QueryBuilder;

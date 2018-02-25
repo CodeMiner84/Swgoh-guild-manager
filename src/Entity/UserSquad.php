@@ -4,14 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserSquadGroupRepository")
- *
- * @JMS\ExclusionPolicy("all")
+ * @ORM\Entity(repositoryClass="App\Repository\UserSquadRepository")
  */
-class UserSquadGroup implements EntityInterface
+class UserSquad
 {
     use TimestampableEntity;
 
@@ -19,9 +16,6 @@ class UserSquadGroup implements EntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     *
-     * @JMS\Groups({"user_squad_group"})
-     * @JMS\Expose
      */
     private $id;
 
@@ -33,19 +27,8 @@ class UserSquadGroup implements EntityInterface
 
     /**
      * @ORM\Column(type="string")
-     *
-     * @JMS\Groups({"user_squad_group"})
-     * @JMS\Expose
      */
     private $name;
-
-    /**
-     * @ORM\Column(type="integer")
-     *
-     * @JMS\Groups({"user_squad_group"})
-     * @JMS\Expose
-     */
-    private $type;
 
     /**
      * Get id.
@@ -103,29 +86,5 @@ class UserSquadGroup implements EntityInterface
     public function getAccount()
     {
         return $this->account;
-    }
-
-    /**
-     * Set type.
-     *
-     * @param int $type
-     *
-     * @return UserSquadGroup
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type.
-     *
-     * @return int
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }

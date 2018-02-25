@@ -28,7 +28,6 @@ class GuildCrawler extends BaseCrawler implements CrawlerInterface
                 ]);
                 $this->em->persist($guild);
             }
-
         }
         $this->em->flush();
     }

@@ -15,7 +15,7 @@ class GuildSquadHandler extends ApiHandler
 
     protected const ALLOWED_PARAMS = [
         'name',
-        'fullSquad'
+        'fullSquad',
     ];
 
     /**

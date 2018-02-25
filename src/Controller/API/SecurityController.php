@@ -10,7 +10,6 @@
 namespace App\Controller\API;
 
 use App\Entity\Account;
-use App\Exception\DuplicateUserException;
 use App\Repository\AccountRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

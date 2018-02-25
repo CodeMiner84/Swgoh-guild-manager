@@ -3,17 +3,13 @@
 namespace App\Controller\API;
 
 use App\Entity\Guild;
-use App\Entity\GuildSquad;
-use App\Entity\UserSquad;
 use App\Entity\UserSquadGroup;
-use App\Handler\GuildSquadHandler;
 use App\Handler\UserSquadGroupHandler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserSquadGroupController extends FOSRestController
 {
-
     /**
      * @Route("/", name="api_get_user_squad_group")
      * @Method("GET")
