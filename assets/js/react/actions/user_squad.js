@@ -31,6 +31,16 @@ const removeSquadType = (response, id) => ({
   id,
 })
 
+const getCollectionType = response => ({
+  type: types.RECV_USER_SQUAD_COLLECTION,
+  payload: response,
+})
+
+const updateCollectionType = response => ({
+  type: types.UPDATE_USER_SQUAD_COLLECTION,
+  payload: response.data,
+})
+
 function fetch(groupId) {
   return (dispatch) => {
     dispatch(requestSquad())
@@ -71,9 +81,31 @@ function removeSquad(groupId, id) {
   }
 }
 
+function getCollection(groupId, squadId) {
+  return (dispatch) => {
+    dispatch(requestSquad())
+
+    return get(`/api/user-squad/${groupId}/collection/${squadId}`)
+      .then(response => dispatch(getCollectionType(response.data)))
+      .catch(error => dispatch(errorResponse(error)))
+  }
+}
+
+function updateCollection(groupId, squadId, params) {
+  return (dispatch) => {
+    dispatch(requestSquad())
+
+    return patch(`/api/user-squad/${groupId}/collection/${squadId}`, params)
+      .then(response => dispatch(updateCollectionType(response.data)))
+      .catch(error => dispatch(errorResponse(error)))
+  }
+}
+
 export default {
   create,
   fetch,
   update,
   removeSquad,
+  getCollection,
+  updateCollection,
 }

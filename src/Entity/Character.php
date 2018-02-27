@@ -21,7 +21,7 @@ class Character
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @JMS\Groups({"characters", "guild_squad", "guild_squad_collection", "guild_users"})
+     * @JMS\Groups({"characters", "guild_squad", "guild_squad_collection", "guild_users", "user_squad_list"})
      * @JMS\Expose
      */
     private $id;
@@ -29,7 +29,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users", "user_squad_list"})
      * @JMS\Expose
      */
     private $code = '';
@@ -37,7 +37,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users", "user_squad_list"})
      * @JMS\Expose
      */
     private $name = '';
@@ -45,7 +45,7 @@ class Character
     /**
      * @ORM\Column(type="integer")
      *
-     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "user_squad_list"})
      * @JMS\Expose
      */
     private $side = 0;
@@ -53,7 +53,7 @@ class Character
     /**
      * @ORM\Column(type="string")
      *
-     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "user_squad_list"})
      * @JMS\Expose
      */
     private $image = '';

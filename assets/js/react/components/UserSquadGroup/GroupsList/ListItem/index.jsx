@@ -37,18 +37,7 @@ class ListItem extends React.Component {
               </Button>
             </div>
           </div>
-          <div className="list-group-item">
-            {Object.keys(item).length === 0 &&
-            <div className={'alert alert-warning mb-0'}>
-              Pick your squad! <Link
-                className={'btn btn-primary btn-sm ml-2'} title={'Build squad'}
-                to={`/guild-squads/${item.id}/builder`}
-              >
-              HERE
-            </Link>
-            </div>
-            }
-          </div>
+
         </div>
       </div>
     )

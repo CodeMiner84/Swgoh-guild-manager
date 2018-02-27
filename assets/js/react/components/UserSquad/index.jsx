@@ -8,6 +8,7 @@ import actions from '../../actions/user_squad'
 import AddUserSquadGroupForm from './AddUserSquadGroupForm'
 import EditUserSquadGroupForm from './EditUserSquadGroupForm'
 import SquadsLists from './SquadsLists'
+import Builder from './Builder'
 
 class GuildSquads extends React.Component {
   constructor(props) {
@@ -45,10 +46,14 @@ class GuildSquads extends React.Component {
           </div>
         </div>
         <Switch >
-          <Route exact path={`/user-squad/:groupId`} groupId={groupId} component={SquadsLists} />
-          <Route exact path={`/user-squad/:groupId/add`} groupId={groupId} component={AddUserSquadGroupForm} />
-          <Route exact path={`/user-squad/:groupId/edit/:id`} groupId={groupId} component={EditUserSquadGroupForm} />
-          {/*<Route exact path="/user-squad/:id/builder" component={props => <Builder phrase={this.props.phrase} {...props} />} />*/}
+          <Route exact path={'/user-squad/:groupId'} groupId={groupId} component={SquadsLists} />
+          <Route exact path={'/user-squad/:groupId/add'} groupId={groupId} component={AddUserSquadGroupForm} />
+          <Route exact path={'/user-squad/:groupId/edit/:id'} groupId={groupId} component={EditUserSquadGroupForm} />
+          <Route
+            exact
+            path={'/user-squad/:groupId/builder/:id'}
+            component={props => <Builder phrase={this.props.phrase} {...props} />}
+          />
         </Switch>
       </div>
     )

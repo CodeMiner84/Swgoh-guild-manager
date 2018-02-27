@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 import FontAwesome from 'react-fontawesome'
 import { Button } from 'react-bootstrap'
 import { confirmAlert } from 'react-confirm-alert'
+import MiniList from './MiniList'
 
 class ListItem extends React.Component {
   removeAction = () => {
@@ -17,7 +18,6 @@ class ListItem extends React.Component {
   };
 
   render() {
-    console.log('state.props', this.props)
     const { item, groupId } = this.props
 
     return (
@@ -29,6 +29,9 @@ class ListItem extends React.Component {
             <div className="pull-right">
               <Link className={'btn btn-info btn-sm'} title={'Edit name'} to={`/user-squad/${groupId}/edit/${item.id}`}>
                 Edit&nbsp;&nbsp;<FontAwesome name={'pencil'} />
+              </Link>
+              <Link className={'btn btn-primary btn-sm ml-2'} title={'Edit name'} to={`/user-squad/${groupId}/builder/${item.id}`}>
+                Collection&nbsp;&nbsp;
               </Link>
               <Button className={'btn btn-danger btn-sm ml-2'} onClick={() => this.removeAction()}>
                 Delete <FontAwesome name={'trash'} />
@@ -45,6 +48,9 @@ class ListItem extends React.Component {
               HERE
             </Link>
             </div>
+            }
+            {Object.keys(item.user_squad_collection).length > 0 &&
+              <MiniList items={item.user_squad_collection} />
             }
           </div>
         </div>

@@ -25,16 +25,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/api/login", name="security_logousst")
-     */
-    public function login(JWTTokenManagerInterface $interface): void
-    {
-        $interface;
-
-        die('A');
-    }
-
-    /**
      * @Route("/api/logout", name="security_logout")
      */
     public function logout(): void

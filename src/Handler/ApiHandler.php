@@ -162,7 +162,7 @@ class ApiHandler
     /**
      * @return Pagerfanta
      */
-    private function getPaginatedResult(): Pagerfanta
+    protected function getPaginatedResult(): Pagerfanta
     {
         $adapter = new DoctrineORMAdapter($this->getQueryBuilder());
 

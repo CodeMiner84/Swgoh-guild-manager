@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
@@ -44,6 +45,19 @@ class UserSquad implements EntityInterface
      * @JMS\Expose
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserSquadCollection", mappedBy="userSquad")
+     *
+     * @JMS\Groups({"user_squad_list"})
+     * @JMS\Expose
+     */
+    private $userSquadCollection;
+
+    public function __construct()
+    {
+        $this->userSquadCollection = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -125,5 +139,41 @@ class UserSquad implements EntityInterface
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Add userSquadCollection.
+     *
+     * @param \App\Entity\UserSquadCollection $userSquadCollection
+     *
+     * @return UserSquad
+     */
+    public function addUserSquadCollection(\App\Entity\UserSquadCollection $userSquadCollection)
+    {
+        $this->userSquadCollection[] = $userSquadCollection;
+
+        return $this;
+    }
+
+    /**
+     * Remove userSquadCollection.
+     *
+     * @param \App\Entity\UserSquadCollection $userSquadCollection
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeUserSquadCollection(\App\Entity\UserSquadCollection $userSquadCollection)
+    {
+        return $this->userSquadCollection->removeElement($userSquadCollection);
+    }
+
+    /**
+     * Get userSquadCollection.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserSquadCollection()
+    {
+        return $this->userSquadCollection;
     }
 }
