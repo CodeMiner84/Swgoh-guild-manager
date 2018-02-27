@@ -5,12 +5,18 @@ namespace App\Utils;
 use App\Entity\Setting;
 use App\Repository\RepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client;
 
 /**
  * Class BaseCrawler.
  */
 class BaseCrawler
 {
+    /**
+     * @var Client
+     */
+    private $curlClient;
+
     /**
      * @var array
      */
@@ -43,8 +49,9 @@ class BaseCrawler
      * @param EntityManagerInterface $em
      * @param RepositoryInterface    $repository
      */
-    public function __construct(Setting $setting, EntityManagerInterface $em, RepositoryInterface $repository)
+    public function __construct(Client $curlClient, Setting $setting, EntityManagerInterface $em, RepositoryInterface $repository)
     {
+        $this->curlClient = $curlClient;
         $this->settings = $setting;
         $this->em = $em;
         $this->repository = $repository;
@@ -57,6 +64,6 @@ class BaseCrawler
      */
     public function getSiteHtml(string $url): string
     {
-        return file_get_contents($url);
+        return $this->curlClient->get($url, ['allow_redirects' => false]);
     }
 }

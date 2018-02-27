@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\UserCharacter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client;
 
 /**
  * Class CrawlerFactory.
@@ -26,21 +27,22 @@ class CrawlerFactory
     public static function get($crawler, EntityManagerInterface $em)
     {
         $instance = null;
+        $client = new Client();
 
         $settings = self::getSettings($em);
 
         switch ($crawler) {
             case 'character':
-                $instance = new CharacterCrawler($settings, $em, $em->getRepository(Character::class));
+                $instance = new CharacterCrawler($client, $settings, $em, $em->getRepository(Character::class));
                 break;
             case 'guild':
-                $instance = new GuildCrawler($settings, $em, $em->getRepository(Guild::class));
+                $instance = new GuildCrawler($client, $settings, $em, $em->getRepository(Guild::class));
                 break;
             case 'user':
-                $instance = new UserCrawler($settings, $em, $em->getRepository(User::class));
+                $instance = new UserCrawler($client, $settings, $em, $em->getRepository(User::class));
                 break;
             case 'user-character':
-                $instance = new UserCharacterCrawler($settings, $em, $em->getRepository(UserCharacter::class));
+                $instance = new UserCharacterCrawler($client, $settings, $em, $em->getRepository(UserCharacter::class));
                 break;
         }
 
