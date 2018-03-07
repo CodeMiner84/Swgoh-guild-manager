@@ -33,7 +33,7 @@ class LoadSettings extends Fixture
     private function getData(): array
     {
         return [
-            ['SWGOH', 'swgoh', 'https://swgoh.gg', '/u', '/g'],
+            ['SWGOH', 'swgoh', 'https://swgoh.gg', '/u', '/g', '/mods'],
         ];
     }
 

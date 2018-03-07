@@ -22,6 +22,7 @@ import Collection from '../Collection'
 import GuildSquads from '../GuildSquads'
 import UserSquadGroup from '../UserSquadGroup'
 import UserSquad from '../UserSquad'
+import Mods from '../Mods'
 
 class Main extends React.Component {
   constructor(props) {
@@ -111,6 +112,7 @@ class Main extends React.Component {
                 <AuthorizedRoute path="/guild-squads" component={GuildSquads} />
                 <AuthorizedRoute path="/user-squad-group" component={UserSquadGroup} />
                 <AuthorizedRoute path="/user-squad/:groupId" component={UserSquad} />
+                <AuthorizedRoute path="/mods" component={Mods} />
               </Switch>
             </main>
           </div>

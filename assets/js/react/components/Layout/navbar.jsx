@@ -42,6 +42,12 @@ const Navbar = () => (
             Your guild
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to={'/mods'} className="nav-link">
+            <FontAwesome name="bolt" className="mr-1" />
+            Mods
+          </Link>
+        </li>
       </ul>
       <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
         <span>GENERAL</span>
