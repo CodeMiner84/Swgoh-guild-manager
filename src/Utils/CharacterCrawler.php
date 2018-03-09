@@ -18,7 +18,7 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
         $this->fetchCharacters($crawler->filter('li.character'));
     }
 
-    private function checkCharacter(string $code): Character
+    private function checkCharacter(string $code): ?Character
     {
         return $this->em->getRepository(Character::class)->findOneByCode($code);
     }

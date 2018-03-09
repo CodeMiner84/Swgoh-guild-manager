@@ -64,6 +64,6 @@ class BaseCrawler
      */
     public function getSiteHtml(string $url): string
     {
-        return $this->curlClient->get($url, ['allow_redirects' => false]);
+        return $this->curlClient->get($url, ['allow_redirects' => false])->getBody()->getContents();
     }
 }

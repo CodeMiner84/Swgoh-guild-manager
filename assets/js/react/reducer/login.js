@@ -13,7 +13,7 @@ function loginReducer(state = initialState, action) {
     case types.LOGIN_REQUEST:
       return {
         ...state,
-        submitted: true,
+        submitted: false,
         error: false,
       }
     case types.REGISTER_SUCCESS:
@@ -22,6 +22,7 @@ function loginReducer(state = initialState, action) {
         logged: true,
         success: true,
         message: null,
+        submitted: false,
         error: false,
       }
     case types.REGISTER_ERROR:
@@ -35,6 +36,7 @@ function loginReducer(state = initialState, action) {
       return {
         ...state,
         error: false,
+        submitted: false,
       }
     case types.LOGIN_SUCCESS:
       return {

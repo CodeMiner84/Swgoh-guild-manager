@@ -53,7 +53,7 @@ class GuildCrawler extends BaseCrawler implements CrawlerInterface
     {
         ++$this->iter;
         try {
-            $crawler = new Crawler($this->getSiteHtml(sprintf('%s?page=%s', $url, $page)));
+            $crawler = new Crawler($this->getSiteHtml(sprintf('%s/?page=%s', $url, $page)));
             $domElements = $crawler->filter('ul.list-group li.character');
 
             if (count($domElements) > 0) {

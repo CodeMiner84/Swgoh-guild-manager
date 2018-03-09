@@ -129,15 +129,14 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
                     'gear' => $this->mapGear($domHTML->filter('.char-portrait-full-gear-level')->text()),
                     'power' => trim(str_replace(',', '.', $power[0])),
                 ];
-
                 if ($this->characterExists($user, $character)) {
                     $this->repository->updateToon($user, $data);
                 } else {
                     $this->em->persist(UserCharacterFactory::create($data));
                 }
             } catch (\Exception $e) {
-                var_dump($e->getMessage());
-                //die();
+                var_dump($e->getTraceAsString());
+                die();
             }
         }
         $this->em->flush();
@@ -151,10 +150,10 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
      */
     public function characterExists(User $user, Character $character)
     {
-        return count($this->repository->findOneBy([
+        return $this->repository->findOneBy([
             'user' => $user,
             'character' => $character,
-        ]));
+        ]);
     }
 
     /**
