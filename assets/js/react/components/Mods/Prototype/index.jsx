@@ -12,7 +12,9 @@ class Prototype extends React.Component {
     this.state = {
       showModal: false,
       modNumber: false,
-      stats: {}
+       stats: this.props.data && this.props.data.stats ? this.props.data.stats : {},
+       primary: this.props.data ? this.props.data.primary : null,
+       secondary: this.props.data ? this.props.data.secondary : null,
     }
 
     this.activeItem = 0;
@@ -26,7 +28,7 @@ class Prototype extends React.Component {
       showModal: false,
       stats: mods,
     })
-    this.props.update(this.props.number, this.state.stats)
+    this.props.update(this.props.number, this.state)
   }
 
   handleModalShow = (number) => {
@@ -43,6 +45,26 @@ class Prototype extends React.Component {
     return '/img/mods/mod_' + this.state.stats[type] + '_' +  type + '.png'
   }
 
+  changePrimaryStat = (type) => {
+    this.setState({
+      primary: type,
+    })
+    this.props.update(this.props.number, {
+      ...this.state,
+      primary: type,
+    })
+  }
+
+  changeSecondaryStat = (type) => {
+    this.setState({
+      secondary: type,
+    })
+    this.props.update(this.props.number, {
+      ...this.state,
+      secondary: type,
+    })
+  }
+
   render() {
     return (
       <div className={'prototype'}>
@@ -52,20 +74,27 @@ class Prototype extends React.Component {
               <h3 className={'pull-left'}>TEMPLATE</h3>
             </div>
             <div className="list-group-item row">
-              <div className="row"><div className={'col'}>
-                <Placeholder>
-                  <Switcher type={'square'} image={this.getImage(1)} handleModalShow={() => this.handleModalShow(1)} />
-                  <Switcher type={'arrow'} image={this.getImage(2)} handleModalShow={() => this.handleModalShow(2)} />
-                  <Switcher type={'diamond'} image={this.getImage(3)} handleModalShow={() => this.handleModalShow(3)} />
-                  <Switcher type={'triangle'} image={this.getImage(4)} handleModalShow={() => this.handleModalShow(4)} />
-                  <Switcher type={'circle'} image={this.getImage(5)} handleModalShow={() => this.handleModalShow(5)} />
-                  <Switcher type={'cross'} image={this.getImage(6)} handleModalShow={() => this.handleModalShow(6)} />
-                </Placeholder>
-              </div>
-                <Selectors />
+              <div className="row">
+                <div className={'col-sm-6 col-md-3'}>
+                  <Placeholder>
+                    <Switcher type={'square'} image={this.getImage(1)} handleModalShow={() => this.handleModalShow(1)} />
+                    <Switcher type={'arrow'} image={this.getImage(2)} handleModalShow={() => this.handleModalShow(2)} />
+                    <Switcher type={'diamond'} image={this.getImage(3)} handleModalShow={() => this.handleModalShow(3)} />
+                    <Switcher type={'triangle'} image={this.getImage(4)} handleModalShow={() => this.handleModalShow(4)} />
+                    <Switcher type={'circle'} image={this.getImage(5)} handleModalShow={() => this.handleModalShow(5)} />
+                    <Switcher type={'cross'} image={this.getImage(6)} handleModalShow={() => this.handleModalShow(6)} />
+                  </Placeholder>
+                </div>
+                <div className={'col-sm-6 col-md-3'}>
+                  <Selectors
+                    changePrimary={this.changePrimaryStat} primary={this.state.primary}
+                    changeSecondary={this.changeSecondaryStat} secondary={this.state.secondary}
+                  />
+                </div>
+                <div className="col">
 
+                </div>
               </div>
-
 
               {this.state.showModal &&
                 <TypeModal handleModalClose={this.handleModalClose} />

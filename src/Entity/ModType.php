@@ -43,8 +43,6 @@ class ModType
      */
     private $value;
 
-
-
     /**
      * Get id.
      *

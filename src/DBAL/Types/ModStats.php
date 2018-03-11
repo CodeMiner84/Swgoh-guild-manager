@@ -23,5 +23,4 @@ class ModStats
         self::STAT_TENACITY => 'Tenacity',
         self::STAT_POTENCY => 'Potency',
     ];
-
 }

@@ -14,27 +14,36 @@ class Mods extends React.Component {
       mods: [],
       stats: [],
     }
+
     props.getModsSettings();
     this.protRef = null;
     this.number = 0;
   }
 
   componentDidMount() {
-    this.addPrototype()
+    this.props.getMods().then(() => {
+      if (this.props.mods) {
+        this.setState({
+          stats: this.props.mods.mods,
+        })
+        this.props.mods.mods.map((map, key) => this.addPrototype(key, map))
+      }
+    })
   }
 
   handleUpdateMod = (number, state) => {
-    let updatedSatats = this.state.stats
+    const updatedSatats = this.state.stats
     updatedSatats[number] = state
     this.setState({
       stats: updatedSatats
     })
   }
 
-  addPrototype = () => {
+  addPrototype = (key, map) => {
     const mods = this.state.mods
     const number = this.number++
-    mods.push(<Prototype update={this.handleUpdateMod} test={123} number={number} />)
+    
+    mods.push(<Prototype update={this.handleUpdateMod} data={map} number={number} />)
 
     this.setState({
       mods,
@@ -42,7 +51,15 @@ class Mods extends React.Component {
   }
 
   save = () => {
-    console.log('this.state', this.state.stats);
+    const params = [];
+    const maps = this.state.stats
+    Object.keys(maps).map(key => params.push({
+      stats: maps[key].stats,
+      primary: maps[key].primary,
+      secondary: maps[key].secondary,
+    }))
+
+    this.props.saveMods(params)
   }
 
   render() {
@@ -67,11 +84,14 @@ class Mods extends React.Component {
   }
 }
 
-const getModsSettings = state => state.mods.settings
+const getModsSettings = () => state => state.mods.settings
+const getUserMods = () => state => state.mods.mods
 
 const selector = createSelector(
-  getModsSettings,
-  settings => settings,
+  [getModsSettings(), getUserMods()],
+  (settings, mods) => ({
+    settings, mods
+  }),
 )
 
 function mapStateToProps(state) {
@@ -82,6 +102,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   getModsSettings: actions.getSettings,
+  saveMods: actions.saveMods,
+  getMods: actions.getMods,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Mods)

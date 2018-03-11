@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export default styled.div`
     width: 212px;
@@ -6,4 +6,4 @@ export default styled.div`
     background-image: url('/img/mod-board.png');
     display: flex;
     position: relative;
-`;
+`

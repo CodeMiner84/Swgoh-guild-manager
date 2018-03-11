@@ -208,7 +208,7 @@ class Mod
      *
      * @param \App\Entity\ModType $tpe
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
     public function removeTpe(\App\Entity\ModType $tpe)
     {

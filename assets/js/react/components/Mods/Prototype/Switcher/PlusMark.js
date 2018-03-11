@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export default styled.div`
     position: absolute;
@@ -48,4 +48,4 @@ export default styled.div`
         max-width: 76px !important;
       }
     `}
-`;
+`

@@ -2,7 +2,6 @@
 
 namespace App\Factory;
 
-use App\Entity\Character;
 use App\Entity\Mod;
 use App\Entity\ModType;
 

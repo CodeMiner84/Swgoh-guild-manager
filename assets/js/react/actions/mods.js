@@ -1,5 +1,5 @@
 import types from '../actionType/mods'
-import { get } from '../utils/requests'
+import { get, post } from '../utils/requests'
 
 function getSettings() {
   return (dispatch) => {
@@ -16,6 +16,41 @@ function getSettings() {
       })
   }
 }
+
+function saveMods(params) {
+  return (dispatch) => {
+    dispatch({
+      type: types.REQUEST_MODS,
+    })
+
+    return post('/api/mod/save', params)
+      .then((response) => {
+        dispatch({
+          type: types.SAVE_MODS,
+          payload: response.data,
+        })
+      })
+  }
+}
+
+function getMods() {
+  return (dispatch) => {
+    dispatch({
+      type: types.RECV_MODS,
+    })
+
+    return get('/api/mod/get')
+      .then((response) => {
+        dispatch({
+          type: types.RECV_MODS,
+          payload: response.data.data[0] ? JSON.parse(response.data.data[0].mods) : {},
+        })
+      })
+  }
+}
+
 export default {
   getSettings,
+  saveMods,
+  getMods,
 }

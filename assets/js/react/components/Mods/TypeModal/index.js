@@ -7,12 +7,12 @@ import Stat from './Stat'
 
 class Example extends React.Component {
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
 
     this.state = {
       show: false,
       active: -1,
-    };
+    }
   }
 
   handleClose = () => {
@@ -39,14 +39,14 @@ class Example extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <StatContainer>
-              {Object.keys(images).map((key) =>
+              {Object.keys(images).map(key =>
                 <Stat
                   className={'btn btn-sm btn-default'}
                   active={this.state.active === key}
                   onClick={() => this.toggleStat(key)}
                 >
-                  <img src={images[key]} width={'30'}  />
-                </Stat>
+                  <img src={images[key]} width={'30'} />
+                </Stat>,
               )}
             </StatContainer>
           </Modal.Body>
@@ -55,7 +55,7 @@ class Example extends React.Component {
           </Modal.Footer>
         </Modal>
       </div>
-    );
+    )
   }
 }
 

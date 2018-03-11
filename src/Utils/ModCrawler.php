@@ -53,7 +53,7 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
                     'name' => $label,
                     'value' => str_replace('%', '', $value),
                     'type' => preg_match('/\%/', $valueText),
-                    'kind' => 0
+                    'kind' => 0,
                 ]);
                 $this->em->persist($modType);
 
@@ -71,7 +71,7 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
                         'name' => $label,
                         'value' => str_replace('%', '', $value),
                         'type' => preg_match('/\%/', $valueText),
-                        'kind' => 1
+                        'kind' => 1,
                     ]);
                     $this->em->persist($modType);
                 }
