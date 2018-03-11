@@ -16,6 +16,7 @@ class ModHandler extends ApiHandler
         return [
             'stats' => ModStats::MOD_STATS,
             'images' => ModType::MOD_IMAGES,
+            'spots' => ModType::MOD_SPOTS
         ];
     }
 

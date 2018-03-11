@@ -16,27 +16,36 @@ export default styled.div`
       }
     }
     ${props => props.type === 'square' && `
-      left: 43px;
+      left: ${props.active ? '29px' : '43px'};
       top: 35px;
     `}
     ${props => props.type === 'arrow' && `
-      left: 136px;
-      top: 22px;
+      left: ${props.active ? '118px' : '136px'};
+      top: 23px;
+      img {
+        max-width: 76px !important;
+      }
     `}
     ${props => props.type === 'diamond' && `
-      left: 56px;
+      left: ${props.active ? '39px' : '56px'};
       top: 182px;
+      img {
+        max-width: 76px !important;
+      }
     `}
     ${props => props.type === 'triangle' && `
-    left: 123px;
-    top: 153px;
+    left: ${props.active ? '109px' : '123px'};
+    top: ${props.active ? '150px' : '154px'};
     `}
     ${props => props.type === 'circle' && `
-      left: 56px;
-      top: 292px;
+      left: ${props.active ? '40px' : '56px'};
+      top: ${props.active ? '294px' : '292px'};
     `}
     ${props => props.type === 'cross' && `
-      left: 136px;
+      left: ${props.active ? '120px' : '136px'};
       top: 260px;
+      img {
+        max-width: 76px !important;
+      }
     `}
 `;

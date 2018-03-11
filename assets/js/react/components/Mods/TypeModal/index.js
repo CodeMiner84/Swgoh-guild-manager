@@ -1,12 +1,17 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, ButtonGroup } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import actions from '../../../actions/user_squad_group'
+import StatContainer from './StatContainer'
+import Stat from './Stat'
 
 class Example extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      show: false
+      show: false,
+      active: -1,
     };
   }
 
@@ -14,7 +19,16 @@ class Example extends React.Component {
     this.props.handleModalClose()
   }
 
+  toggleStat = (active) => {
+    this.props.handleModalClose(active)
+  }
+
   render() {
+    const { mods: { images, stats } } = this.props
+    if (!images || !stats) {
+      return <div>loadins</div>
+    }
+
     return (
       <div>
         <p>Click to get the full Modal experience!</p>
@@ -24,24 +38,17 @@ class Example extends React.Component {
             <Modal.Title>Modal heading</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4>Text in a modal</h4>
-            <p>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </p>
-
-            <h4>Tooltips in a modal</h4>
-            <p>
-              there is a{' '}
-            </p>
-
-            <hr />
-
-            <h4>Overflowing text to show scroll behavior</h4>
-            <p>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </p>
+            <StatContainer>
+              {Object.keys(images).map((key) =>
+                <Stat
+                  className={'btn btn-sm btn-default'}
+                  active={this.state.active === key}
+                  onClick={() => this.toggleStat(key)}
+                >
+                  <img src={images[key]} width={'30'}  />
+                </Stat>
+              )}
+            </StatContainer>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose}>Close</Button>
@@ -52,6 +59,8 @@ class Example extends React.Component {
   }
 }
 
-export default Example
+const mapStateToProps = state => ({
+  mods: state.mods.settings,
+})
 
-
+export default connect(mapStateToProps, null)(Example)
