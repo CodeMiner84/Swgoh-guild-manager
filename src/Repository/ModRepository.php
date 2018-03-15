@@ -25,20 +25,19 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
         ;
     }
 
-    public function findBestMod(int $accountId, ?string $type, ?string $slot, ?string $primary, ?string $secondary)
+    public function findBestMod(int $accountId, ?string $type, ?string $slot, array $existed = [], ?string $primary, ?string $secondary)
     {
         $qb = $this->createQueryBuilder('m')
         ;
 
         $query = $qb
-            ->select('partial m.{id,image}', 'partial character.{id, name, image}', 'IDENTITY(types.mod) as mod_id')
+            ->select('partial m.{id, image, uuid}', 'partial character.{id, name, image}', 'IDENTITY(types.mod) as mod_id')
             ->addSelect('ABS(types.value) AS HIDDEN val')
             ->innerJoin('m.types', 'types')
             ->innerJoin('m.character', 'character')
             ->where('m.user = :account')
             ->setParameter('account', $accountId)
         ;
-
 
         if ($type) {
             $query->andWhere('m.type = :type')
@@ -55,6 +54,10 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
                 $qb->expr()->eq('types.kind', '1')
                 ))
                 ->setParameter('secondary', ModStats::MOD_STATS[$secondary]);
+        }
+
+        if (count($existed) > 0) {
+            $qb->andWhere($qb->expr()->notIn('m.uuid', $existed));
         }
 
         $query->setMaxResults(1);

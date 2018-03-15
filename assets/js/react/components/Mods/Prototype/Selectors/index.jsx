@@ -42,8 +42,6 @@ class Selectors extends React.Component {
             {Object.keys(stats).map((key) => <option selected={this.props.secondary === key ? 'selected' : ''} value={key}>{stats[key]}</option>)}
           </FormControl>
         </FormGroup>
-
-        <HelpBlock>Validation is based on string length.</HelpBlock>
       </FormGroup>
     )
   }

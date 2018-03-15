@@ -43,20 +43,43 @@ class Mods extends React.Component {
     const mods = this.state.mods
     const number = this.number++
 
-    mods.push(<Prototype update={this.handleUpdateMod} data={map} generated={this.props.generated ? this.props.generated[number] : {}} number={number} />)
+    mods.push(<Prototype update={this.handleUpdateMod} data={map} removePrototype={this.removePrototype} generated={this.props.generated ? this.props.generated[number] : {}} number={number} />)
 
     this.setState({
       mods,
     })
+
+  }
+
+  removePrototype = (index) => {
+    const stateMods = this.state.stats
+    const stats = []
+    Object.keys(stateMods).map(key => parseInt(key) !== parseInt(index) ? stats.push(stateMods[key]) : null)
+    this.setState({
+      stats,
+      mods: stats,
+    })
+    this.props.saveMods(this.getStats(stats))
+    this.setState({
+      state: null,
+      mods: null,
+    })
+    stats.map((map, key) => this.addPrototype(key, map))
   }
 
   save = () => {
     this.props.saveMods(this.getStats())
   }
 
-  getStats() {
+  getStats(stats = null) {
     const params = [];
-    const maps = this.state.stats
+    let maps = []
+    if (!stats) {
+      maps = this.state.stats
+    } else {
+      maps = stats
+    }
+    console.log('maps 222', maps);
     Object.keys(maps).map(key => params.push({
       stats: maps[key].stats,
       primary: maps[key].primary,

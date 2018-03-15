@@ -97,7 +97,6 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
         ++$this->iter;
         try {
             $crawler = new Crawler($this->getSiteHtml(sprintf('%s?page=%s', $url, $page)));
-            var_dump($page);
             $domElements = $crawler->filter('li.collection-mod-list > div > div.col-xs-12 ');
 
             if (count($domElements) > 0) {

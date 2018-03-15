@@ -22,7 +22,12 @@ class Item extends React.Component {
         </ImageContainer>
         <StatsContainer >
           {mod.stats.length > 0 &&
-            Object.keys(mod.stats).map(key => <Stat active={this.props.secondary == mod.stats[key].name && !mod.stats[key].type} kind={mod.stats[key].kind}>{mod.stats[key].name} +{mod.stats[key].value}</Stat>)}
+            Object.keys(mod.stats).map(key => <Stat
+              active={this.props.secondary == mod.stats[key].name && !mod.stats[key].type}
+              kind={mod.stats[key].kind}
+            >
+              +{mod.stats[key].value}{mod.stats[key].type ? '%' : ''} {mod.stats[key].name}
+            </Stat>)}
         </StatsContainer>
       </Container>
     )

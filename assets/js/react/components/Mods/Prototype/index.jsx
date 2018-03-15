@@ -1,6 +1,8 @@
 import React from 'react'
+import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import Placeholder from './Placeholder'
+import Remove from './Placeholder/Remove'
 import Switcher from './Switcher'
 import TypeModal from '../TypeModal'
 import SelectorsContainer from './components/SelectorsContainer'
@@ -9,6 +11,7 @@ import Generated from './Generated'
 import Template from './components/Template'
 import TemplateContainer from './components/TemplateContainer'
 import TemplateCol from './components/TemplateCol'
+import OverallStats from './OverallStats'
 
 class Prototype extends React.Component {
   constructor(props) {
@@ -70,10 +73,16 @@ class Prototype extends React.Component {
     })
   }
 
+  removePrototype = () => {
+    this.props.removePrototype(this.props.number)
+
+    console.log('test');
+  }
+
   render() {
-    const generated = this.props.generated[this.props.number]
-    const secondary = this.state.secondary ? this.props.mods.stats[this.state.secondary] : null;
-    console.log('generated', generated);
+    const generated = this.props.number !== null && Object.keys(this.props.generated).length && this.props.generated[this.props.number] !== undefined ? this.props.generated[this.props.number] : {}
+    const secondary = this.state.secondary ? this.props.mods.stats[this.state.secondary] : null
+    
     return (
       <div >
         <div >
@@ -83,6 +92,7 @@ class Prototype extends React.Component {
                 <TemplateCol>
                   <Template>
                     <Placeholder>
+                      <Remove onClick={this.removePrototype}><FontAwesome name={'trash'} /></Remove>
                       <Switcher type={'square'} image={this.getImage(1)} handleModalShow={() => this.handleModalShow(1)} />
                       <Switcher type={'arrow'} image={this.getImage(2)} handleModalShow={() => this.handleModalShow(2)} />
                       <Switcher type={'diamond'} image={this.getImage(3)} handleModalShow={() => this.handleModalShow(3)} />
@@ -95,12 +105,20 @@ class Prototype extends React.Component {
                         changePrimary={this.changePrimaryStat} primary={this.state.primary}
                         changeSecondary={this.changeSecondaryStat} secondary={this.state.secondary}
                       />
+                      <OverallStats
+                        mods={generated}
+                        secondary={secondary}
+                      />
+
                     </SelectorsContainer>
+
                   </Template>
                 </TemplateCol>
+                {Object.keys(generated).length > 0 && secondary !== null &&
                 <TemplateCol>
                   <Generated mods={generated} secondary={secondary} />
                 </TemplateCol>
+                }
               </TemplateContainer>
 
               {this.state.showModal &&

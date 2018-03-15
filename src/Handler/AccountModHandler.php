@@ -59,6 +59,9 @@ class AccountModHandler extends ApiHandler
 
     public function generate()
     {
+        if (!$this->user->getUUid()) {
+            throw new \Exception('Unable to fetch user from swgoh.gg');
+        }
         $modRepo = $this->em->getRepository(Mod::class);
         $account = $this->em->getRepository(User::class)->findOneBy(['uuid' => $this->user->getUuid()]);
 
@@ -69,9 +72,8 @@ class AccountModHandler extends ApiHandler
 
         $savedMods = json_decode($mods->getMods(), true);
 
-        $statuses = ModStats::MOD_STATS;
-
         $return = [];
+        $modUuids = [];
         foreach ($savedMods as $key => $savedMod) {
             $primary = $savedMod['primary'];
             $secondary = $savedMod['secondary'];
@@ -83,9 +85,9 @@ class AccountModHandler extends ApiHandler
 
             $tmp = [];
             foreach ($template as $slot => $type) {
-                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $type, $slot, $primary, $secondary);
+                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $type, $slot, $modUuids, $primary, $secondary);
+                $modUuids[$tmp[$slot]['uuid']] = $tmp[$slot]['uuid'];
             }
-
             $return[$key] = $tmp;
         }
 
