@@ -22,6 +22,11 @@ class Mod
     private $id;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $uuid;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -30,7 +35,7 @@ class Mod
     /**
      * @ORM\OneToMany(targetEntity="ModType", mappedBy="mod")
      */
-    private $tpes;
+    private $types;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -53,6 +58,16 @@ class Mod
      * @ORM\Column(type="string")
      */
     private $name = '';
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $slot;
 
     public function __construct()
     {
@@ -198,7 +213,7 @@ class Mod
      */
     public function addTpe(\App\Entity\ModType $tpe)
     {
-        $this->tpes[] = $tpe;
+        $this->types[] = $tpe;
 
         return $this;
     }
@@ -212,16 +227,79 @@ class Mod
      */
     public function removeTpe(\App\Entity\ModType $tpe)
     {
-        return $this->tpes->removeElement($tpe);
+        return $this->types->removeElement($tpe);
     }
 
     /**
-     * Get tpes.
+     * Get types.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTpes()
+    public function getTypes()
     {
-        return $this->tpes;
+        return $this->types;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     *
+     * @return Mod
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlot()
+    {
+        return $this->slot;
+    }
+
+    /**
+     * @param mixed $slot
+     *
+     * @return Mod
+     */
+    public function setSlot($slot)
+    {
+        $this->slot = $slot;
+
+        return $this;
+    }
+
+    public function getFullImage()
+    {
+        return '/img/mods/' . $this->image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @param mixed $uuid
+     */
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 }

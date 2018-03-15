@@ -2,7 +2,12 @@
 
 namespace App\Handler;
 
+use App\Command\UserModCommand;
+use App\DBAL\Types\ModStats;
+use App\Entity\Account;
 use App\Entity\AccountMods;
+use App\Entity\Mod;
+use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -50,5 +55,45 @@ class AccountModHandler extends ApiHandler
         );
 
         return $this->viewhandler->createResponse($view, $this->request, 'json');
+    }
+
+    public function generate()
+    {
+        $modRepo = $this->em->getRepository(Mod::class);
+        $account = $this->em->getRepository(User::class)->findOneBy(['uuid' => $this->user->getUuid()]);
+
+        $mods = $this->generateUserModsTemplate();
+        if (!$mods instanceof AccountMods) {
+            throw new \Exception('wrong mod');
+        }
+
+        $savedMods = json_decode($mods->getMods(), true);
+
+        $statuses = ModStats::MOD_STATS;
+
+        $return = [];
+        foreach ($savedMods as $key => $savedMod) {
+            $primary = $savedMod['primary'];
+            $secondary = $savedMod['secondary'];
+            $template = [];
+            $stats = $savedMod['stats'];
+            for ($slot = 1; $slot < 7; $slot++) {
+                $template[$slot] = $stats[$slot] ?? null;
+            }
+
+            $tmp = [];
+            foreach ($template as $slot => $type) {
+                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $type, $slot, $primary, $secondary);
+            }
+
+            $return[$key] = $tmp;
+        }
+
+        return $return;
+    }
+
+    private function generateUserModsTemplate()
+    {
+        return $this->repository->findOneByAccount($this->user->getId());
     }
 }

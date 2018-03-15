@@ -35,6 +35,21 @@ class ModController extends FOSRestController
     }
 
     /**
+     * @Route("/generate", name="api_mods_generate")
+     * @Method("GET")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Generate mods",
+     * )
+     * @SWG\Tag(name="mods")
+     */
+    public function generate()
+    {
+        return JsonResponse::create($this->getAccountModsHandler()->generate());
+    }
+
+    /**
      * @Route("/get", name="api_mods_get_account_mods")
      * @Method("GET")
      *

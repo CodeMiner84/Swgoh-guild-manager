@@ -19,7 +19,7 @@ class ModStats
         self::STAT_DEFENSE => 'Defense',
         self::STAT_SPEED => 'Speed',
         self::STAT_CRIT_CHANCE => 'Critical chance',
-        self::STAT_CRIT_DAMAGE => 'Critical damange',
+        self::STAT_CRIT_DAMAGE => 'Critical damage',
         self::STAT_TENACITY => 'Tenacity',
         self::STAT_POTENCY => 'Potency',
     ];

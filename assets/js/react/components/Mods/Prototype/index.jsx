@@ -3,7 +3,12 @@ import { connect } from 'react-redux'
 import Placeholder from './Placeholder'
 import Switcher from './Switcher'
 import TypeModal from '../TypeModal'
+import SelectorsContainer from './components/SelectorsContainer'
 import Selectors from './Selectors'
+import Generated from './Generated'
+import Template from './components/Template'
+import TemplateContainer from './components/TemplateContainer'
+import TemplateCol from './components/TemplateCol'
 
 class Prototype extends React.Component {
   constructor(props) {
@@ -66,35 +71,37 @@ class Prototype extends React.Component {
   }
 
   render() {
+    const generated = this.props.generated[this.props.number]
+    const secondary = this.state.secondary ? this.props.mods.stats[this.state.secondary] : null;
+    console.log('generated', generated);
     return (
-      <div className={'prototype'}>
-        <div className={'card'}>
+      <div >
+        <div >
           <div className={'list-group list-group-flush'}>
-            <div className={'card-header'}>
-              <h3 className={'pull-left'}>TEMPLATE</h3>
-            </div>
             <div className="list-group-item row">
-              <div className="row">
-                <div className={'col-sm-6 col-md-3'}>
-                  <Placeholder>
-                    <Switcher type={'square'} image={this.getImage(1)} handleModalShow={() => this.handleModalShow(1)} />
-                    <Switcher type={'arrow'} image={this.getImage(2)} handleModalShow={() => this.handleModalShow(2)} />
-                    <Switcher type={'diamond'} image={this.getImage(3)} handleModalShow={() => this.handleModalShow(3)} />
-                    <Switcher type={'triangle'} image={this.getImage(4)} handleModalShow={() => this.handleModalShow(4)} />
-                    <Switcher type={'circle'} image={this.getImage(5)} handleModalShow={() => this.handleModalShow(5)} />
-                    <Switcher type={'cross'} image={this.getImage(6)} handleModalShow={() => this.handleModalShow(6)} />
-                  </Placeholder>
-                </div>
-                <div className={'col-sm-6 col-md-3'}>
-                  <Selectors
-                    changePrimary={this.changePrimaryStat} primary={this.state.primary}
-                    changeSecondary={this.changeSecondaryStat} secondary={this.state.secondary}
-                  />
-                </div>
-                <div className="col">
-
-                </div>
-              </div>
+              <TemplateContainer>
+                <TemplateCol>
+                  <Template>
+                    <Placeholder>
+                      <Switcher type={'square'} image={this.getImage(1)} handleModalShow={() => this.handleModalShow(1)} />
+                      <Switcher type={'arrow'} image={this.getImage(2)} handleModalShow={() => this.handleModalShow(2)} />
+                      <Switcher type={'diamond'} image={this.getImage(3)} handleModalShow={() => this.handleModalShow(3)} />
+                      <Switcher type={'triangle'} image={this.getImage(4)} handleModalShow={() => this.handleModalShow(4)} />
+                      <Switcher type={'circle'} image={this.getImage(5)} handleModalShow={() => this.handleModalShow(5)} />
+                      <Switcher type={'cross'} image={this.getImage(6)} handleModalShow={() => this.handleModalShow(6)} />
+                    </Placeholder>
+                    <SelectorsContainer>
+                      <Selectors
+                        changePrimary={this.changePrimaryStat} primary={this.state.primary}
+                        changeSecondary={this.changeSecondaryStat} secondary={this.state.secondary}
+                      />
+                    </SelectorsContainer>
+                  </Template>
+                </TemplateCol>
+                <TemplateCol>
+                  <Generated mods={generated} secondary={secondary} />
+                </TemplateCol>
+              </TemplateContainer>
 
               {this.state.showModal &&
                 <TypeModal handleModalClose={this.handleModalClose} />
@@ -109,6 +116,7 @@ class Prototype extends React.Component {
 
 const mapStateToProps = state => ({
   mods: state.mods.settings,
+  generated: state.mods.generated,
 })
 
 export default connect(mapStateToProps, null)(Prototype)

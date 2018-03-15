@@ -23,6 +23,9 @@ class ModFactory
             ->setCharacter($data['character'])
             ->setAccount($data['account'])
             ->setUser($data['user'])
+            ->setType($data['type'])
+            ->setSlot($data['slot'])
+            ->setUuid($data['uuid'])
         ;
 
         return $mod;

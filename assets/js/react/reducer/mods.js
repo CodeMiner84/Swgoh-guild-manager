@@ -3,7 +3,8 @@ import types from '../actionType/mods'
 const initialState = {
   settings: [],
   isLoading: false,
-
+  mods: {},
+  generated: {},
 }
 
 function modsReducer(state = initialState, action) {
@@ -30,6 +31,12 @@ function modsReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         mods: action.payload,
+      }
+    case types.GENERATE_MODS:
+      return {
+        ...state,
+        isLoading: false,
+        generated: action.payload,
       }
     default:
       return state

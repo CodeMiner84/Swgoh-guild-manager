@@ -17,6 +17,22 @@ function getSettings() {
   }
 }
 
+function generate() {
+  return (dispatch) => {
+    dispatch({
+      type: types.REQUEST_MODS,
+    })
+
+    return get('/api/mod/generate')
+      .then((response) => {
+        dispatch({
+          type: types.GENERATE_MODS,
+          payload: response.data,
+        })
+      })
+  }
+}
+
 function saveMods(params) {
   return (dispatch) => {
     dispatch({
@@ -53,4 +69,5 @@ export default {
   getSettings,
   saveMods,
   getMods,
+  generate,
 }

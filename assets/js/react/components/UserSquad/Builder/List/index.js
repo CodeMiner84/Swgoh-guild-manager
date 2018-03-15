@@ -29,8 +29,6 @@ class List extends React.Component {
       items = items.filter(item => item.side === 0)
     }
 
-    console.log('this.props.squadType', this.props.squadType)
-
     return (
       <div className="row">
         {items.map(item => <Item

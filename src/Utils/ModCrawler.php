@@ -35,12 +35,19 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
             //if (!$this->checkGuild($match[2], $match[1])) {
             if ($character instanceof Character) {
                 $imageNode = $crawler->filter('img.statmod-img')->getNode(0);
+                $modImage = $imageNode->getAttribute('src');
+                $pattern = '/\/\/swgoh\.gg\/static\/img\/assets\/tex\.statmodmystery_([0-9])_([0-9])\.png/';
+                preg_match($pattern, $modImage, $matches);
+
                 $mod = ModFactory::create([
-                    'image' => $imageNode->getAttribute('src'),
+                    'uuid' => $crawler->filter('.collection-mod')->getNode(0)->getAttribute('data-id'),
+                    'image' => sprintf("mod_%s_%s.png", $matches[1], $matches[2]),
                     'name' => $imageNode->getAttribute('alt'),
                     'user' => $this->user,
                     'account' => $account,
                     'character' => $character,
+                    'type' => $matches[1],
+                    'slot' => $matches[2],
                 ]);
 
                 $primary = $crawler->filter('.statmod-details .statmod-stats-1');
@@ -90,6 +97,7 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
         ++$this->iter;
         try {
             $crawler = new Crawler($this->getSiteHtml(sprintf('%s?page=%s', $url, $page)));
+            var_dump($page);
             $domElements = $crawler->filter('li.collection-mod-list > div > div.col-xs-12 ');
 
             if (count($domElements) > 0) {
