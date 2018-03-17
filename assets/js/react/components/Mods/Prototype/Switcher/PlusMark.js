@@ -37,16 +37,16 @@ export default styled.div`
       }
     `}
     ${props => props.type === 'triangle' && `
-    left: ${props.active ? '109px' : '105px'};
-    top: ${props.active ? '150px' : '154px'};
+    left: ${props.active ? '109px' : '110px'};
+    top: ${props.active ? '150px' : '151px'};
     `}
     ${props => props.type === 'circle' && `
-      left: ${props.active ? '40px' : '38px'};
-      top: ${props.active ? '294px' : '292px'};
+      left: ${props.active ? '40px' : '37px'};
+      top: ${props.active ? '292px' : '292px'};
     `}
     ${props => props.type === 'cross' && `
       left: ${props.active ? '120px' : '118px'};
-      top: 260px;
+      top: 259px;
       img {
         max-width: 76px !important;
       }

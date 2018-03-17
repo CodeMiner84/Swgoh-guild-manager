@@ -21,8 +21,7 @@ class Selectors extends React.Component {
   }
 
   render() {
-    const { mods: { stats } } = this.props
-
+    const { mods: { stats, primaryStats, secondaryStats } } = this.props
     return (
       <FormGroup
         controlId="formBasicText"
@@ -30,16 +29,16 @@ class Selectors extends React.Component {
         <FormGroup controlId="primaryStat">
           <ControlLabel>Primary</ControlLabel>
           <FormControl componentClass="select" onChange={this.changePrimary} placeholder="select">
-            <option value="select">select</option>
-            {Object.keys(stats).map((key) => <option selected={this.props.primary === key ? 'selected' : ''} value={key}>{stats[key]}</option>)}
+            <option value={0}>select</option>
+            {Object.keys(primaryStats).map((key) => <option selected={this.props.primary === key ? 'selected' : ''} value={key}>{primaryStats[key]}</option>)}
           </FormControl>
         </FormGroup>
 
         <FormGroup controlId="secondaryStat">
           <ControlLabel>Secondary</ControlLabel>
           <FormControl componentClass="select" onChange={this.changeSecondary} placeholder="select">
-            <option value="select">select</option>
-            {Object.keys(stats).map((key) => <option selected={this.props.secondary === key ? 'selected' : ''} value={key}>{stats[key]}</option>)}
+            <option value={0}>select</option>
+            {Object.keys(secondaryStats).map((key) => <option selected={this.props.secondary === key ? 'selected' : ''} value={key}>{secondaryStats[key]}</option>)}
           </FormControl>
         </FormGroup>
       </FormGroup>

@@ -84,8 +84,8 @@ class AccountModHandler extends ApiHandler
             }
 
             $tmp = [];
-            foreach ($template as $slot => $type) {
-                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $type, $slot, $modUuids, $primary, $secondary);
+            foreach ($template as $slot => $mod) {
+                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $mod, $slot, $modUuids, $primary, $secondary);
                 $modUuids[$tmp[$slot]['uuid']] = $tmp[$slot]['uuid'];
             }
             $return[$key] = $tmp;

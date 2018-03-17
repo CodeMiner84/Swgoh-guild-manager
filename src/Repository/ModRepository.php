@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\DBAL\Types\ModPrimary;
+use App\DBAL\Types\ModSecondary;
 use App\DBAL\Types\ModStats;
 use App\Entity\Mod;
 use App\Entity\ModType;
@@ -25,10 +27,22 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
         ;
     }
 
-    public function findBestMod(int $accountId, ?string $type, ?string $slot, array $existed = [], ?string $primary, ?string $secondary)
+    public function findBestMod(int $accountId, ?array $params, ?string $slot, array $existed = [], ?string $globalPrimary, ?string $globalSecondary)
     {
+        $mod = $params['mod'];
+        $primary = $params['primary'];
+        $secondary = $params['secondary'];
+
         $qb = $this->createQueryBuilder('m')
         ;
+
+        if (!$primary && $globalPrimary) {
+            $primary = $globalPrimary;
+        }
+
+        if (!$secondary && $globalSecondary) {
+            $secondary = $globalSecondary;
+        }
 
         $query = $qb
             ->select('partial m.{id, image, uuid}', 'partial character.{id, name, image}', 'IDENTITY(types.mod) as mod_id')
@@ -39,21 +53,29 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
             ->setParameter('account', $accountId)
         ;
 
-        if ($type) {
+        if ($mod) {
             $query->andWhere('m.type = :type')
-                ->setParameter('type', $type);
+                ->setParameter('type', $mod);
         }
         if ($slot) {
             $query->andWhere('m.slot = :slot')
                 ->setParameter('slot', $slot);
         }
 
-        if ($secondary) {
+        if ($primary && $primary !== 'select') {
+            $query->andWhere($qb->expr()->andX(
+                $qb->expr()->eq('types.name', ':primary'),
+                $qb->expr()->eq('types.kind', '0')
+            ))
+                ->setParameter('primary', ModPrimary::STATS[$primary]);
+        }
+
+        if ($secondary && $secondary !== 'select') {
             $query->andWhere($qb->expr()->andX(
                 $qb->expr()->eq('types.name', ':secondary'),
                 $qb->expr()->eq('types.kind', '1')
-                ))
-                ->setParameter('secondary', ModStats::MOD_STATS[$secondary]);
+            ))
+                ->setParameter('secondary', ModSecondary::STATS[$secondary]);
         }
 
         if (count($existed) > 0) {

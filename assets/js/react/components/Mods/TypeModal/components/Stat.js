@@ -7,7 +7,7 @@ export default styled(Label)`
     border-radius: 0;
     border: 1px solid #bbb;
     &:hover{
-      background-color: #dcdcdc;
+      background-color: #dcwdcdc;
     }
-    background: ${props => props.active ? '#FF0000' : 'inherit'};
+    background: ${props => props.active ? '#dcdcdc' : 'inherit'};
 `

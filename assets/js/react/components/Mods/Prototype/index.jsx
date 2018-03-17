@@ -65,37 +65,34 @@ class Prototype extends React.Component {
   }
 
   changePrimaryStat = (type) => {
-    //@TODO
-    return
     this.setState({
       primary: type,
     })
-    this.props.update(this.props.number, {
+    this.props.handleUpdateMod(this.props.number, {
       ...this.state,
       primary: type,
     })
   }
 
   changeSecondaryStat = (type) => {
-    //@TODO
-    return
     this.setState({
       secondary: type,
     })
-    this.props.update(this.props.number, {
+    this.props.handleUpdateMod(this.props.number, {
       ...this.state,
       secondary: type,
     })
   }
 
   removePrototype = () => {
-    //@TODO
-    return
     this.props.removePrototype(this.props.number)
   }
 
   render() {
-    const active = Object.keys(this.props.templates).filter(template => template.uuid === this.props.number).length
+    let templates = this.props.templates
+    if (this.props.templates.mods !== undefined) {
+      templates = JSON.parse(this.props.templates.mods)
+    }
     const generated = this.props.number !== null && Object.keys(this.props.generated).length && this.props.generated[this.props.number] !== undefined ? this.props.generated[this.props.number] : {}
     const secondary = this.state.secondary ? this.props.mods.stats[this.state.secondary] : null
 
@@ -108,7 +105,7 @@ class Prototype extends React.Component {
                 <TemplateCol>
                   <Template>
                     <Placeholder>
-                      {active > 0 &&
+                      {this.props.number && templates[this.props.number] !== undefined &&
                       <Remove onClick={this.removePrototype}><FontAwesome name={'trash'}/></Remove>
                       }
                       <Switcher type={'square'} mod={this.getMod(1)} handleModalShow={() => this.handleModalShow(1)} />
@@ -130,7 +127,7 @@ class Prototype extends React.Component {
                     </SelectorsContainer>
                   </Template>
                 </TemplateCol>
-                {Object.keys(generated).length > 0 && secondary !== null &&
+                {Object.keys(generated).length > 0 &&
                 <TemplateCol>
                   <Generated mods={generated} secondary={secondary} />
                 </TemplateCol>
@@ -138,7 +135,7 @@ class Prototype extends React.Component {
               </TemplateContainer>
 
               {this.state.showModal &&
-                <TypeModal saveStat={this.saveModStats} stats={this.state.stats} handleModalClose={this.handleModalClose} />
+                <TypeModal saveStat={this.saveModStats} slot={this.state.modNumber} stats={this.state.stats} handleModalClose={this.handleModalClose} />
               }
             </div>
           </div>

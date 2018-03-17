@@ -9,10 +9,15 @@ class Example extends React.Component {
     super(props, context)
 
     this.state = {
-      active: -1,
       mod: null,
       primary: null,
       secondary: null,
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.stats !== null && this.props.stats[this.props.slot] != null) {
+      this.setState(this.props.stats[this.props.slot])
     }
   }
 
@@ -23,19 +28,18 @@ class Example extends React.Component {
   changeMod = (mod) => {
     this.setState({
       mod,
-      active: mod,
     })
   }
 
   changePrimary = (e) => {
     this.setState({
-      primary: e.target.value,
+      primary: e.target.value !== 'select' ? e.target.value : 0,
     })
   }
 
   changeSecondary = (e) => {
     this.setState({
-      secondary: e.target.value,
+      secondary: e.target.value !== 'select' ? e.target.value : 0,
     })
   }
 
@@ -52,8 +56,6 @@ class Example extends React.Component {
     if (!images || !stats) {
       return <div>loadins</div>
     }
-    console.log('this.state.active', this.state.active);
-    console.log('this.props', this.props);
 
     return (
       <div>
@@ -66,7 +68,7 @@ class Example extends React.Component {
               {Object.keys(images).map(key =>
                 <Stat
                   className={'btn btn-sm btn-default'}
-                  active={this.state.active === key}
+                  active={this.state.mod === key}
                   onClick={() => this.changeMod(key)}
                 >
                   <img src={images[key]} width={'30'} />
@@ -79,15 +81,15 @@ class Example extends React.Component {
               <FormGroup controlId="primaryStat">
                 <ControlLabel>Primary</ControlLabel>
                 <FormControl componentClass="select" onClick={this.changePrimary} placeholder="select">
-                  <option value="select">select</option>
-                  {Object.keys(primaryStats).map(key => <option selected={this.props.primary === key ? 'selected' : ''} value={key}>{primaryStats[key]}</option>)}
+                  <option value={0}>select</option>
+                  {Object.keys(primaryStats).map(key => <option selected={this.state.primary === key ? 'selected' : ''} value={key}>{primaryStats[key]}</option>)}
                 </FormControl>
               </FormGroup>
               <FormGroup controlId="secondaryStat">
                 <ControlLabel>Secondary</ControlLabel>
                 <FormControl componentClass="select" onClick={this.changeSecondary} placeholder="select">
-                  <option value="select">select</option>
-                  {Object.keys(secondaryStats).map(key => <option selected={this.props.secondary === key ? 'selected' : ''} value={key}>{secondaryStats[key]}</option>)}
+                  <option value={0}>select</option>
+                  {Object.keys(secondaryStats).map(key => <option selected={this.state.secondary === key ? 'selected' : ''} value={key}>{secondaryStats[key]}</option>)}
                 </FormControl>
               </FormGroup>
             </FormGroup>

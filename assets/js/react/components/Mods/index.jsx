@@ -34,22 +34,18 @@ class Mods extends React.Component {
   }
 
   handleUpdateMod = (number, state) => {
-    // const updatedSatats = this.state.stats
+    let updatedStats = this.state.stats
     const stats = this.state.stats
-    console.log('state', state);
-    // const tmp = Object.keys(stats).filter(key => stats[key].uuid === number)
-    // const arrKey = tmp.shift() || 0
-    //
-    updatedSatats[arrKey] = state
+    updatedStats[number] = state
     this.setState({
-      stats: state
+      stats: updatedStats
     })
   }
 
   addPrototype = (key, map) => {
     const mods = this.state.mods
     const number = map !== undefined ? map.uuid : uuid.v4()
-
+    
     mods.push(<Prototype handleUpdateMod={this.handleUpdateMod} data={map} removePrototype={this.removePrototype} generated={this.props.generated ? this.props.generated[number] : {}} number={number} />)
 
     this.setState({
@@ -58,20 +54,28 @@ class Mods extends React.Component {
   }
 
   removePrototype = (index) => {
-    const stateMods = this.state.stats
-    const stats = []
-    const tmp = Object.keys(stateMods).filter(key => key !== index)
-    Object.keys(stateMods).filter(key => console.log('key', key))
-    this.setState({
-      stats,
-      mods: stats,
+    const stats = this.state.stats
+    let activeKey = null
+    let iter = 0
+    const newMods = []
+    const newStats = []
+
+    Object.keys(stats).map(key => {
+      if (key !== index) {
+        newMods.push(this.state.mods[iter])
+        newStats[key] = this.state.stats[key]
+      }
+      iter++
     })
-    this.props.saveMods(this.getStats(stats))
     this.setState({
-      state: null,
-      mods: null,
+      mods: newMods,
+      stats: newStats,
     })
-    stats.map((map, key) => this.addPrototype(key, map))
+    this.props.saveMods(newStats)
+    console.log({
+      mods: newMods,
+      stats: newStats
+    });
   }
 
   save = () => {
@@ -86,12 +90,12 @@ class Mods extends React.Component {
     } else {
       maps = stats
     }
-    Object.keys(maps).map(key => params.push({
+    Object.keys(maps).map(key => params[maps[key].uuid || key] = {
       uuid: maps[key].uuid || key,
       stats: maps[key].stats,
       primary: maps[key].primary,
       secondary: maps[key].secondary,
-    }))
+    })
 
     return params
   }
@@ -106,7 +110,7 @@ class Mods extends React.Component {
     }
 
     const mods = this.state.mods
-
+    
     return (
       <div >
         <div className="container">

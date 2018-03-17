@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export default styled.div`
     position: absolute;
-    top: -14px;
-    left: -10px;
-    font-size: 12px;
+    top: -12px;
+    left: 3px;
+    font-size: 11px;
     color: #FFFFFF;
     width: 100px;
     text-transform: uppercase;
