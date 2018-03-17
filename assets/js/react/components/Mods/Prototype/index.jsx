@@ -20,22 +20,22 @@ class Prototype extends React.Component {
     this.state = {
       showModal: false,
       modNumber: false,
-       stats: this.props.data && this.props.data.stats ? this.props.data.stats : {},
-       primary: this.props.data ? this.props.data.primary : null,
-       secondary: this.props.data ? this.props.data.secondary : null,
+      stats: this.props.data && this.props.data.stats ? this.props.data.stats : {},
+      primary: this.props.data ? this.props.data.primary : null,
+      secondary: this.props.data ? this.props.data.secondary : null,
     }
 
-    this.activeItem = 0;
+    this.activeItem = 0
   }
 
-  handleModalClose = (stat) => {
+  saveModStats = (stat) => {
     const modNumber = this.state.modNumber
     const mods = this.state.stats
     mods[modNumber] = stat
 
     this.setState({
-      showModal: false,
       stats: mods,
+      showModal: false,
     })
 
     this.props.handleUpdateMod(this.props.number, this.state)
@@ -43,19 +43,30 @@ class Prototype extends React.Component {
 
   handleModalShow = (number) => {
     this.setState({
-      showModal: true,
       modNumber: number,
+      showModal: true,
     })
   }
 
-  getImage (type) {
+  handleModalClose = () => {
+    this.setState({
+      showModal: false,
+    })
+  }
+
+  getMod (type) {
     if (!this.state.stats[type]) {
       return null
     }
-    return '/img/mods/mod_' + this.state.stats[type] + '_' +  type + '.png'
+    return {
+      type,
+      mod: this.state.stats[type],
+    }
   }
 
   changePrimaryStat = (type) => {
+    //@TODO
+    return
     this.setState({
       primary: type,
     })
@@ -66,6 +77,8 @@ class Prototype extends React.Component {
   }
 
   changeSecondaryStat = (type) => {
+    //@TODO
+    return
     this.setState({
       secondary: type,
     })
@@ -76,6 +89,8 @@ class Prototype extends React.Component {
   }
 
   removePrototype = () => {
+    //@TODO
+    return
     this.props.removePrototype(this.props.number)
   }
 
@@ -96,12 +111,12 @@ class Prototype extends React.Component {
                       {active > 0 &&
                       <Remove onClick={this.removePrototype}><FontAwesome name={'trash'}/></Remove>
                       }
-                      <Switcher type={'square'} image={this.getImage(1)} handleModalShow={() => this.handleModalShow(1)} />
-                      <Switcher type={'arrow'} image={this.getImage(2)} handleModalShow={() => this.handleModalShow(2)} />
-                      <Switcher type={'diamond'} image={this.getImage(3)} handleModalShow={() => this.handleModalShow(3)} />
-                      <Switcher type={'triangle'} image={this.getImage(4)} handleModalShow={() => this.handleModalShow(4)} />
-                      <Switcher type={'circle'} image={this.getImage(5)} handleModalShow={() => this.handleModalShow(5)} />
-                      <Switcher type={'cross'} image={this.getImage(6)} handleModalShow={() => this.handleModalShow(6)} />
+                      <Switcher type={'square'} mod={this.getMod(1)} handleModalShow={() => this.handleModalShow(1)} />
+                      <Switcher type={'arrow'} mod={this.getMod(2)} handleModalShow={() => this.handleModalShow(2)} />
+                      <Switcher type={'diamond'} mod={this.getMod(3)} handleModalShow={() => this.handleModalShow(3)} />
+                      <Switcher type={'triangle'} mod={this.getMod(4)} handleModalShow={() => this.handleModalShow(4)} />
+                      <Switcher type={'circle'} mod={this.getMod(5)} handleModalShow={() => this.handleModalShow(5)} />
+                      <Switcher type={'cross'} mod={this.getMod(6)} handleModalShow={() => this.handleModalShow(6)} />
                     </Placeholder>
                     <SelectorsContainer>
                       <Selectors
@@ -112,9 +127,7 @@ class Prototype extends React.Component {
                         mods={generated}
                         secondary={secondary}
                       />
-
                     </SelectorsContainer>
-
                   </Template>
                 </TemplateCol>
                 {Object.keys(generated).length > 0 && secondary !== null &&
@@ -125,7 +138,7 @@ class Prototype extends React.Component {
               </TemplateContainer>
 
               {this.state.showModal &&
-                <TypeModal handleModalClose={this.handleModalClose} />
+                <TypeModal saveStat={this.saveModStats} stats={this.state.stats} handleModalClose={this.handleModalClose} />
               }
             </div>
           </div>

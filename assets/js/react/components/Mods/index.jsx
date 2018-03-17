@@ -34,19 +34,16 @@ class Mods extends React.Component {
   }
 
   handleUpdateMod = (number, state) => {
-    const updatedSatats = this.state.stats
-    console.log('updatedSatats', this.state);
+    // const updatedSatats = this.state.stats
     const stats = this.state.stats
-    const tmp = Object.keys(stats).filter(key => stats[key].uuid === number)
-    const arrKey = tmp.shift() || 0
-
-    updatedSatats[arrKey] = {
-      ...state,
-      uuid: number
-    }
-    // this.setState({
-    //   stats: updatedSatats
-    // })
+    console.log('state', state);
+    // const tmp = Object.keys(stats).filter(key => stats[key].uuid === number)
+    // const arrKey = tmp.shift() || 0
+    //
+    updatedSatats[arrKey] = state
+    this.setState({
+      stats: state
+    })
   }
 
   addPrototype = (key, map) => {
@@ -78,8 +75,6 @@ class Mods extends React.Component {
   }
 
   save = () => {
-    console.log('SAVE');
-    console.log('this.getStats()', this.getStats());
     this.props.saveMods(this.getStats())
   }
 
@@ -91,7 +86,6 @@ class Mods extends React.Component {
     } else {
       maps = stats
     }
-    console.log('maps', maps);
     Object.keys(maps).map(key => params.push({
       uuid: maps[key].uuid || key,
       stats: maps[key].stats,
