@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'uuid'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import Prototype from './Prototype'
@@ -15,46 +16,55 @@ class Mods extends React.Component {
       stats: [],
     }
 
-    props.getModsSettings();
     this.protRef = null;
     this.number = 0;
   }
 
   componentDidMount() {
+    this.props.getModsSettings();
     this.props.getMods().then(() => {
       if (this.props.mods) {
+        const mods = this.props.mods.mods
         this.setState({
-          stats: this.props.mods.mods,
+          stats: mods,
         })
-        this.props.mods.mods.map((map, key) => this.addPrototype(key, map))
+        Object.keys(mods).map(key => this.addPrototype(key, mods[key]))
       }
     })
   }
 
   handleUpdateMod = (number, state) => {
     const updatedSatats = this.state.stats
-    updatedSatats[number] = state
-    this.setState({
-      stats: updatedSatats
-    })
+    console.log('updatedSatats', this.state);
+    const stats = this.state.stats
+    const tmp = Object.keys(stats).filter(key => stats[key].uuid === number)
+    const arrKey = tmp.shift() || 0
+
+    updatedSatats[arrKey] = {
+      ...state,
+      uuid: number
+    }
+    // this.setState({
+    //   stats: updatedSatats
+    // })
   }
 
   addPrototype = (key, map) => {
     const mods = this.state.mods
-    const number = this.number++
+    const number = map !== undefined ? map.uuid : uuid.v4()
 
-    mods.push(<Prototype update={this.handleUpdateMod} data={map} removePrototype={this.removePrototype} generated={this.props.generated ? this.props.generated[number] : {}} number={number} />)
+    mods.push(<Prototype handleUpdateMod={this.handleUpdateMod} data={map} removePrototype={this.removePrototype} generated={this.props.generated ? this.props.generated[number] : {}} number={number} />)
 
     this.setState({
       mods,
     })
-
   }
 
   removePrototype = (index) => {
     const stateMods = this.state.stats
     const stats = []
-    Object.keys(stateMods).map(key => parseInt(key) !== parseInt(index) ? stats.push(stateMods[key]) : null)
+    const tmp = Object.keys(stateMods).filter(key => key !== index)
+    Object.keys(stateMods).filter(key => console.log('key', key))
     this.setState({
       stats,
       mods: stats,
@@ -68,6 +78,8 @@ class Mods extends React.Component {
   }
 
   save = () => {
+    console.log('SAVE');
+    console.log('this.getStats()', this.getStats());
     this.props.saveMods(this.getStats())
   }
 
@@ -79,8 +91,9 @@ class Mods extends React.Component {
     } else {
       maps = stats
     }
-    console.log('maps 222', maps);
+    console.log('maps', maps);
     Object.keys(maps).map(key => params.push({
+      uuid: maps[key].uuid || key,
       stats: maps[key].stats,
       primary: maps[key].primary,
       secondary: maps[key].secondary,
@@ -98,6 +111,8 @@ class Mods extends React.Component {
       return <Loader />
     }
 
+    const mods = this.state.mods
+
     return (
       <div >
         <div className="container">
@@ -106,7 +121,7 @@ class Mods extends React.Component {
           </div>
           <div className="col-12">
               {Object.keys(this.state.mods).length > 0 &&
-              this.state.mods.filter((item, key) => <div>{item}</div>)}
+              Object.keys(mods).map(key => <div>{mods[key]}</div>)}
             <Button className={'btn btn-info'} onClick={this.save}>Save</Button>
             <Button className={'btn btn-info'} onClick={this.generate}>Generate mods</Button>
           </div>

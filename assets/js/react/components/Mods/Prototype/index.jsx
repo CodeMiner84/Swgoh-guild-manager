@@ -32,11 +32,13 @@ class Prototype extends React.Component {
     const modNumber = this.state.modNumber
     const mods = this.state.stats
     mods[modNumber] = stat
+
     this.setState({
       showModal: false,
       stats: mods,
     })
-    this.props.update(this.props.number, this.state)
+
+    this.props.handleUpdateMod(this.props.number, this.state)
   }
 
   handleModalShow = (number) => {
@@ -75,14 +77,13 @@ class Prototype extends React.Component {
 
   removePrototype = () => {
     this.props.removePrototype(this.props.number)
-
-    console.log('test');
   }
 
   render() {
+    const active = Object.keys(this.props.templates).filter(template => template.uuid === this.props.number).length
     const generated = this.props.number !== null && Object.keys(this.props.generated).length && this.props.generated[this.props.number] !== undefined ? this.props.generated[this.props.number] : {}
     const secondary = this.state.secondary ? this.props.mods.stats[this.state.secondary] : null
-    
+
     return (
       <div >
         <div >
@@ -92,7 +93,9 @@ class Prototype extends React.Component {
                 <TemplateCol>
                   <Template>
                     <Placeholder>
-                      <Remove onClick={this.removePrototype}><FontAwesome name={'trash'} /></Remove>
+                      {active > 0 &&
+                      <Remove onClick={this.removePrototype}><FontAwesome name={'trash'}/></Remove>
+                      }
                       <Switcher type={'square'} image={this.getImage(1)} handleModalShow={() => this.handleModalShow(1)} />
                       <Switcher type={'arrow'} image={this.getImage(2)} handleModalShow={() => this.handleModalShow(2)} />
                       <Switcher type={'diamond'} image={this.getImage(3)} handleModalShow={() => this.handleModalShow(3)} />
@@ -134,6 +137,7 @@ class Prototype extends React.Component {
 
 const mapStateToProps = state => ({
   mods: state.mods.settings,
+  templates: state.mods.mods,
   generated: state.mods.generated,
 })
 
