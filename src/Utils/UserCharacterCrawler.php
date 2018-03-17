@@ -80,7 +80,7 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
      */
     private function getUserCharacters(User $user): string
     {
-        return @file_get_contents(sprintf('%s%s/%s/collection/',
+        return $this->getSiteHtml(sprintf('%s%s/%s/collection/',
             $this->settings->getApi(),
             $this->settings->getUserSuffix(),
             $user->getUuid()

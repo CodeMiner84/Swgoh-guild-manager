@@ -56,6 +56,11 @@ services:
         arguments:
             $crawler: 'user-character'
 
+    App\Utils\ModCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'mod'
+
     Gedmo\Timestampable\TimestampableListener:
         tags:
             - { name: doctrine.event_subscriber, connection: default }

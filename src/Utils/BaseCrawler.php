@@ -15,7 +15,7 @@ class BaseCrawler
     /**
      * @var Client
      */
-    private $curlClient;
+    protected $curlClient;
 
     /**
      * @var array

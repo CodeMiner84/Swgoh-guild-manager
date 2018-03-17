@@ -9,20 +9,22 @@ import characterReducer from './character'
 import loginReducer from './login'
 import accountReducer from './account'
 import userSquadGroupReducer from './user_squad_group'
+import modsReducer from './mods'
 import userSquadReducer from './user_squad'
 
 const rootReducer = combineReducers({
+  account: accountReducer,
+  character: characterReducer,
   dashboard: dashboardReducer,
+  form: formReducer,
   guild: guildReducer,
   guild_squads: guildSquadsReducer,
-  user: usersReducer,
-  character: characterReducer,
   login: loginReducer,
-  form: formReducer,
+  mods: modsReducer,
   routing: routerReducer,
-  account: accountReducer,
-  user_squad_group: userSquadGroupReducer,
+  user: usersReducer,
   user_squad: userSquadReducer,
+  user_squad_group: userSquadGroupReducer,
 })
 
 export default rootReducer

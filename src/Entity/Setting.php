@@ -38,17 +38,22 @@ class Setting
     /**
      * @ORM\Column(type="string")
      */
-    private $userSuffix = '';
+    private $userSuffix = '/u';
 
     /**
      * @ORM\Column(type="string")
      */
-    private $guildSuffix = '';
+    private $guildSuffix = '/g';
 
     /**
      * @ORM\Column(type="string")
      */
     private $unitSuffix = '';
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $modsUrl = '/mods';
 
     /**
      * Get id.
@@ -196,5 +201,29 @@ class Setting
         $this->unitSuffix = $unitSuffix;
 
         return $this;
+    }
+
+    /**
+     * Set modsUrl.
+     *
+     * @param string $modsUrl
+     *
+     * @return Setting
+     */
+    public function setModsUrl($modsUrl)
+    {
+        $this->modsUrl = $modsUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get modsUrl.
+     *
+     * @return string
+     */
+    public function getModsUrl()
+    {
+        return $this->modsUrl;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Utils;
 
 use App\Entity\Character;
 use App\Entity\Guild;
+use App\Entity\Mod;
 use App\Entity\Setting;
 use App\Entity\User;
 use App\Entity\UserCharacter;
@@ -43,6 +44,9 @@ class CrawlerFactory
                 break;
             case 'user-character':
                 $instance = new UserCharacterCrawler($client, $settings, $em, $em->getRepository(UserCharacter::class));
+                break;
+            case 'mod':
+                $instance = new ModCrawler($client, $settings, $em, $em->getRepository(Mod::class));
                 break;
         }
 
