@@ -57,7 +57,8 @@ function getMods() {
 
     return get('/api/mod/get')
       .then((response) => {
-        dispatch({
+        console.log('JSON.parse(response.data.data[0].mods)', JSON.parse(response.data.data[0].mods));
+        return dispatch({
           type: types.RECV_MODS,
           payload: response.data.data[0] ? JSON.parse(response.data.data[0].mods) : {},
         })

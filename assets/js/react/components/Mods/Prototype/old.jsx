@@ -28,10 +28,6 @@ class Prototype extends React.Component {
     this.activeItem = 0
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    return true
-  }
-
   saveModStats = (stat) => {
     const modNumber = this.state.modNumber
     const mods = this.state.stats
@@ -58,7 +54,7 @@ class Prototype extends React.Component {
     })
   }
 
-  getMod(type) {
+  getMod (type) {
     if (!this.state.stats[type]) {
       return null
     }
@@ -97,48 +93,53 @@ class Prototype extends React.Component {
     if (this.props.templates.mods !== undefined) {
       templates = JSON.parse(this.props.templates.mods)
     }
-
     const generated = this.props.number !== null && Object.keys(this.props.generated).length && this.props.generated[this.props.number] !== undefined ? this.props.generated[this.props.number] : {}
-    const secondary = this.state.secondary ? this.props.mods.secondaryStats[this.state.secondary] : null
+    const secondary = this.state.secondary ? this.props.mods.stats[this.state.secondary] : null
 
     return (
       <div >
-        <TemplateContainer>
-          <TemplateCol>
-            <Template>
-              <Placeholder>
-                {this.props.number && templates[this.props.number] !== undefined &&
-                <Remove onClick={this.removePrototype}><FontAwesome name={'trash'} /></Remove>
+        <div >
+          <div className={'list-group list-group-flush'}>
+            <div className="list-group-item row">
+              <TemplateContainer>
+                <TemplateCol>
+                  <Template>
+                    <Placeholder>
+                      {this.props.number && templates[this.props.number] !== undefined &&
+                      <Remove onClick={this.removePrototype}><FontAwesome name={'trash'}/></Remove>
+                      }
+                      <Switcher type={'square'} mod={this.getMod(1)} handleModalShow={() => this.handleModalShow(1)} />
+                      <Switcher type={'arrow'} mod={this.getMod(2)} handleModalShow={() => this.handleModalShow(2)} />
+                      <Switcher type={'diamond'} mod={this.getMod(3)} handleModalShow={() => this.handleModalShow(3)} />
+                      <Switcher type={'triangle'} mod={this.getMod(4)} handleModalShow={() => this.handleModalShow(4)} />
+                      <Switcher type={'circle'} mod={this.getMod(5)} handleModalShow={() => this.handleModalShow(5)} />
+                      <Switcher type={'cross'} mod={this.getMod(6)} handleModalShow={() => this.handleModalShow(6)} />
+                    </Placeholder>
+                    <SelectorsContainer>
+                      <Selectors
+                        changePrimary={this.changePrimaryStat} primary={this.state.primary}
+                        changeSecondary={this.changeSecondaryStat} secondary={this.state.secondary}
+                      />
+                      <OverallStats
+                        mods={generated}
+                        secondary={secondary}
+                      />
+                    </SelectorsContainer>
+                  </Template>
+                </TemplateCol>
+                {Object.keys(generated).length > 0 &&
+                <TemplateCol>
+                  <Generated mods={generated} secondary={secondary} />
+                </TemplateCol>
                 }
-                <Switcher type={'square'} mod={this.getMod(1)} handleModalShow={() => this.handleModalShow(1)} />
-                <Switcher type={'arrow'} mod={this.getMod(2)} handleModalShow={() => this.handleModalShow(2)} />
-                <Switcher type={'diamond'} mod={this.getMod(3)} handleModalShow={() => this.handleModalShow(3)} />
-                <Switcher type={'triangle'} mod={this.getMod(4)} handleModalShow={() => this.handleModalShow(4)} />
-                <Switcher type={'circle'} mod={this.getMod(5)} handleModalShow={() => this.handleModalShow(5)} />
-                <Switcher type={'cross'} mod={this.getMod(6)} handleModalShow={() => this.handleModalShow(6)} />
-              </Placeholder>
-              <SelectorsContainer>
-                <Selectors
-                  changePrimary={this.changePrimaryStat} primary={this.state.primary}
-                  changeSecondary={this.changeSecondaryStat} secondary={this.state.secondary}
-                />
-                <OverallStats
-                  mods={generated}
-                  secondary={secondary}
-                />
-              </SelectorsContainer>
-            </Template>
-          </TemplateCol>
-          {Object.keys(generated).length > 0 &&
-          <TemplateCol>
-            <Generated generated={generated} secondary={secondary} stats={this.props.data}/>
-          </TemplateCol>
-          }
-        </TemplateContainer>
+              </TemplateContainer>
 
-        {this.state.showModal &&
-          <TypeModal saveStat={this.saveModStats} slot={this.state.modNumber} stats={this.state.stats} handleModalClose={this.handleModalClose} />
-        }
+              {this.state.showModal &&
+              <TypeModal saveStat={this.saveModStats} slot={this.state.modNumber} stats={this.state.stats} handleModalClose={this.handleModalClose} />
+              }
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

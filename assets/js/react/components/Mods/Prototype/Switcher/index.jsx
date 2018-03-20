@@ -5,6 +5,7 @@ import Image from './Image'
 import Legend from './Legend'
 import LegendItem from './LegendItem'
 import { connect } from 'react-redux'
+import helpers from '../../helpers'
 
 class Switcher extends React.Component {
   showModal = () => {
@@ -44,16 +45,12 @@ class Switcher extends React.Component {
       return null
     }
     const text = this.props.settings[type][number]
-    const splitted = text.split(' ')
-    if (splitted.length === 1) {
-      return text.slice(0, 2)
-    }
-    return splitted.reduce((previous, current) => previous.slice(0, 1) + current.slice(0, 1))
+    return null;
   }
 
   render() {
     const image = this.getImage(this.props.mod)
-    
+
     return (
       <PlusMark onClick={this.showModal} type={this.props.type} active={image ? true : false}>
         <Legend>
