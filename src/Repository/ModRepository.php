@@ -62,20 +62,29 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
                 ->setParameter('slot', $slot);
         }
 
+        $orX = [];
         if ($primary && $primary !== 'select') {
-            $query->andWhere($qb->expr()->andX(
+            $orX[] = $qb->expr()->andX(
                 $qb->expr()->eq('types.name', ':primary'),
                 $qb->expr()->eq('types.kind', '0')
-            ))
-                ->setParameter('primary', ModPrimary::STATS[$primary]);
+            );
+           $query
+               ->setParameter('primary', ModPrimary::STATS[$primary]);
         }
 
         if ($secondary && $secondary !== 'select') {
-            $query->andWhere($qb->expr()->andX(
+            $orX[] = $qb->expr()->andX(
                 $qb->expr()->eq('types.name', ':secondary'),
                 $qb->expr()->eq('types.kind', '1')
-            ))
+            );
+
+            $query
                 ->setParameter('secondary', ModSecondary::STATS[$secondary]);
+        }
+        if (count($orX)) {
+            $query->andWhere($qb->expr()->orX(
+                ...$orX
+            ));
         }
 
         if (count($existed) > 0) {

@@ -37,8 +37,8 @@ export default styled.div`
       }
     `}
     ${props => props.type === 'triangle' && `
-    left: ${props.active ? '109px' : '110px'};
-    top: ${props.active ? '150px' : '151px'};
+    left: ${props.active ? '109px' : '105px'};
+    top: ${props.active ? '150px' : '153px'};
     `}
     ${props => props.type === 'circle' && `
       left: ${props.active ? '40px' : '37px'};

@@ -1,18 +1,19 @@
 import React from 'react'
 import uuid from 'uuid'
+import ReactTimeout from 'react-timeout'
+import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import Prototype from './Prototype'
 import actions from '../../actions/mods'
 import Loader from '../../components/Loader'
-import { Button } from 'react-bootstrap'
+import Buttons from './Prototype/components/Buttons'
 
 class Mods extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      mods: [],
       stats: [],
     }
 
@@ -22,13 +23,12 @@ class Mods extends React.Component {
 
   componentDidMount() {
     this.props.getModsSettings();
-    this.props.getMods().then(() => {
+    this.props.getMods().then((response) => {
       if (this.props.mods) {
         const mods = this.props.mods.mods
         this.setState({
           stats: mods,
         })
-        Object.keys(mods).map(key => this.addPrototype(key, mods[key]))
       }
     })
   }
@@ -43,39 +43,42 @@ class Mods extends React.Component {
   }
 
   addPrototype = (key, map) => {
-    const mods = this.state.mods
     const number = map !== undefined ? map.uuid : uuid.v4()
-    
-    mods.push(<Prototype handleUpdateMod={this.handleUpdateMod} data={map} removePrototype={this.removePrototype} generated={this.props.generated ? this.props.generated[number] : {}} number={number} />)
+
+    const stats = this.state.stats
+    stats[number] = {
+      modNumber: 0,
+      stats: {},
+      primary: null,
+      secondary: null,
+    }
 
     this.setState({
-      mods,
+      stats,
     })
   }
 
   removePrototype = (index) => {
     const stats = this.state.stats
-    let activeKey = null
     let iter = 0
-    const newMods = []
     const newStats = []
 
     Object.keys(stats).map(key => {
       if (key !== index) {
-        newMods.push(this.state.mods[iter])
         newStats[key] = this.state.stats[key]
       }
       iter++
     })
     this.setState({
-      mods: newMods,
-      stats: newStats,
+      stats: {},
     })
+
+    this.props.setTimeout(() => {
+      this.setState({
+        stats: newStats,
+      })
+    }, 10)
     this.props.saveMods(newStats)
-    console.log({
-      mods: newMods,
-      stats: newStats
-    });
   }
 
   save = () => {
@@ -109,19 +112,26 @@ class Mods extends React.Component {
       return <Loader />
     }
 
-    const mods = this.state.mods
-    
     return (
       <div >
-        <div className="container">
-          <div className="col-12">
+        <div className="row">
+          <divstats className="col-12">
             <button className={'btn btn-default'} onClick={this.addPrototype}>+ Add mod</button>
-          </div>
+          </divstats>
+          <Buttons>
+            <Button className={'btn btn-primary mr-20'} onClick={this.save}>Save</Button>
+            <Button className={'btn btn-success'} onClick={this.generate}>Generate mods</Button>
+          </Buttons>
           <div className="col-12">
-              {Object.keys(this.state.mods).length > 0 &&
-              Object.keys(mods).map(key => <div>{mods[key]}</div>)}
-            <Button className={'btn btn-info'} onClick={this.save}>Save</Button>
-            <Button className={'btn btn-info'} onClick={this.generate}>Generate mods</Button>
+            {Object.keys(this.state.stats).map(number =>
+              <Prototype
+                handleUpdateMod={this.handleUpdateMod}
+                data={this.state.stats[number]}
+                removePrototype={this.removePrototype}
+                generated={this.props.generated ? this.props.generated[number] : {}}
+                number={number}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -153,4 +163,4 @@ const mapDispatchToProps = {
   generate: actions.generate,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Mods)
+export default connect(mapStateToProps, mapDispatchToProps)(ReactTimeout(Mods))
