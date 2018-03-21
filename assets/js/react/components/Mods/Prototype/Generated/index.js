@@ -11,10 +11,8 @@ class Generated extends React.Component {
       <div className={'row'}>
         <Container>
           {Object.keys(generated).map(key => {
-            console.log('stats[key]', stats[key]);
             const secondary = stats[key] != undefined && stats[key].secondary != undefined ? this.props.mods.secondaryStats[stats[key].secondary] : this.props.secondary
 
-            console.log('secondary', secondary);
             return (<Item
               className={'col-sm col.md col.lg'}
               secondary={secondary}

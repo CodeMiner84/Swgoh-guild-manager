@@ -12,11 +12,6 @@ class Item extends React.Component {
       return <Container></Container>
     }
 
-    console.log('secondary', this.props.secondary);
-    if (this.props.secondary) {
-      console.log('this.props.secondary', this.props.secondary);
-    }
-
     return (
       <Container>
         <ImageContainer>

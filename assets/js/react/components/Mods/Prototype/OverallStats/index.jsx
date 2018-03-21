@@ -27,14 +27,14 @@ class OverallStats extends React.Component {
 
     return (
       <Container>
-        <Legend>OVERALL STATS</Legend>
+        <Legend>OVERALL STATS (secondary)</Legend>
         <div className="row">
           {Object.keys(values).map(key => {
             const tooltip = (<Tooltip>{key}</Tooltip>)
 
             return (<div className="col-6">
               <OverlayTrigger placement="top" html data-html raw overlay={tooltip}>
-                <div>{helpers.getShortMod(key)}: {values[key]}</div>
+                <div>{helpers.getShortMod(key)}: {values[key].toFixed(2)}</div>
               </OverlayTrigger>
               </div>)
           })}
