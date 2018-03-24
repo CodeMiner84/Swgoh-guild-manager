@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Class UserCharacterCommand.
  */
-class UserCharacterCommand extends Command
+class AllCharactersCommand extends Command
 {
     /**
      * @var EntityManagerInterface
@@ -31,7 +31,7 @@ class UserCharacterCommand extends Command
     /**
      * @var string
      */
-    protected static $defaultName = 'swgoh:users:characters';
+    protected static $defaultName = 'swgoh:all:user:characters';
 
     /**
      * UserCharacterCommand constructor.
@@ -51,9 +51,7 @@ class UserCharacterCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->setDescription('Fetch all in game user characters')
         ;
     }
 
