@@ -29,6 +29,10 @@ class Dashboard extends React.Component {
     })
   }
 
+  syncData = () => {
+    console.log('sync data');
+  }
+
   render() {
     if (this.props.auth.length === 0) {
       return (<div />)
@@ -36,7 +40,12 @@ class Dashboard extends React.Component {
 
     return (
       <div >
-        <h3>Account</h3>
+        <div className="row">
+          <div className="col">
+            <h3 className={'pull-left'}>Account</h3>
+            <button className={'btn btn-danger pull-right'} onClick={this.syncData}>Synchronize data</button>
+          </div>
+        </div>
         <Form
           saved={this.state.saved}
           onSubmit={this.handleSubmit}
