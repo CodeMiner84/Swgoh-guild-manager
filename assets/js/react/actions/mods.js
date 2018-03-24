@@ -56,12 +56,10 @@ function getMods() {
     })
 
     return get('/api/mod/get')
-      .then((response) => {
-        return dispatch({
-          type: types.RECV_MODS,
-          payload: response.data.data[0] ? JSON.parse(response.data.data[0].mods) : {},
-        })
-      })
+      .then(response => dispatch({
+        type: types.RECV_MODS,
+        payload: response.data.data[0] ? JSON.parse(response.data.data[0].mods) : {},
+      }))
   }
 }
 function synchronizeMods() {
@@ -71,12 +69,12 @@ function synchronizeMods() {
     })
 
     return get('/api/synchronize/mod')
-      .then((response) => {
-        return dispatch({
+      .then(response =>
+        dispatch({
           type: types.SYNCHRONIZE_USER_MODS,
           payload: response.data,
-        })
-      })
+        }),
+      )
   }
 }
 

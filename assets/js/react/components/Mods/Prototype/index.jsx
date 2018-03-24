@@ -94,7 +94,6 @@ class Prototype extends React.Component {
 
   render() {
     let templates = this.props.templates
-    console.log('', );
     if (this.props.templates !== undefined && this.props.templates.mods !== undefined) {
       templates = JSON.parse(this.props.templates.mods)
     }
@@ -132,7 +131,7 @@ class Prototype extends React.Component {
           </TemplateCol>
           {Object.keys(generated).length > 0 &&
           <TemplateCol>
-            <Generated generated={generated} secondary={secondary} stats={this.props.data}/>
+            <Generated generated={generated} secondary={secondary} stats={this.props.data} />
           </TemplateCol>
           }
         </TemplateContainer>
@@ -147,7 +146,6 @@ class Prototype extends React.Component {
 
 const mapStateToProps = state => ({
   mods: state.mods.settings,
-  templates: state.mods.mods,
   generated: state.mods.generated,
 })
 

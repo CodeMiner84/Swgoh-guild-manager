@@ -108,15 +108,11 @@ class Mods extends React.Component {
   }
 
   synchronizeMods = () => {
-    console.log('this.props.mods.mods', this.props.mods.mods);
     this.props.synchronizeMods().then(() => {
-      console.log('this.props after action', this.props);
-      console.log('this.props.mods.mods', this.props.mods.mods);
     })
   }
 
   render() {
-    console.log('this.props in render', this.props);
     if (this.props.isLoading) {
       return <Loader />
     }
@@ -136,6 +132,7 @@ class Mods extends React.Component {
           <div className="col-12">
             {Object.keys(this.state.stats).map(number =>
               <Prototype
+                templates={this.state.stats}
                 handleUpdateMod={this.handleUpdateMod}
                 data={this.state.stats[number]}
                 removePrototype={this.removePrototype}
@@ -157,18 +154,17 @@ const getGeneratedMods = () => state => state.mods.generated
 const selector = createSelector(
   [getModsSettings(), getUserMods(), getGeneratedMods()],
   (settings, mods, generated) => ({
-    settings, mods, generated
+    settings, mods, generated,
   }),
 )
 
-function mapStateToProps2(state) {
-  console.log('state in mapPropToState', state);
+function mapStateToProps(state) {
   return {
     mods: selector(state),
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps2 = state => ({
   mods: state.mods !== undefined ? state.mods.mods : {},
   settings: state.mods !== undefined ? state.mods.settings : {},
   generated: state.mods !== undefined ? state.mods.generated : {},

@@ -1,11 +1,11 @@
 import types from '../actionType/mods'
 
 const initialState = {
-  // settings: [],
-  // isLoading: false,
-  // mods: {},
-  // generated: {},
-  // synchronizing: false,
+  settings: [],
+  isLoading: false,
+  mods: {},
+  generated: {},
+  synchronizing: false,
 }
 
 function modsReducer(state = initialState, action) {
