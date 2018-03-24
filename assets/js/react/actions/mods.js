@@ -56,13 +56,25 @@ function getMods() {
     })
 
     return get('/api/mod/get')
-      .then((response) => {
-        console.log('JSON.parse(response.data.data[0].mods)', JSON.parse(response.data.data[0].mods));
-        return dispatch({
-          type: types.RECV_MODS,
-          payload: response.data.data[0] ? JSON.parse(response.data.data[0].mods) : {},
-        })
-      })
+      .then(response => dispatch({
+        type: types.RECV_MODS,
+        payload: response.data.data[0] ? JSON.parse(response.data.data[0].mods) : {},
+      }))
+  }
+}
+function synchronizeMods() {
+  return (dispatch) => {
+    dispatch({
+      type: types.RECV_MODS,
+    })
+
+    return get('/api/synchronize/mod')
+      .then(response =>
+        dispatch({
+          type: types.SYNCHRONIZE_USER_MODS,
+          payload: response.data,
+        }),
+      )
   }
 }
 
@@ -71,4 +83,5 @@ export default {
   saveMods,
   getMods,
   generate,
+  synchronizeMods,
 }

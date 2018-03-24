@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   mods: {},
   generated: {},
+  synchronizing: false,
 }
 
 function modsReducer(state = initialState, action) {
@@ -13,6 +14,7 @@ function modsReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: true,
+        synchronizing: false,
       }
     case types.RECV_MODS_SETTINGS:
       return {
@@ -37,6 +39,17 @@ function modsReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         generated: action.payload,
+      }
+    case types.SYNCHRONIZE_USER_MODS:
+      console.log('MODSSS', {
+        ...state,
+        isLoading: false,
+        synchronizing: true,
+      });
+      return {
+        ...state,
+        isLoading: false,
+        synchronizing: true,
       }
     default:
       return state

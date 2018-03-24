@@ -107,6 +107,11 @@ class Mods extends React.Component {
     this.props.generate();
   }
 
+  synchronizeMods = () => {
+    this.props.synchronizeMods().then(() => {
+    })
+  }
+
   render() {
     if (this.props.isLoading) {
       return <Loader />
@@ -115,8 +120,10 @@ class Mods extends React.Component {
     return (
       <div >
         <div className="row">
+
           <divstats className="col-12">
-            <button className={'btn btn-default'} onClick={this.addPrototype}>+ Add mod</button>
+            <button className={'btn btn-default mr-20'} onClick={this.addPrototype}>+ Add mod</button>
+            <button className={'btn btn-info'} onClick={this.synchronizeMods}>Synchronize mods</button>
           </divstats>
           <Buttons>
             <Button className={'btn btn-primary mr-20'} onClick={this.save}>Save</Button>
@@ -125,6 +132,7 @@ class Mods extends React.Component {
           <div className="col-12">
             {Object.keys(this.state.stats).map(number =>
               <Prototype
+                templates={this.state.stats}
                 handleUpdateMod={this.handleUpdateMod}
                 data={this.state.stats[number]}
                 removePrototype={this.removePrototype}
@@ -146,7 +154,7 @@ const getGeneratedMods = () => state => state.mods.generated
 const selector = createSelector(
   [getModsSettings(), getUserMods(), getGeneratedMods()],
   (settings, mods, generated) => ({
-    settings, mods, generated
+    settings, mods, generated,
   }),
 )
 
@@ -156,11 +164,18 @@ function mapStateToProps(state) {
   }
 }
 
+const mapStateToProps2 = state => ({
+  mods: state.mods !== undefined ? state.mods.mods : {},
+  settings: state.mods !== undefined ? state.mods.settings : {},
+  generated: state.mods !== undefined ? state.mods.generated : {},
+})
+
 const mapDispatchToProps = {
   getModsSettings: actions.getSettings,
   saveMods: actions.saveMods,
   getMods: actions.getMods,
   generate: actions.generate,
+  synchronizeMods: actions.synchronizeMods,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactTimeout(Mods))

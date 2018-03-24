@@ -12,11 +12,9 @@ class Prototypes extends React.Component {
   }
 
   componentDidMount(props) {
-    console.log('props', props);
   }
 
   render() {
-    console.log('this.prop.data', this.props);
     return (
       <div >
         test
