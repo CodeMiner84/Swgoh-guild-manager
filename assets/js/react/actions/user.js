@@ -1,6 +1,15 @@
 import types from '../actionType/user'
 import { get, patch, post } from '../utils/requests'
 
+const loadingType = () => ({
+  type: types.IS_LOADING,
+})
+
+const syncType = (response) => ({
+  type: types.SYNCHRONIZE_ACCOUNT,
+  payload: response.data,
+})
+
 function fetchUsers() {
   return dispatch => get('/api/users')
       .then((response) => {
@@ -31,8 +40,18 @@ function updateAccount(data) {
     })
 }
 
+function synchronizeAccount() {
+  return (dispatch) => {
+    dispatch(loadingType())
+
+    return post('/api/synchronize/account')
+      .then(response => dispatch(syncType(response)))
+  }
+}
+
 export default {
   fetchUsers,
   fetchUserCharacter,
   updateAccount,
+  synchronizeAccount,
 }

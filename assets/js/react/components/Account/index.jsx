@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
   }
 
   syncData = () => {
-    console.log('sync data');
+    this.props.syncAccount()
   }
 
   render() {
@@ -72,6 +72,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   updateAccount: actions.updateAccount,
+  syncAccount: actions.synchronizeAccount,
 }
 
 Dashboard.defaultProps = {

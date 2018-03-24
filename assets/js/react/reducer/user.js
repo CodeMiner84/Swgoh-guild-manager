@@ -29,6 +29,11 @@ function usersReducer(state = initialState, action) {
         ...state,
         isLoading: false,
       }
+    case types.SYNCHRONIZE_ACCOUNT:
+      return {
+        ...state,
+        isLoading: false,
+      }
     default:
       return state
   }
