@@ -94,7 +94,8 @@ class Prototype extends React.Component {
 
   render() {
     let templates = this.props.templates
-    if (this.props.templates.mods !== undefined) {
+    console.log('', );
+    if (this.props.templates !== undefined && this.props.templates.mods !== undefined) {
       templates = JSON.parse(this.props.templates.mods)
     }
 

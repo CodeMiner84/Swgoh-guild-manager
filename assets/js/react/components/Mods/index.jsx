@@ -107,7 +107,16 @@ class Mods extends React.Component {
     this.props.generate();
   }
 
+  synchronizeMods = () => {
+    console.log('this.props.mods.mods', this.props.mods.mods);
+    this.props.synchronizeMods().then(() => {
+      console.log('this.props after action', this.props);
+      console.log('this.props.mods.mods', this.props.mods.mods);
+    })
+  }
+
   render() {
+    console.log('this.props in render', this.props);
     if (this.props.isLoading) {
       return <Loader />
     }
@@ -115,8 +124,10 @@ class Mods extends React.Component {
     return (
       <div >
         <div className="row">
+
           <divstats className="col-12">
-            <button className={'btn btn-default'} onClick={this.addPrototype}>+ Add mod</button>
+            <button className={'btn btn-default mr-20'} onClick={this.addPrototype}>+ Add mod</button>
+            <button className={'btn btn-info'} onClick={this.synchronizeMods}>Synchronize mods</button>
           </divstats>
           <Buttons>
             <Button className={'btn btn-primary mr-20'} onClick={this.save}>Save</Button>
@@ -150,17 +161,25 @@ const selector = createSelector(
   }),
 )
 
-function mapStateToProps(state) {
+function mapStateToProps2(state) {
+  console.log('state in mapPropToState', state);
   return {
     mods: selector(state),
   }
 }
+
+const mapStateToProps = state => ({
+  mods: state.mods !== undefined ? state.mods.mods : {},
+  settings: state.mods !== undefined ? state.mods.settings : {},
+  generated: state.mods !== undefined ? state.mods.generated : {},
+})
 
 const mapDispatchToProps = {
   getModsSettings: actions.getSettings,
   saveMods: actions.saveMods,
   getMods: actions.getMods,
   generate: actions.generate,
+  synchronizeMods: actions.synchronizeMods,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactTimeout(Mods))
