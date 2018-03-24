@@ -35,6 +35,24 @@ class SynchronizeController extends FOSRestController
         return $this->getHandler()->addQueue('mod');
     }
 
+    /**
+     * @Route("/account", name="api_synchronize_user")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Sync user",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @Model(type=Queue::class, groups={"queue_user"})
+     *     )
+     * )
+     * @SWG\Tag(name="queue_user")
+     */
+    public function postSyncUser()
+    {
+        return $this->getHandler()->addQueue('user');
+    }
+
     public function getHandler()
     {
         return $this->get(QueueHandler::class)->init(Queue::class);

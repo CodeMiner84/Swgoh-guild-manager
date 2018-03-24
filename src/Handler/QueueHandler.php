@@ -30,14 +30,25 @@ class QueueHandler extends ApiHandler
         return $qb;
     }
 
-    public function addQueue(string $type)
+    /**
+     * @param string $type
+     *
+     * @return JsonResponse
+     */
+    public function addQueue(string $type): JsonResponse
     {
         $queue = new Queue();
 
         $command = null;
+        $entity = null;
         switch ($type) {
             case 'mod':
                 $command = 'swgoh:mods:user ' . $this->getUserAlias();
+                $entity = 'Mod';
+                break;
+            case 'user':
+                $entity = 'UserCharacter';
+                $command = 'swgoh:user:characters ' . $this->getUserAlias();
                 break;
         }
 
@@ -50,7 +61,7 @@ class QueueHandler extends ApiHandler
 
         $queue->setCommand($command)
             ->setAccount($this->user)
-            ->setEntity('MOD')
+            ->setEntity($entity)
             ->setFinished(0)
             ;
 
