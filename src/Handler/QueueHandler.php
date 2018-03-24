@@ -41,14 +41,17 @@ class QueueHandler extends ApiHandler
 
         $command = null;
         $entity = null;
+        $params = [];
         switch ($type) {
             case 'mod':
-                $command = 'swgoh:mods:user ' . $this->getUserAlias();
+                $command = 'swgoh:mods:user';
                 $entity = 'Mod';
+                $params['code'] = $this->getUserAlias();
                 break;
             case 'user':
                 $entity = 'UserCharacter';
-                $command = 'swgoh:user:characters ' . $this->getUserAlias();
+                $command = 'swgoh:user:characters';
+                $params['code'] = $this->getUserAlias();
                 break;
         }
 
@@ -62,6 +65,7 @@ class QueueHandler extends ApiHandler
         $queue->setCommand($command)
             ->setAccount($this->user)
             ->setEntity($entity)
+            ->setParams($params)
             ->setFinished(0)
             ;
 

@@ -164,12 +164,6 @@ function mapStateToProps(state) {
   }
 }
 
-const mapStateToProps2 = state => ({
-  mods: state.mods !== undefined ? state.mods.mods : {},
-  settings: state.mods !== undefined ? state.mods.settings : {},
-  generated: state.mods !== undefined ? state.mods.generated : {},
-})
-
 const mapDispatchToProps = {
   getModsSettings: actions.getSettings,
   saveMods: actions.saveMods,

@@ -39,10 +39,17 @@ class Queue
     private $entity;
 
     /**
-     * var boolean
-     * @ORM\Column(type="boolean")
+     * var string
+     * @ORM\Column(type="string")
      */
     private $finished;
+
+
+    /**
+     * var JSON
+     * @ORM\Column(type="json")
+     */
+    private $params;
 
     /**
      * @return mixed
@@ -131,6 +138,24 @@ class Queue
     public function setFinished($finished)
     {
         $this->finished = $finished;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param mixed $params
+     * @return Queue
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
         return $this;
     }
 }
