@@ -15,6 +15,7 @@ class Login extends React.Component {
       username: '',
       password: '',
       submitted: false,
+      error: null,
     }
   }
 
@@ -25,10 +26,18 @@ class Login extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.setState({ submitted: true })
+    this.setState({ submitted: true, error: null })
     this.props.login(this.state.username, this.state.password).then(
-      () => this.props.history.push('/')
-    )
+      (respond) => {
+        if (respond.code === 200) {
+          this.props.history.push('/')
+        } else {
+          this.setState({ submitted: false, error: 'Error! Please check you username and password!' })
+        }
+      },
+    ).catch((error) => {
+      console.log('error', error)
+    })
   }
 
   render() {
@@ -40,6 +49,7 @@ class Login extends React.Component {
         <Form
           handleSubmit={this.handleSubmit}
           onChange={this.onChange}
+          error={this.state.error}
         />
       </div>
     )

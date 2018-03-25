@@ -44,6 +44,11 @@ function loginReducer(state = initialState, action) {
         user: action.payload,
         submitted: false,
       }
+    case types.LOGIN_FAILURE:
+      return {
+        ...state,
+        error: true,
+      }
     default:
       return state
   }

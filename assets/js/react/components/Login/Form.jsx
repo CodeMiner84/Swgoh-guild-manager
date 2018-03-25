@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const Form = ({ handleSubmit, onChange }) => {
+const Form = ({ handleSubmit, onChange, error }) => {
   return (
     <div className={'d-flex justify-content-center'}>
       <div className={'border col-sm-6 px-5 pt-4 pb-3'}>
         <form className="" onSubmit={handleSubmit}>
+          {error &&
+          <div className={'form-group'}>
+            <div className={'alert alert-danger'}>{error}</div>
+          </div>
+          }
           <div className={'form-group row'}>
             <div className={'col-xs-12'}>
               Login or <Link to={'/register'}>REGISTER</Link> if you don't have account yet.

@@ -15,12 +15,17 @@ function login(username, password) {
       .then((response) => {
         if (response.data && response.data.token) {
           setToken(response.data.token)
-          dispatch({
+          return dispatch({
+            code: 200,
             type: types.LOGIN_SUCCESS,
             payload: response.data,
           })
         }
       })
+      .catch(response => dispatch({
+        type: types.LOGIN_FAILURE,
+        code: 500,
+      }))
   }
 }
 
