@@ -6,6 +6,7 @@ use App\Entity\Queue;
 use App\Entity\RequestTrait;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class GuildHandler.
@@ -58,6 +59,7 @@ class QueueHandler extends ApiHandler
         if ($this->repository->checkQueue($command, $this->user->getId())) {
         return JsonResponse::create([
             'success' => false,
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Action is already runing',
         ]);
         }
@@ -74,6 +76,7 @@ class QueueHandler extends ApiHandler
 
         return JsonResponse::create([
             'success' => true,
+            'code' => Response::HTTP_OK,
             'message' => 'Action added',
         ]);
     }
