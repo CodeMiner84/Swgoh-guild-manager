@@ -4,6 +4,7 @@ import { createSelector } from 'reselect'
 import { connect } from 'react-redux'
 import Form from './Form'
 import actions from '../../actions/user'
+import {confirmAlert} from "react-confirm-alert";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -30,9 +31,22 @@ class Dashboard extends React.Component {
   }
 
   syncData = () => {
-    this.props.syncAccount()
+    this.props.syncAccount().then(response => {
+      if (response.payload.code === 200) {
+        this.syncAlert(true)
+      } else {
+        this.syncAlert(false)
+      }
+    }, this)
   }
 
+  syncAlert = (success) => {
+    confirmAlert({
+      message: success ? 'Your data will be fetched' : 'Your data is added to queue. Please wait',
+      cancelLabel: 'OK',
+    })
+  }
+  
   render() {
     if (this.props.auth.length === 0) {
       return (<div />)
