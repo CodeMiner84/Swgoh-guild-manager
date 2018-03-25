@@ -8,6 +8,7 @@ import Prototype from './Prototype'
 import actions from '../../actions/mods'
 import Loader from '../../components/Loader'
 import Buttons from './Prototype/components/Buttons'
+import { confirmAlert } from 'react-confirm-alert'
 
 class Mods extends React.Component {
   constructor(props) {
@@ -108,7 +109,19 @@ class Mods extends React.Component {
   }
 
   synchronizeMods = () => {
-    this.props.synchronizeMods().then(() => {
+    this.props.synchronizeMods().then((response) => {
+      if (response.payload.code === 200) {
+        this.syncAlert(true)
+      } else {
+        this.syncAlert(false)
+      }
+    }, this)
+  }
+
+  syncAlert = (success) => {
+    confirmAlert({
+      message: success ? 'Your mods will be fetched' : 'Your request is added to queue. Please wait',
+      cancelLabel: 'OK',
     })
   }
 
