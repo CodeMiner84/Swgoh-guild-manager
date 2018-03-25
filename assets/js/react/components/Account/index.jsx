@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
 
   syncAlert = (success) => {
     confirmAlert({
-      message: success ? 'Your data will be fetched' : 'Your data is added to queue. Please wait',
+      message: success ? 'Your characters will be fetched' : 'Your request is added to queue. Please wait',
       cancelLabel: 'OK',
     })
   }
