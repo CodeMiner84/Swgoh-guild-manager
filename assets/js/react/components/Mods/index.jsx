@@ -131,14 +131,6 @@ class Mods extends React.Component {
       return <Loader />
     }
 
-    if (!this.props.auth.uuid) {
-      return (
-        <div className="alert alert-danger">
-          You need to map your user uuid <Link to={'/account'}>HERE</Link>
-        </div>
-      )
-    }
-
     return (
       <div >
         <div className="row">
@@ -172,23 +164,17 @@ class Mods extends React.Component {
 const getModsSettings = () => state => state.mods.settings
 const getUserMods = () => state => state.mods.mods
 const getGeneratedMods = () => state => state.mods.generated
-const getAccount = () => state => state.account.auth
 
 const selector = createSelector(
-  [getModsSettings(), getUserMods(), getGeneratedMods(), getAccount()],
-  (settings, mods, generated, auth) => ({
-    settings, mods, generated, auth,
+  [getModsSettings(), getUserMods(), getGeneratedMods()],
+  (settings, mods, generated) => ({
+    settings, mods, generated,
   }),
-)
-const authSelector = createSelector(
-  [getAccount()],
-  auth => auth,
 )
 
 function mapStateToProps(state) {
   return {
     mods: selector(state),
-    auth: authSelector(state),
   }
 }
 

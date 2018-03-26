@@ -107,7 +107,7 @@ class Main extends React.Component {
                 <AuthorizedRoute path="/guilds" component={Guilds} />
                 <AuthorizedRoute path="/characters" searchPhrase={this.state.phrase} component={Character} />
                 <AuthorizedRoute path="/cart" component={Cart} />
-                <AuthorizedRoute path="/account" component={Account} />
+                <AuthorizedRoute path="/account" noUuid component={Account} />
                 <AuthorizedRoute path="/collection" searchPhrase={this.state.phrase} component={Collection} />
                 <AuthorizedRoute path="/guild-squads" component={GuildSquads} />
                 <AuthorizedRoute path="/user-squad-group" component={UserSquadGroup} />
