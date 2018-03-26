@@ -51,6 +51,15 @@ class Dashboard extends React.Component {
       return (<div />)
     }
 
+
+    if (!this.props.auth.uuid) {
+      return (
+        <div className="alert alert-danger">
+          You need to map your user uuid <Link to={'/account'}>HERE</Link>
+        </div>
+      )
+    }
+
     return (
       <div>
         <ReactTable
@@ -75,10 +84,11 @@ Dashboard.propTypes = {
 const getUser = () => state => state.account.auth
 const getUsers = () => state => state.guild.users
 const getSquads = () => state => state.guild_squads.guild_squads
+const getAccount = () => state => state.account.auth
 
 const selector = createSelector(
-  [getUser(), getUsers(), getSquads()],
-  (user, usersList, squads) => {
+  [getUser(), getUsers(), getSquads(), getAccount()],
+  (user, usersList, squads, auth) => {
     let users = []
     if (usersList.length === 1) {
       users = usersList[0].users
@@ -145,10 +155,11 @@ const selector = createSelector(
     })
 
     return {
-      user, users, squads, dataMapper,
+      user, users, squads, dataMapper, auth
     }
   },
 )
+
 
 function mapStateToProps(state) {
   return selector(state)

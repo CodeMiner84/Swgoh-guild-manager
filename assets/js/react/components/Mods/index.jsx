@@ -1,5 +1,6 @@
 import React from 'react'
 import uuid from 'uuid'
+import { Link } from 'react-router-dom'
 import ReactTimeout from 'react-timeout'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -18,12 +19,12 @@ class Mods extends React.Component {
       stats: [],
     }
 
-    this.protRef = null;
-    this.number = 0;
+    this.protRef = null
+    this.number = 0
   }
 
   componentDidMount() {
-    this.props.getModsSettings();
+    this.props.getModsSettings()
     this.props.getMods().then((response) => {
       if (this.props.mods) {
         const mods = this.props.mods.mods
@@ -35,11 +36,11 @@ class Mods extends React.Component {
   }
 
   handleUpdateMod = (number, state) => {
-    let updatedStats = this.state.stats
+    const updatedStats = this.state.stats
     const stats = this.state.stats
     updatedStats[number] = state
     this.setState({
-      stats: updatedStats
+      stats: updatedStats,
     })
   }
 
@@ -64,7 +65,7 @@ class Mods extends React.Component {
     let iter = 0
     const newStats = []
 
-    Object.keys(stats).map(key => {
+    Object.keys(stats).map((key) => {
       if (key !== index) {
         newStats[key] = this.state.stats[key]
       }
@@ -87,7 +88,7 @@ class Mods extends React.Component {
   }
 
   getStats(stats = null) {
-    const params = [];
+    const params = []
     let maps = []
     if (!stats) {
       maps = this.state.stats
@@ -105,7 +106,7 @@ class Mods extends React.Component {
   }
 
   generate = () => {
-    this.props.generate();
+    this.props.generate()
   }
 
   synchronizeMods = () => {
@@ -130,6 +131,14 @@ class Mods extends React.Component {
       return <Loader />
     }
 
+    if (!this.props.auth.uuid) {
+      return (
+        <div className="alert alert-danger">
+          You need to map your user uuid <Link to={'/account'}>HERE</Link>
+        </div>
+      )
+    }
+
     return (
       <div >
         <div className="row">
@@ -151,7 +160,7 @@ class Mods extends React.Component {
                 removePrototype={this.removePrototype}
                 generated={this.props.generated ? this.props.generated[number] : {}}
                 number={number}
-              />
+              />,
             )}
           </div>
         </div>
@@ -163,17 +172,23 @@ class Mods extends React.Component {
 const getModsSettings = () => state => state.mods.settings
 const getUserMods = () => state => state.mods.mods
 const getGeneratedMods = () => state => state.mods.generated
+const getAccount = () => state => state.account.auth
 
 const selector = createSelector(
-  [getModsSettings(), getUserMods(), getGeneratedMods()],
-  (settings, mods, generated) => ({
-    settings, mods, generated,
+  [getModsSettings(), getUserMods(), getGeneratedMods(), getAccount()],
+  (settings, mods, generated, auth) => ({
+    settings, mods, generated, auth,
   }),
+)
+const authSelector = createSelector(
+  [getAccount()],
+  auth => auth,
 )
 
 function mapStateToProps(state) {
   return {
     mods: selector(state),
+    auth: authSelector(state),
   }
 }
 

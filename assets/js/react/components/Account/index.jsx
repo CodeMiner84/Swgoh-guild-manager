@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
       cancelLabel: 'OK',
     })
   }
-  
+
   render() {
     if (this.props.auth.length === 0) {
       return (<div />)
@@ -57,7 +57,10 @@ class Dashboard extends React.Component {
         <div className="row">
           <div className="col">
             <h3 className={'pull-left'}>Account</h3>
-            <button className={'btn btn-danger pull-right'} onClick={this.syncData}>Synchronize data</button>
+            {this.props.auth != null && this.props.auth.uuid &&
+            <button className={'btn btn-danger pull-right'} onClick={this.syncData}>Synchronize
+              data</button>
+            }
           </div>
         </div>
         <Form
