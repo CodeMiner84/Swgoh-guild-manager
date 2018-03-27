@@ -21,7 +21,7 @@ class BuildForm extends React.Component {
       type: parseInt(event.type || 0, 10),
     }
 
-    this.props.createSquadGroup(params).then(response => this.props.history.push(`/user-squad-group`))
+    this.props.createSquadGroup(params).then(response => this.props.history.push(`/user-squad/${response.payload.id}`))
   }
 
   render() {

@@ -36,7 +36,7 @@ function create(params) {
     dispatch(requestSquadGroup())
 
     return post('/api/user-squad-group/add', params).then(response =>
-      dispatch(createSquadGroup(response.data)))
+      dispatch(createSquadGroup(response)))
       .catch(error => dispatch(errorResponse(error)))
   }
 }
