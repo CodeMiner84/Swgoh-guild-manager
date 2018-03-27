@@ -4,6 +4,7 @@ import { createSelector } from 'reselect'
 import { connect } from 'react-redux'
 import ReactTimeout from 'react-timeout'
 import actions from '../../../actions/user_squad'
+import actionsChar from '../../../actions/character';
 import List from './List'
 import Loader from '../../Loader'
 import Filtering from '../../Layout/filtering'
@@ -16,14 +17,17 @@ class Builder extends React.Component {
       active: [],
       phrase: '',
       saving: false,
+      loading: true,
     }
   }
 
   componentDidMount() {
     if (undefined !== this.props.match.params.groupId && undefined !== this.props.match.params.id) {
+      this.props.getCharacters().then(() => {
       this.props.getCollection(this.props.match.params.groupId, this.props.match.params.id).then(() => {
         const active = []
         const chars = this.props.characters
+
         this.props.user_squad_collection.map(
            character =>
              chars.map(char => (char.id === character.character.id ? active.push(char) : null)),
@@ -31,8 +35,10 @@ class Builder extends React.Component {
 
         this.setState({
           active,
+          loading: false,
         })
       })
+      }, this)
     }
   }
 
@@ -79,7 +85,7 @@ class Builder extends React.Component {
   }
 
   render() {
-    if (this.props.isLoading || !this.props.squads) {
+    if (this.props.isLoading || !this.props.squads || this.state.loading) {
       return <Loader />
     }
 
@@ -88,6 +94,7 @@ class Builder extends React.Component {
     }
 
     const squad = this.props.squads.filter(squad => squad.id == this.props.match.params.groupId)[0]
+
     return (
       <div >
         {
@@ -138,7 +145,7 @@ class Builder extends React.Component {
                 characters={this.props.characters}
                 toggleHandle={this.toggleHandle}
                 disabled={this.props.disabled}
-                squadType={squad.type}
+                squadType={squad !== undefined ? squad.type : null}
               />
             </div>
           </div>
@@ -171,6 +178,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   saveSquad: actions.updateCollection,
   getCollection: actions.getCollection,
+  getCharacters: actionsChar.fetchCharacters,
 }
 
 Builder.defaultProps = {

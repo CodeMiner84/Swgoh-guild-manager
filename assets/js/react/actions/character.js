@@ -2,7 +2,7 @@ import { get } from '../utils/requests'
 import types from '../actionType/character'
 
 function fetchCharacters(phrase) {
-  return dispatch => get('api/characters?noLimit')
+  return dispatch => get('/api/characters?noLimit')
       .then((response) => {
         dispatch({
           type: types.CHARACTER_LIST,
