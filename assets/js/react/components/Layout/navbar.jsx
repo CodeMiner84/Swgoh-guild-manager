@@ -45,6 +45,12 @@ const Navbar = () => (
           </Link>
         </li>
         <li className="nav-item">
+          <Link to={'/mods'} className="nav-link">
+            <FontAwesome name="gears" className="mr-1" />
+            Mods
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link to={'/collection'} className="nav-link">
             <FontAwesome name="users" className="mr-1" />
             Your collection
@@ -52,26 +58,20 @@ const Navbar = () => (
         </li>
         <li className="nav-item">
           <Link to={'/user-squad-group'} className="nav-link">
-            <FontAwesome name="users" className="mr-1" />
+            <FontAwesome name="list-alt" className="mr-1" />
             User squads
           </Link>
         </li>
         <li className="nav-item">
           <Link to={'/guild-squads'} className="nav-link">
-            <FontAwesome name="users" className="mr-1" />
+            <FontAwesome name="list" className="mr-1" />
             Guild squads
           </Link>
         </li>
         <li className="nav-item">
           <Link to={'/guild'} className="nav-link">
-            <FontAwesome name="users" className="mr-1" />
+            <FontAwesome name="object-group" className="mr-1" />
             Your guild
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to={'/mods'} className="nav-link">
-            <FontAwesome name="bolt" className="mr-1" />
-            Mods
           </Link>
         </li>
       </ul>
