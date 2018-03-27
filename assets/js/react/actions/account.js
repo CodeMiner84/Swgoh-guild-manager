@@ -17,6 +17,15 @@ function getAccount() {
   }
 }
 
+
+function logoutUser() {
+  return (dispatch) => {
+    return dispatch({
+      type: types.LOGOUT_USER,
+    })
+  }
+}
+
 function fetchPersonalCollection(phrase = '') {
   return (dispatch) => {
     dispatch({
@@ -39,5 +48,6 @@ function fetchPersonalCollection(phrase = '') {
 
 export default {
   getAccount,
+  logoutUser,
   fetchPersonalCollection,
 }

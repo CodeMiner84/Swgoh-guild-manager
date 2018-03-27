@@ -64,6 +64,7 @@ class Main extends React.Component {
   }
 
   logoutUser = () => {
+    this.props.logoutUser()
     logout()
     this.setState({
       auth: false,
@@ -136,6 +137,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getAccount: actions.getAccount,
+  logoutUser: actions.logoutUser,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main))

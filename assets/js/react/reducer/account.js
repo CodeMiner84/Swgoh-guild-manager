@@ -8,6 +8,11 @@ const initialState = {
 
 function accountReducer(state = initialState, action) {
   switch (action.type) {
+    case types.LOGOUT_USER:
+      return {
+        auth: {},
+        isLoading: false,
+      }
     case types.IS_LOADING:
       return {
         ...state,
