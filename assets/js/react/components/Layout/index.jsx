@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 import { history as historyPropTypes } from 'history-prop-types'
 import { Route, withRouter, matchPath, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -32,6 +33,8 @@ class Main extends React.Component {
       auth: isAuth(),
       authUser: isAuth(),
     }
+    ReactGA.initialize('UA-116511446-1')
+    ReactGA.pageview(window.location.pathname)
   }
 
   componentWillMount() {
