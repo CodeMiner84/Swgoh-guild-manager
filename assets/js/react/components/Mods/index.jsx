@@ -137,7 +137,7 @@ class Mods extends React.Component {
 
           <divstats className="col-12">
             <button className={'btn btn-default mr-20'} onClick={this.addPrototype}>+ Add mod</button>
-            <button className={'btn btn-info'} onClick={this.synchronizeMods}>Synchronize mods</button>
+            <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>
           </divstats>
           <Buttons>
             <Button className={'btn btn-primary mr-20'} onClick={this.save}>Save</Button>
