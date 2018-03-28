@@ -14,15 +14,16 @@ class Dashboard extends React.Component {
     this.state = {
       submitting: false,
       saved: false,
+      loaded: false,
     }
   }
 
   componentDidMount() {
     this.props.getAccount().then(() => {
-      console.log('this.auth in propssss', this.props.auth);
+      this.setState({
+        loaded: true,
+      })
     })
-    console.log('didMount');
-    console.log('this.props.auth', this.props.auth);
   }
 
   handleSubmit = (event) => {
@@ -61,8 +62,6 @@ class Dashboard extends React.Component {
       return (<div />)
     }
 
-    console.log('this.props.auth in render', this.props.auth);
-
     return (
       <div >
         <div className="row">
@@ -74,12 +73,14 @@ class Dashboard extends React.Component {
             }
           </div>
         </div>
+        {this.state.loaded &&
         <Form
           saved={this.state.saved}
           onSubmit={this.handleSubmit}
           submitting={this.state.submitting}
           data={this.props.auth}
         />
+        }
       </div>
     )
   }

@@ -6,7 +6,6 @@ import { Field, reduxForm } from 'redux-form'
 let AccountForm = (props) => {
   const { handleSubmit, pristine, submitting, saved } = props
 
-  console.log('props.data', props.data);
   return (
     <form onSubmit={handleSubmit}>
       {saved &&
