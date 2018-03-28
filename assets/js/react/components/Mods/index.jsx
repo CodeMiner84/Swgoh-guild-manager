@@ -1,15 +1,14 @@
 import React from 'react'
 import uuid from 'uuid'
-import { Link } from 'react-router-dom'
+import { confirmAlert } from 'react-confirm-alert'
 import ReactTimeout from 'react-timeout'
-import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import Prototype from './Prototype'
 import actions from '../../actions/mods'
 import Loader from '../../components/Loader'
 import Buttons from './Prototype/components/Buttons'
-import { confirmAlert } from 'react-confirm-alert'
+import SaveButton from './Prototype/components/SaveButton'
 
 class Mods extends React.Component {
   constructor(props) {
@@ -83,10 +82,6 @@ class Mods extends React.Component {
     this.props.saveMods(newStats)
   }
 
-  save = () => {
-    this.props.saveMods(this.getStats())
-  }
-
   getStats(stats = null) {
     const params = []
     let maps = []
@@ -106,7 +101,7 @@ class Mods extends React.Component {
   }
 
   generate = () => {
-    this.props.generate()
+    this.props.saveMods(this.getStats()).then(() => this.props.generate())
   }
 
   synchronizeMods = () => {
@@ -139,11 +134,10 @@ class Mods extends React.Component {
             <button className={'btn btn-default mr-20'} onClick={this.addPrototype}>+ Add mod</button>
             <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>
           </divstats>
-          <Buttons>
-            <Button className={'btn btn-primary mr-20'} onClick={this.save}>Save</Button>
-            <Button className={'btn btn-success'} onClick={this.generate}>Generate mods</Button>
-          </Buttons>
           <div className="col-12">
+            <Buttons>
+              <SaveButton className={'btn btn-success'} onClick={this.generate}>Save & Generate</SaveButton>
+            </Buttons>
             {Object.keys(this.state.stats).map(number =>
               <Prototype
                 templates={this.state.stats}
