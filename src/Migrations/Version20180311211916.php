@@ -15,7 +15,6 @@ class Version20180311211916 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE setting CHANGE mods_url mods_url VARCHAR(255) NOT NULL');
         $this->addSql('ALTER TABLE user_mod ADD type INT NOT NULL, ADD slot INT NOT NULL');
     }
 
@@ -24,7 +23,6 @@ class Version20180311211916 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE setting CHANGE mods_url mods_url TEXT DEFAULT NULL COLLATE utf8_unicode_ci');
         $this->addSql('ALTER TABLE user_mod DROP type, DROP slot');
     }
 }
