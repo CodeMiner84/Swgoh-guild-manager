@@ -45,6 +45,7 @@ class Main extends React.Component {
       this.props.getAccount()
         .then(() => {
 
+          this.props.history.push('/')
         }).catch(() => {
           this.props.history.push('/login')
         })

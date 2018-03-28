@@ -4,6 +4,7 @@ import { createSelector } from 'reselect'
 import { connect } from 'react-redux'
 import Form from './Form'
 import actions from '../../actions/user'
+import actionsAccount from '../../actions/account'
 import {confirmAlert} from "react-confirm-alert";
 
 class Dashboard extends React.Component {
@@ -14,6 +15,14 @@ class Dashboard extends React.Component {
       submitting: false,
       saved: false,
     }
+  }
+
+  componentDidMount() {
+    this.props.getAccount().then(() => {
+      console.log('this.auth in propssss', this.props.auth);
+    })
+    console.log('didMount');
+    console.log('this.props.auth', this.props.auth);
   }
 
   handleSubmit = (event) => {
@@ -52,6 +61,8 @@ class Dashboard extends React.Component {
       return (<div />)
     }
 
+    console.log('this.props.auth in render', this.props.auth);
+
     return (
       <div >
         <div className="row">
@@ -74,10 +85,10 @@ class Dashboard extends React.Component {
   }
 }
 
-const getAccount = state => state.account.auth
+const getAccountAuth = state => state.account.auth
 
 const selector = createSelector(
-  getAccount,
+  getAccountAuth,
   auth => auth,
 )
 
@@ -90,6 +101,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   updateAccount: actions.updateAccount,
   syncAccount: actions.synchronizeAccount,
+  getAccount: actionsAccount  .getAccount,
 }
 
 Dashboard.defaultProps = {
