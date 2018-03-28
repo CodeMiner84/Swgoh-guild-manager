@@ -129,6 +129,7 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
                     'gear' => $this->mapGear($domHTML->filter('.char-portrait-full-gear-level')->text()),
                     'power' => trim(str_replace(',', '.', $power[0])),
                 ];
+
                 if ($this->characterExists($user, $character)) {
                     $this->repository->updateToon($user, $data);
                 } else {

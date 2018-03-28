@@ -1,5 +1,6 @@
 import React from 'react'
 import { createSelector } from 'reselect'
+import YouTube  from 'react-youtube'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -8,6 +9,14 @@ import List from './components/List'
 
 class Dashboard extends React.Component {
   render() {
+    const opts = {
+      height: '200',
+      width: '320',
+      playerVars: {
+        autoplay: 0,
+      }
+    };
+
     return (
       <div>
         <List>
@@ -17,7 +26,11 @@ class Dashboard extends React.Component {
           </li>
           <li>
             <b>Where can I connect my from with swgoh.gg ?</b><br/>
-            <Link to={'/account'}>Here</Link> you can link your profile
+            <Link to={'/account'}>Here</Link> you can link your profile. <br/>
+            <YouTube
+              videoId="_bfvwPqzIv0"
+              opts={opts}
+            />
           </li>
           <li>
             <b>What do I need to link my profile ?</b><br/>
@@ -42,6 +55,10 @@ class Dashboard extends React.Component {
             After click on spot you see a modal where you can set up type, primary or secondary stats for each slot. <br/>
             If you don't set up primary and secondary stats for each slot separately you can do this globally for template by selecting one of available value in primary and secondary select placed next to mod template.
             When your template are done - hit SAVE & GENERATE button. System will automatically suits the best mods acording to selected stats.
+            <br/><YouTube
+              videoId="s9Du2axQG4U"
+              opts={opts}
+            />
           </li>
           <li>
             <b>What will happend when I generate mods without setting anything except globall secondary stat ?</b><br/>
