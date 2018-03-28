@@ -47,7 +47,7 @@ let AccountForm = (props) => {
         <small id="emailHelp" className="form-text text-muted">User code is required for some features in site.</small>
       </div>
       <div>
-        <button type="submit" disabled={pristine || submitting} className="btn btn-primary">Submit</button>
+        <button type="submit" disabled={pristine || submitting} className="btn btn-primary">Save</button>
       </div>
     </form>
   )
