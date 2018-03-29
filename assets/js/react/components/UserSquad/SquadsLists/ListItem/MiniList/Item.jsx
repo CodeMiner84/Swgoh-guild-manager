@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import BoxItem from './ItemBox'
 import Name from './Name'
 import Image from './Image'
@@ -11,5 +12,9 @@ const Item = ({ item }) => (
     </BoxItem>
   </div>
   )
+
+Item.propTypes = {
+  item: PropTypes.shape().isRequired,
+}
 
 export default Item

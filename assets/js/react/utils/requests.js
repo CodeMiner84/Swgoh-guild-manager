@@ -10,7 +10,7 @@ function get(url, params) {
     response => response,
     (error) => {
       if (error.response.data.error === undefined) {
-        // logout()
+        logout()
       }
     },
     )
@@ -33,7 +33,7 @@ function patch(url, params) {
     },
   )
 }
-function remove(url, params) {
+function remove(url) {
   return axios.delete(url,
     {
       headers: authHeader(),
