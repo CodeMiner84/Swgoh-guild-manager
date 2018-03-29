@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export default styled.div`
     background: #FF0000;
@@ -9,4 +9,4 @@ export default styled.div`
     text-align: center;
     font-size: 24px;
     cursor: pointer;
-`;
+`

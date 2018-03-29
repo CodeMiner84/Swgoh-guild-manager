@@ -45,7 +45,7 @@ function modsReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         synchronizing: true,
-      });
+      })
       return {
         ...state,
         isLoading: false,

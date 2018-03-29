@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export default styled.div`
     position: absolute;
@@ -8,4 +8,4 @@ export default styled.div`
     color: #FFFFFF;
     width: 100px;
     text-transform: uppercase;
-`;
+`
