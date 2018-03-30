@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ReactTimeout from 'react-timeout'
 import actions from '../../../actions/guild_squads'
-import Loader from '../../Loader'
+import Loader from '../../Loader/index'
 import ListItem from './ListItem';
 
 

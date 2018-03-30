@@ -1,7 +1,7 @@
 import { get } from '../utils/requests'
 import types from '../actionType/character'
 
-function fetchCharacters(phrase) {
+function fetchCharacters() {
   return dispatch => get('/api/characters?noLimit')
       .then((response) => {
         dispatch({

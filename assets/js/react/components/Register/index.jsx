@@ -5,7 +5,7 @@ import { createSelector } from 'reselect'
 import PropTypes from 'prop-types'
 import actions from '../../actions/login'
 import Form from './Form'
-import Loader from '../Loader'
+import Loader from '../Loader/index'
 
 class Register extends React.Component {
   constructor(props) {

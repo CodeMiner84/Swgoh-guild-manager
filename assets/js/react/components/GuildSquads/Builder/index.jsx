@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import ReactTimeout from 'react-timeout'
 import actions from '../../../actions/guild_squads'
 import List from './List'
-import Loader from '../../Loader'
+import Loader from '../../Loader/index'
 import Filtering from '../../Layout/filtering'
 
 

@@ -6,7 +6,7 @@ import { createSelector } from 'reselect'
 import ReactTable from 'react-table'
 import actions from '../../actions/guild'
 import squadActions from '../../actions/guild_squads'
-import Loader from '../../components/Loader'
+import Loader from '../Loader/index'
 import gridColumns from '../Guild/gridColumns'
 
 function sortProperties(obj) {

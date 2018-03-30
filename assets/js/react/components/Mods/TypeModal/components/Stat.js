@@ -9,5 +9,5 @@ export default styled(Label)`
     &:hover{
       background-color: #dcwdcdc;
     }
-    background: ${props => props.active ? '#dcdcdc' : 'inherit'};
+    background: ${props => (props.active ? '#dcdcdc' : 'inherit')};
 `

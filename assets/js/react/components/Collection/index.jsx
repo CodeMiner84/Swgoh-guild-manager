@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import actions from '../../actions/account'
 import Toon from '../components/Toon'
-import Loader from '../../components/Loader'
+import Loader from '../Loader/index'
 
 class Dashboard extends React.Component {
   constructor(props) {

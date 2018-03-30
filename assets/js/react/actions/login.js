@@ -22,7 +22,7 @@ function login(username, password) {
           })
         }
       })
-      .catch(response => dispatch({
+      .catch(() => dispatch({
         type: types.LOGIN_FAILURE,
         code: 500,
       }))

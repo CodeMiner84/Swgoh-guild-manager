@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ReactTimeout from 'react-timeout'
 import actions from '../../../actions/user_squad_group'
-import Loader from '../../Loader'
+import Loader from '../../Loader/index'
 import ListItem from './ListItem'
 
 class UserSquadList extends React.Component {

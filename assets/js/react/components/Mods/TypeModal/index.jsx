@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Modal, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import TypeContainer from './components/TypeContainer'
 import Stat from './components/Stat'
 
-class Example extends React.Component {
+class TypeModal extends React.Component {
   constructor(props, context) {
     super(props, context)
 
@@ -71,7 +72,7 @@ class Example extends React.Component {
                   active={this.state.mod === key}
                   onClick={() => this.changeMod(key)}
                 >
-                  <img src={images[key]} width={'30'} />
+                  <img src={images[key]} alt={''} width={'30'} />
                 </Stat>,
               )}
             </TypeContainer>
@@ -108,4 +109,12 @@ const mapStateToProps = state => ({
   mods: state.mods.settings,
 })
 
-export default connect(mapStateToProps, null)(Example)
+TypeModal.propTypes = {
+  mods: PropTypes.shape.isRequired,
+  slot: PropTypes.number.isRequired,
+  stats: PropTypes.shape.isRequired,
+  saveStat: PropTypes.func.isRequired,
+  handleModalClose: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, null)(TypeModal)

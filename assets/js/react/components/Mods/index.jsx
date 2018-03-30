@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import Prototype from './Prototype'
 import actions from '../../actions/mods'
-import Loader from '../../components/Loader'
+import Loader from '../Loader/index'
 import Buttons from './Prototype/components/Buttons'
 import SaveButton from './Prototype/components/SaveButton'
 

@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import ReactTimeout from 'react-timeout'
 import actions from '../../../actions/user_squad'
 import actionsChar from '../../../actions/character';
-import List from './List'
-import Loader from '../../Loader'
+import List from './List/index'
+import Loader from '../../Loader/index'
 import Filtering from '../../Layout/filtering'
 
 class Builder extends React.Component {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Item from './Item'
 
 class List extends React.Component {
@@ -9,7 +10,8 @@ class List extends React.Component {
 
     let items = this.props.characters
     if (this.props.phrase !== '') {
-      items = items.filter(character => character.name.toLowerCase().indexOf(this.props.phrase) > -1 ||
+      items = items.filter(
+        character => character.name.toLowerCase().indexOf(this.props.phrase) > -1 ||
         character.tags.toLowerCase().indexOf(this.props.phrase) > -1)
     }
 
@@ -19,6 +21,11 @@ class List extends React.Component {
       </div>
     )
   }
+}
+
+List.propTypes = {
+  characters: PropTypes.shape.isRequired,
+  phrase: PropTypes.string.isRequired,
 }
 
 export default List
