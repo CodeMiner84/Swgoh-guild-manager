@@ -282,7 +282,7 @@ class Mod
 
     public function getFullImage()
     {
-        return '/img/mods/' . $this->image;
+        return '/img/mods/'.$this->image;
     }
 
     /**

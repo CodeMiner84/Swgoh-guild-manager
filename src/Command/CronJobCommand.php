@@ -4,13 +4,10 @@ namespace App\Command;
 
 use App\Entity\Guild;
 use App\Entity\Queue;
-use App\Entity\User;
-use App\Utils\UserCharacterCrawler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -50,10 +47,10 @@ class CronJobCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $commands = $this->entityManager->getRepository(Queue::class)->findBy([
-            'finished' => 0
+            'finished' => 0,
         ]);
 
-        if (count($commands) === 0) {
+        if (0 === count($commands)) {
             throw new \Exception('NO COMMANDS FOUND !');
         }
 
@@ -73,7 +70,6 @@ class CronJobCommand extends Command
 
                 $command->setFinished(1);
             } catch (\Exception $e) {
-
             }
         }
 

@@ -4,11 +4,9 @@ namespace App\Repository;
 
 use App\DBAL\Types\ModPrimary;
 use App\DBAL\Types\ModSecondary;
-use App\DBAL\Types\ModStats;
 use App\Entity\Mod;
 use App\Entity\ModType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class ModRepository extends ServiceEntityRepository implements RepositoryInterface
@@ -27,7 +25,7 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
         ;
     }
 
-    public function findBestMod(int $accountId, ?array $params, ?string $slot, array $existed = [], ?string $globalPrimary, ?string $globalSecondary)
+    public function findBestMod(int $accountId, ?array $params, ?string $slot, array $existed, ?string $globalPrimary, ?string $globalSecondary)
     {
         $mod = $params['mod'];
         $primary = $params['primary'];
@@ -63,16 +61,16 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
         }
 
         $orX = [];
-        if ($primary && $primary !== 'select') {
+        if ($primary && 'select' !== $primary) {
             $orX[] = $qb->expr()->andX(
                 $qb->expr()->eq('types.name', ':primary'),
                 $qb->expr()->eq('types.kind', '0')
             );
-           $query
+            $query
                ->setParameter('primary', ModPrimary::STATS[$primary]);
         }
 
-        if ($secondary && $secondary !== 'select') {
+        if ($secondary && 'select' !== $secondary) {
             $orX[] = $qb->expr()->andX(
                 $qb->expr()->eq('types.name', ':secondary'),
                 $qb->expr()->eq('types.kind', '1')
@@ -93,7 +91,6 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
 
         $query->setMaxResults(1);
         $query->orderBy('val', 'DESC');
-
 
         $result = $query->getQuery()->getArrayResult();
 

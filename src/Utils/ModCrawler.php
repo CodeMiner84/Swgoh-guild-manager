@@ -41,7 +41,7 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
 
                 $mod = ModFactory::create([
                     'uuid' => $crawler->filter('.collection-mod')->getNode(0)->getAttribute('data-id'),
-                    'image' => sprintf("mod_%s_%s.png", $matches[1], $matches[2]),
+                    'image' => sprintf('mod_%s_%s.png', $matches[1], $matches[2]),
                     'name' => $imageNode->getAttribute('alt'),
                     'user' => $this->user,
                     'account' => $account,

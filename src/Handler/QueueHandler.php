@@ -57,7 +57,7 @@ class QueueHandler extends ApiHandler
         }
 
         if ($this->repository->checkQueue($command, $this->user->getId())) {
-        return JsonResponse::create([
+            return JsonResponse::create([
             'success' => false,
             'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Action is already runing',

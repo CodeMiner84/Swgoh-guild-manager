@@ -2,10 +2,8 @@
 
 namespace App\Controller\API;
 
-use App\Entity\Guild;
 use App\Entity\Queue;
 use App\Entity\User;
-use App\Handler\ApiHandler;
 use App\Handler\QueueHandler;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\Model;

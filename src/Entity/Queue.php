@@ -20,7 +20,8 @@ class Queue
     private $id;
 
     /**
-     * var string
+     * var string.
+     *
      * @ORM\Column(type="string")
      */
     private $command;
@@ -33,20 +34,22 @@ class Queue
     private $account;
 
     /**
-     * var string
+     * var string.
+     *
      * @ORM\Column(type="string")
      */
     private $entity;
 
     /**
-     * var string
+     * var string.
+     *
      * @ORM\Column(type="string")
      */
     private $finished;
 
-
     /**
-     * var JSON
+     * var JSON.
+     *
      * @ORM\Column(type="json")
      */
     private $params;
@@ -61,11 +64,13 @@ class Queue
 
     /**
      * @param mixed $id
+     *
      * @return Queue
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -79,11 +84,13 @@ class Queue
 
     /**
      * @param mixed $command
+     *
      * @return Queue
      */
     public function setCommand($command)
     {
         $this->command = $command;
+
         return $this;
     }
 
@@ -97,11 +104,13 @@ class Queue
 
     /**
      * @param Account $account
+     *
      * @return Queue
      */
-    public function setAccount(Account $account): Queue
+    public function setAccount(Account $account): self
     {
         $this->account = $account;
+
         return $this;
     }
 
@@ -115,11 +124,13 @@ class Queue
 
     /**
      * @param mixed $entity
+     *
      * @return Queue
      */
     public function setEntity($entity)
     {
         $this->entity = $entity;
+
         return $this;
     }
 
@@ -133,11 +144,13 @@ class Queue
 
     /**
      * @param mixed $finished
+     *
      * @return Queue
      */
     public function setFinished($finished)
     {
         $this->finished = $finished;
+
         return $this;
     }
 
@@ -151,11 +164,13 @@ class Queue
 
     /**
      * @param mixed $params
+     *
      * @return Queue
      */
     public function setParams($params)
     {
         $this->params = $params;
+
         return $this;
     }
 }

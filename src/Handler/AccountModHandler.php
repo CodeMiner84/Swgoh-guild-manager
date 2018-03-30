@@ -2,8 +2,6 @@
 
 namespace App\Handler;
 
-use App\Command\UserModCommand;
-use App\DBAL\Types\ModStats;
 use App\Entity\Account;
 use App\Entity\AccountMods;
 use App\Entity\Mod;
@@ -79,7 +77,7 @@ class AccountModHandler extends ApiHandler
             $secondary = $savedMod['secondary'];
             $template = [];
             $stats = $savedMod['stats'];
-            for ($slot = 1; $slot < 7; $slot++) {
+            for ($slot = 1; $slot < 7; ++$slot) {
                 $template[$slot] = $stats[$slot] ?? null;
             }
 

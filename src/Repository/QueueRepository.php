@@ -17,6 +17,7 @@ class QueueRepository extends ServiceEntityRepository
     {
         $date = new \DateTime();
         $date->modify('-3 hours');
+
         return $this->createQueryBuilder('q')
             ->where('q.command = :command')
             ->andWhere('q.account = :account')
