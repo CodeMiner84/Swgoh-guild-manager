@@ -5,7 +5,7 @@ const loadingType = () => ({
   type: types.IS_LOADING,
 })
 
-const syncType = (response) => ({
+const syncType = response => ({
   type: types.SYNCHRONIZE_ACCOUNT,
   payload: response.data,
 })

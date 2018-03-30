@@ -10,7 +10,7 @@ let AccountForm = (props) => {
     <form onSubmit={handleSubmit}>
       {saved &&
         <div className={'alert alert-success'}>
-          Form has been sucessfully updated.
+          Your data has beed saved.
         </div>
       }
       <div className="form-group">

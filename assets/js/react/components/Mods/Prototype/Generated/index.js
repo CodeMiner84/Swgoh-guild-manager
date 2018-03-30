@@ -10,7 +10,7 @@ class Generated extends React.Component {
     return (
       <div className={'row'}>
         <Container>
-          {Object.keys(generated).map(key => {
+          {Object.keys(generated).map((key) => {
             const secondary = stats[key] != undefined && stats[key].secondary != undefined ? this.props.mods.secondaryStats[stats[key].secondary] : this.props.secondary
 
             return (<Item

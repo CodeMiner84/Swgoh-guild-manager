@@ -6,9 +6,12 @@ import storage from 'redux-persist/es/storage'
 import reducer from '../reducer'
 
 const loggerMiddleware = createLogger()
-// const middleware = [thunk, loggerMiddleware]
-const middleware = [thunk]
+let middleware = [thunk, loggerMiddleware]
+/** @TODO remove bottom mmiddleware in future */
+middleware = [thunk]
+/*eslint-disable */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+/*eslint-enable */
 const configureStore = composeEnhancers(
   applyMiddleware(...middleware),
 )(createStore)

@@ -41,11 +41,6 @@ function modsReducer(state = initialState, action) {
         generated: action.payload,
       }
     case types.SYNCHRONIZE_USER_MODS:
-      console.log('MODSSS', {
-        ...state,
-        isLoading: false,
-        synchronizing: true,
-      });
       return {
         ...state,
         isLoading: false,

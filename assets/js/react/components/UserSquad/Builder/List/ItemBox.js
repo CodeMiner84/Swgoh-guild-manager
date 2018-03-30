@@ -1,3 +1,4 @@
+/* eslint disable */
 import styled from 'styled-components'
 
 export default styled.div`
@@ -27,3 +28,4 @@ export default styled.div`
     `
   }
 `
+/* eslint enable */
