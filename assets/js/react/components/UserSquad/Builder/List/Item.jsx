@@ -41,13 +41,13 @@ class RowItem extends React.Component {
 }
 
 RowItem.defaultProps = {
-  disabled: {},
+  disabled: false,
+  item: {},
 }
 
 RowItem.propTypes = {
   toggleHandle: PropTypes.func.isRequired,
-  item: PropTypes.shape.isRequired,
-  active: PropTypes.shape.isRequired,
+  item: PropTypes.shape(),
   disabled: PropTypes.bool,
 };
 

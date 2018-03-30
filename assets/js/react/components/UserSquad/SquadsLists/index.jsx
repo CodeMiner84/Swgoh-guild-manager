@@ -30,7 +30,8 @@ class UserSquadList extends React.Component {
     if (this.props.isLoading) {
       return <Loader />
     }
-    if (!this.props.user_squad)
+    const squads = this.props.user_squad
+    if (squads.length === 0)
     {
       return (
         <div className={'alert alert-warning'}>You don't have squad yet. Craete one&nbsp;
@@ -41,7 +42,7 @@ class UserSquadList extends React.Component {
 
     return (
       <div className={'list-group'}>
-        {this.props.user_squad.map((item) => <ListItem removeSquad={this.removeSquad} groupId={this.props.match.params.groupId} item={item} />)}
+        {squads.map((item) => <ListItem key={item.id} removeSquad={this.removeSquad} groupId={this.props.match.params.groupId} item={item} />)}
       </div>
     )
   }
@@ -57,9 +58,15 @@ const mapDispatchToProps = {
   remove: actions.removeSquad,
 }
 
+UserSquadList.defaultProps = {
+  match: [],
+  remove: () => {},
+};
+
 UserSquadList.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  remove: PropTypes.bool.isRequired,
+  remove: PropTypes.func,
+  match: PropTypes.shape(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactTimeout(UserSquadList));

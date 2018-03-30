@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 import { connect } from 'react-redux'
 import ReactTimeout from 'react-timeout'
 import actions from '../../../actions/user_squad'
-import actionsChar from '../../../actions/character';
+import actionsChar from '../../../actions/character'
 import List from './List/index'
 import Loader from '../../Loader/index'
 import Filtering from '../../Layout/filtering'
@@ -24,20 +24,20 @@ class Builder extends React.Component {
   componentDidMount() {
     if (undefined !== this.props.match.params.groupId && undefined !== this.props.match.params.id) {
       this.props.getCharacters().then(() => {
-      this.props.getCollection(this.props.match.params.groupId, this.props.match.params.id).then(() => {
-        const active = []
-        const chars = this.props.characters
+        this.props.getCollection(this.props.match.params.groupId, this.props.match.params.id).then(() => {
+          const active = []
+          const chars = this.props.characters
 
-        this.props.user_squad_collection.map(
+          this.props.user_squad_collection.map(
            character =>
              chars.map(char => (char.id === character.character.id ? active.push(char) : null)),
          )
 
-        this.setState({
-          active,
-          loading: false,
+          this.setState({
+            active,
+            loading: false,
+          })
         })
-      })
       }, this)
     }
   }
@@ -144,7 +144,7 @@ class Builder extends React.Component {
                 phrase={this.state.phrase}
                 characters={this.props.characters}
                 toggleHandle={this.toggleHandle}
-                disabled={this.props.disabled}
+                disabled={Object.keys(this.props.disabled).length > 0 ? this.props.disabled : {}}
                 squadType={squad !== undefined ? squad.type : null}
               />
             </div>
@@ -167,7 +167,7 @@ const selector = createSelector(
     user_squad_collection: user_squad_collection.data,
     disabled: user_squad_collection.diff,
     isLoading,
-    squads: squads,
+    squads,
   }),
 )
 
@@ -183,18 +183,24 @@ const mapDispatchToProps = {
 
 Builder.defaultProps = {
   isLoading: false,
+  getSquad: () => {},
+  saveSquad: () => {},
+  setTimeout: () => {},
+  getCollection: () => {},
+  match: [],
+  characters: [],
+  user_squad_collection: [],
 }
 
 Builder.propTypes = {
-  saveSquad: PropTypes.func.isRequired,
-  getSquad: PropTypes.func.isRequired,
-  match: PropTypes.shape.isRequired,
-  characters: PropTypes.shape.isRequired,
-  user_squad_collection: PropTypes.shape.isRequired,
+  saveSquad: PropTypes.func,
+  getSquad: PropTypes.func,
+  match: PropTypes.shape(),
+  characters: PropTypes.arrayOf(PropTypes.shape()),
+  user_squad_collection: PropTypes.shape(),
   isLoading: PropTypes.bool,
-  getCollection: PropTypes.func.isRequired,
-  setTimeout: PropTypes.func.isRequired,
-  disabled: PropTypes.shape.isRequired,
+  getCollection: PropTypes.func,
+  setTimeout: PropTypes.func,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactTimeout(Builder))

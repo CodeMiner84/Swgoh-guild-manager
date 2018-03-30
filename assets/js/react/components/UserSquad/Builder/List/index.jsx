@@ -32,7 +32,7 @@ class List extends React.Component {
     return (
       <div className="row">
         {items.map(item => <Item
-          key={item.code}
+          key={item.id}
           active={this.props.active}
           toggleHandle={obj => this.props.toggleHandle(obj)}
           item={item}
@@ -44,16 +44,19 @@ class List extends React.Component {
 }
 
 List.defaultProps = {
-
+  disabled: {},
+  active: [],
+  characters: [],
+  squadType: 0,
 }
 
 List.propTypes = {
   toggleHandle: PropTypes.func.isRequired,
-  active: PropTypes.shape.isRequired,
-  squadType: PropTypes.shape.isRequired,
-  characters: PropTypes.shape.isRequired,
+  active: PropTypes.arrayOf(PropTypes.shape()),
+  squadType: PropTypes.number,
+  characters: PropTypes.arrayOf(PropTypes.shape()),
   phrase: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.shape(),
 }
 
 export default List

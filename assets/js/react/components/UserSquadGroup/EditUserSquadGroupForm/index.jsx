@@ -82,13 +82,15 @@ EditForm.propTypes = {
 }
 
 EditForm.defaultProps = {
-
+  match: {},
+  user_squad_groups: [],
 }
 
 EditForm.propTypes = {
   history: PropTypes.shape(historyPropTypes).isRequired,
   user_squad_group: PropTypes.shape().isRequired,
-  match: PropTypes.shape().isRequired,
+  match: PropTypes.shape(),
+  user_squad_groups: PropTypes.arrayOf(PropTypes.shape()),
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditForm)

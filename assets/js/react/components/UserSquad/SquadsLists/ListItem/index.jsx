@@ -1,6 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Redirect } from 'react-router-dom'
 import FontAwesome from 'react-fontawesome'
 import { Button } from 'react-bootstrap'
 import { confirmAlert } from 'react-confirm-alert'
@@ -50,7 +50,7 @@ class ListItem extends React.Component {
             </div>
             }
             {Object.keys(item.user_squad_collection).length > 0 &&
-              <MiniList items={item.user_squad_collection} />
+              <MiniList key={item.id} items={item.user_squad_collection} />
             }
           </div>
         </div>
@@ -58,5 +58,14 @@ class ListItem extends React.Component {
     )
   }
 }
+
+ListItem.defaultProps = {
+  item: {},
+  groupId: 0,
+};
+
+ListItem.propTypes = {
+  groupId: PropTypes.string,
+};
 
 export default ListItem

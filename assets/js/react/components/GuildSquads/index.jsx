@@ -74,10 +74,11 @@ const mapDispatchToProps = {
 GuildSquads.defaultProps = {
   auth: false,
   phrase: '',
+  updateAccount: () => {},
 }
 
 GuildSquads.propTypes = {
-  updateAccount: PropTypes.func.isRequired,
+  updateAccount: PropTypes.func,
   auth: PropTypes.shape(),
   phrase: PropTypes.string,
 }

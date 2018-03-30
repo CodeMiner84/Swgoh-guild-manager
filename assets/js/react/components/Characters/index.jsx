@@ -30,6 +30,7 @@ Characters.defaultProps = {
 };
 
 Characters.propTypes = {
+  characters: PropTypes.shape.isRequired,
   phrase: PropTypes.string,
   getAll: PropTypes.func.isRequired,
 };

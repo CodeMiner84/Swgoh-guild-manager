@@ -80,12 +80,15 @@ const mapDispatchToProps = {
 GuildSquads.defaultProps = {
   auth: false,
   phrase: '',
+  createSquad: () => {},
+  match: [],
 }
 
 GuildSquads.propTypes = {
-  updateAccount: PropTypes.func.isRequired,
   auth: PropTypes.shape(),
   phrase: PropTypes.string,
+  createSquad: PropTypes.func,
+  match: PropTypes.shape(),
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuildSquads)

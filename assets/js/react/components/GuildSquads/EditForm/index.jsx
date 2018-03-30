@@ -84,13 +84,13 @@ BuildForm.propTypes = {
 }
 
 BuildForm.defaultProps = {
-
+  match: [],
 }
 
 BuildForm.propTypes = {
   history: PropTypes.shape(historyPropTypes).isRequired,
-  guild_squads: PropTypes.shape().isRequired,
-  match: PropTypes.shape().isRequired,
+  guild_squads: PropTypes.shape.isRequired,
+  match: PropTypes.shape(),
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildForm)

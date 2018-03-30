@@ -14,94 +14,94 @@ class Dashboard extends React.Component {
       width: '320',
       playerVars: {
         autoplay: 0,
-      }
+      },
     };
 
     return (
       <div>
         <List>
-          <li>
-            <b>Why do I need to register ?</b><br/>
-            Registration allow you to connect with swgoh.gg profile and have your own data.
-          </li>
-          <li>
-            <b>My e-mail address is using for some marketing stuff ?</b><br/>
-            No, e-mail is sued only for registration process. No newsletter will be send, no third party company has access to it. Your email is safe and it's private.
-          </li>
-          <li>
-            <b>Where my data comes from ?</b><br/>
-            All data is fetched from http://swgoh.gg, and if your profile needs to be public. If not - then your data won't fetch.
-          </li>
-          <li>
-            <b>Where can I connect my from with swgoh.gg ?</b><br/>
-            <Link to={'/account'}>Here</Link> you can link your profile. <br/>
-            <YouTube
-              videoId="ZcrrHe-FsYA"
-              opts={opts}
-            />
-          </li>
-          <li>
-            <b>What do I need to link my profile ?</b><br/>
-            You only need to know your nickname from this path: https://swgoh.gg/u/YOUR_USERNAME
-          </li>
-          <li>
-            <b>What do I need to link my guild ?</b><br/>
-            You need both guild ID and guild ALIAS, also from swgoh.gg from pattern https://swgoh.gg/g/GUILD_ID/GUILD_ALIAS/
-          </li>
-          <li>
-            <b>How can I sync my data ?</b><br/>
-            One you type your nickname your data is synchronize in background after user click on red button Synchronize data <Link to={'/account'}>Here</Link>. After click data will be fetch more or less in few minutes.
-          </li>
-          <li>
-            <b>How can I fetch my mods ?</b><br/>
-            Mods module is <Link to={'/mods'}>HERE</Link>. You can also synchronize your mods the same like account.
-          </li>
-          <li>
-            <b>How can I suits the best mods ?</b><br/>
-            After your mods are synchronized you need to add mod template.<br/>
-            Then you can set up each mod type (Potency, Health etc) in each six slots. Each slot coresponding to the same position in game.<br/>
-            After click on spot you see a modal where you can set up type, primary or secondary stats for each slot. <br/>
-            If you don't set up primary and secondary stats for each slot separately you can do this globally for template by selecting one of available value in primary and secondary select placed next to mod template.
-            When your template are done - hit SAVE & GENERATE button. System will automatically suits the best mods acording to selected stats.
-            <br/><YouTube
-              videoId="Ce06lQ8Oozc"
-              opts={opts}
-            />
-          </li>
-          <li>
-            <b>What will happend when I generate mods without setting anything except globall secondary stat ?</b><br/>
-            System find the best mods for you. But only secondary / priamry stats. The percentage boost from mode isn't calculated.
-          </li>
-          <li>
-            <b>Is percentage stats of mods are calculating ?</b><br/>
-            No only primary / secondary stats are matter. For example system don't see difference in speed betwen 4 healt and 4 speed mods.
-          </li>
-          <li>
-            <b>User squad - whats for ?</b><br/>
-            You can group your squads per TB / TW / Sith raid or whatever. Each group can have their own squads, but one toon can be set once in each group.
-          </li>
-          <li>
-            <b>What do I need user squads ?</b><br/>
-            If you have wide squad and sometime you add one toon to few squads and then need to edit and check what toon is in used than this will help you to manage this. <br/>
-            You can set as many squads you want, and then you can easily set up your rooster in game.
-            <br/><YouTube
-              videoId="HEq2KuklAEc"
-              opts={opts}
-            />
-          </li>
-          <li>
-            <b>Guild squad - whats for ?</b><br/>
-            You can use it in many ways. Guild leader can manage squad for territory battles between guilds. After you set up squad for example Nighsisters you can check how many ppl in guild have this squad. <br/>
-            This is usefull also for Sith raid when you need to check how many JTR squad did your guild have ...
-          </li>
-          <li>
-            <b>Guild squad - full squad option - what is it ?</b><br/>
-            Sometimes you need squad that can be build from more that 5 toons. At the begining of the game there was only 5 resistance character and you can't match other toon for this squad. Now there is a lot more and by checking this full squad option and you will set up squad with more than 5 toons, than in your <Link to={'/guild'}>guild module</Link> you will see the 5 best toons of this squad in each guild member. <br/>
-            <br/><YouTube
-            videoId="rlo3IEz5lBQ"
-            opts={opts}
-          />
-          </li>
+          {/*<li>*/}
+            {/*<b>Why do I need to register ?</b><br/>*/}
+            {/*Registration allow you to connect with swgoh.gg profile and have your own data.*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>My e-mail address is using for some marketing stuff ?</b><br/>*/}
+            {/*No, e-mail is sued only for registration process. No newsletter will be send, no third party company has access to it. Your email is safe and it's private.*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>Where my data comes from ?</b><br/>*/}
+            {/*All data is fetched from http://swgoh.gg, and if your profile needs to be public. If not - then your data won't fetch.*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>Where can I connect my from with swgoh.gg ?</b><br/>*/}
+            {/*<Link to={'/account'}>Here</Link> you can link your profile. <br/>*/}
+            {/*<YouTube*/}
+              {/*videoId="ZcrrHe-FsYA"*/}
+              {/*opts={opts}*/}
+            {/*/>*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>What do I need to link my profile ?</b><br/>*/}
+            {/*You only need to know your nickname from this path: https://swgoh.gg/u/YOUR_USERNAME*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>What do I need to link my guild ?</b><br/>*/}
+            {/*You need both guild ID and guild ALIAS, also from swgoh.gg from pattern https://swgoh.gg/g/GUILD_ID/GUILD_ALIAS/*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>How can I sync my data ?</b><br/>*/}
+            {/*One you type your nickname your data is synchronize in background after user click on red button Synchronize data <Link to={'/account'}>Here</Link>. After click data will be fetch more or less in few minutes.*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>How can I fetch my mods ?</b><br/>*/}
+            {/*Mods module is <Link to={'/mods'}>HERE</Link>. You can also synchronize your mods the same like account.*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>How can I suits the best mods ?</b><br/>*/}
+            {/*After your mods are synchronized you need to add mod template.<br/>*/}
+            {/*Then you can set up each mod type (Potency, Health etc) in each six slots. Each slot coresponding to the same position in game.<br/>*/}
+            {/*After click on spot you see a modal where you can set up type, primary or secondary stats for each slot. <br/>*/}
+            {/*If you don't set up primary and secondary stats for each slot separately you can do this globally for template by selecting one of available value in primary and secondary select placed next to mod template.*/}
+            {/*When your template are done - hit SAVE & GENERATE button. System will automatically suits the best mods acording to selected stats.*/}
+            {/*<br/><YouTube*/}
+              {/*videoId="Ce06lQ8Oozc"*/}
+              {/*opts={opts}*/}
+            {/*/>*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>What will happend when I generate mods without setting anything except globall secondary stat ?</b><br/>*/}
+            {/*System find the best mods for you. But only secondary / priamry stats. The percentage boost from mode isn't calculated.*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>Is percentage stats of mods are calculating ?</b><br/>*/}
+            {/*No only primary / secondary stats are matter. For example system don't see difference in speed betwen 4 healt and 4 speed mods.*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>User squad - whats for ?</b><br/>*/}
+            {/*You can group your squads per TB / TW / Sith raid or whatever. Each group can have their own squads, but one toon can be set once in each group.*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>What do I need user squads ?</b><br/>*/}
+            {/*If you have wide squad and sometime you add one toon to few squads and then need to edit and check what toon is in used than this will help you to manage this. <br/>*/}
+            {/*You can set as many squads you want, and then you can easily set up your rooster in game.*/}
+            {/*<br/><YouTube*/}
+              {/*videoId="HEq2KuklAEc"*/}
+              {/*opts={opts}*/}
+            {/*/>*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>Guild squad - whats for ?</b><br/>*/}
+            {/*You can use it in many ways. Guild leader can manage squad for territory battles between guilds. After you set up squad for example Nighsisters you can check how many ppl in guild have this squad. <br/>*/}
+            {/*This is usefull also for Sith raid when you need to check how many JTR squad did your guild have ...*/}
+          {/*</li>*/}
+          {/*<li>*/}
+            {/*<b>Guild squad - full squad option - what is it ?</b><br/>*/}
+            {/*Sometimes you need squad that can be build from more that 5 toons. At the begining of the game there was only 5 resistance character and you can't match other toon for this squad. Now there is a lot more and by checking this full squad option and you will set up squad with more than 5 toons, than in your <Link to={'/guild'}>guild module</Link> you will see the 5 best toons of this squad in each guild member. <br/>*/}
+            {/*<br/><YouTube*/}
+            {/*videoId="rlo3IEz5lBQ"*/}
+            {/*opts={opts}*/}
+          {/*/>*/}
+          {/*</li>*/}
         </List>
       </div>
     )

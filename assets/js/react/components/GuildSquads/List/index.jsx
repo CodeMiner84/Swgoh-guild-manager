@@ -37,7 +37,7 @@ class List extends React.Component {
         </div>
         }
         <div className={'list-group'}>
-          {this.props.guild_squads.map((item) => <ListItem removeSquad={this.removeSquad} item={item} />)}
+          {this.props.guild_squads.map((item) => <ListItem key={item.id} removeSquad={this.removeSquad} item={item} />)}
         </div>
       </div>
     )

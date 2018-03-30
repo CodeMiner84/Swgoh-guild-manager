@@ -102,15 +102,16 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   updateAccount: actions.updateAccount,
   syncAccount: actions.synchronizeAccount,
-  getAccount: actionsAccount  .getAccount,
+  getAccount: actionsAccount.getAccount,
 }
 
 Dashboard.defaultProps = {
   auth: false,
+  updateAccount: () => {},
 }
 
 Dashboard.propTypes = {
-  updateAccount: PropTypes.func.isRequired,
+  updateAccount: PropTypes.func,
   auth: PropTypes.shape(),
 }
 

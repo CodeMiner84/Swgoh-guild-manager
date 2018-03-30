@@ -32,7 +32,7 @@ let SquadForm = (props) => {
           placeholder={'Full Squad'}
           className={'checkbox'}
         />
-        <small id="emailHelp" class="form-text text-muted">By checking this option all of your toon in this squad will be shown in guild squad. By default only power of 5 strongest characters will count</small>
+        <small id="emailHelp" className="form-text text-muted">By checking this option all of your toon in this squad will be shown in guild squad. By default only power of 5 strongest characters will count</small>
       </div>
       <div>
         <button type={'submit'} disabled={pristine || submitting} className={'btn btn-primary btn-sm'}>Save</button>

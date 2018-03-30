@@ -170,12 +170,13 @@ const mapDispatchToProps = {
 
 Builder.defaultProps = {
   isLoading: false,
+  match: [],
 }
 
 Builder.propTypes = {
   saveSquad: PropTypes.func.isRequired,
   getSquad: PropTypes.func.isRequired,
-  match: PropTypes.shape.isRequired,
+  match: PropTypes.shape(),
   characters: PropTypes.shape.isRequired,
   squad: PropTypes.shape.isRequired,
   isLoading: PropTypes.bool,
