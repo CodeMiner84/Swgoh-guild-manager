@@ -9,6 +9,7 @@ import actions from '../../actions/mods'
 import Loader from '../Loader/index'
 import Buttons from './Prototype/components/Buttons'
 import SaveButton from './Prototype/components/SaveButton'
+import Tip from './Prototype/components/Tip'
 
 class Mods extends React.Component {
   constructor(props) {
@@ -129,7 +130,9 @@ class Mods extends React.Component {
     return (
       <div >
         <div className="row">
-
+          <Tip>
+            <span className={'badge badge-light'}>TIP</span> Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
+          </Tip>
           <div className="col-12">
             <button className={'btn btn-info mr-20'} onClick={this.addPrototype}>+ Add mod template</button>
             <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>
