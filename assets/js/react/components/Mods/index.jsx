@@ -130,10 +130,10 @@ class Mods extends React.Component {
       <div >
         <div className="row">
 
-          <divstats className="col-12">
+          <div className="col-12">
             <button className={'btn btn-info mr-20'} onClick={this.addPrototype}>+ Add mod template</button>
             <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>
-          </divstats>
+          </div>
           <div className="col-12">
             <Buttons>
               <SaveButton className={'btn btn-success'} onClick={this.generate}>Save & Generate</SaveButton>
