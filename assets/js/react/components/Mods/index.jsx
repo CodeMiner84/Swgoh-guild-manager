@@ -6,10 +6,12 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import Prototype from './Prototype'
 import actions from '../../actions/mods'
+import userActions from '../../actions/account'
 import Loader from '../Loader/index'
 import Buttons from './Prototype/components/Buttons'
 import SaveButton from './Prototype/components/SaveButton'
 import Tip from './Prototype/components/Tip'
+import Exclude from './components/Exclude'
 
 class Mods extends React.Component {
   constructor(props) {
@@ -25,6 +27,7 @@ class Mods extends React.Component {
 
   componentDidMount() {
     this.props.getModsSettings()
+    this.props.fetchUserCharacter()
     this.props.getMods().then((response) => {
       if (this.props.mods) {
         const mods = this.props.mods.mods
@@ -131,8 +134,9 @@ class Mods extends React.Component {
       <div >
         <div className="row">
           <Tip>
-            <span className={'badge badge-light'}>TIP</span> Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
+            <div className={'badge badge-light'}>TIP</div> Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
           </Tip>
+          <Exclude characters={this.props.userCharacters} />
           <div className="col-12">
             <button className={'btn btn-info mr-20'} onClick={this.addPrototype}>+ Add mod template</button>
             <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>
@@ -161,6 +165,7 @@ class Mods extends React.Component {
 const getModsSettings = () => state => state.mods.settings
 const getUserMods = () => state => state.mods.mods
 const getGeneratedMods = () => state => state.mods.generated
+const getChars = () => state => state.account.userCharacters
 
 const selector = createSelector(
   [getModsSettings(), getUserMods(), getGeneratedMods()],
@@ -169,9 +174,17 @@ const selector = createSelector(
   }),
 )
 
+const characterSelector = createSelector(
+  [getChars()],
+  userCharacters => ({
+    userCharacters,
+  }),
+)
+
 function mapStateToProps(state) {
   return {
     mods: selector(state),
+    userCharacters: characterSelector(state).userCharacters,
   }
 }
 
@@ -181,6 +194,7 @@ const mapDispatchToProps = {
   getMods: actions.getMods,
   generate: actions.generate,
   synchronizeMods: actions.synchronizeMods,
+  fetchUserCharacter: userActions.fetchPersonalCollection,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactTimeout(Mods))

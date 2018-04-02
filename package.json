@@ -31,6 +31,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
     "react-table": "^6.8.0",
+    "react-tag-input": "^4.9.1",
     "react-timeout": "^1.1.1",
     "react-tippy": "^1.2.2",
     "react-youtube": "^7.5.0",
