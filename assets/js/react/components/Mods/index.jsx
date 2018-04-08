@@ -23,6 +23,7 @@ class Mods extends React.Component {
 
     this.protRef = null
     this.number = 0
+    this.excludedToons= {}
   }
 
   componentDidMount() {
@@ -45,6 +46,7 @@ class Mods extends React.Component {
     this.setState({
       stats: updatedStats,
     })
+
   }
 
   addPrototype = (key, map) => {
@@ -105,7 +107,7 @@ class Mods extends React.Component {
   }
 
   generate = () => {
-    this.props.saveMods(this.getStats()).then(() => this.props.generate())
+    this.props.saveMods(this.getStats(), this.excludedToons).then(() => this.props.generate())
   }
 
   synchronizeMods = () => {
@@ -116,6 +118,10 @@ class Mods extends React.Component {
         this.syncAlert(false)
       }
     }, this)
+  }
+
+  excludeCharacters = (excludedToons) => {
+    this.excludedToons = excludedToons
   }
 
   syncAlert = (success) => {
@@ -136,7 +142,7 @@ class Mods extends React.Component {
           <Tip>
             <div className={'badge badge-light'}>TIP</div> Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
           </Tip>
-          <Exclude characters={this.props.userCharacters} />
+          <Exclude characters={this.props.userCharacters} excludeCharacters={this.excludeCharacters} />
           <div className="col-12">
             <button className={'btn btn-info mr-20'} onClick={this.addPrototype}>+ Add mod template</button>
             <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>

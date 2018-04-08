@@ -44,12 +44,16 @@ class Exclude extends React.Component {
   }
 
   handleAddition(tag) {
+    console.log('additon', tag);
     const tags = this.state.tags
     tags.push({
       id: tags.length + 1,
       text: tag,
     })
     this.setState({ tags })
+    console.log('addddd');
+    this.props.excludeCharacters(tags);
+
   }
 
   handleDrag(tag, currPos, newPos) {
@@ -61,6 +65,9 @@ class Exclude extends React.Component {
 
     // re-render
     this.setState({ tags })
+
+console.log('handle Dra');
+    console.log('tags', tags);
   }
 
   handleSuggestion = (textInputValue, possibleSuggestionsArray) =>

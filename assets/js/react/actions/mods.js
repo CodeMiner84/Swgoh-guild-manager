@@ -33,13 +33,13 @@ function generate() {
   }
 }
 
-function saveMods(params) {
+function saveMods(templates, excludedToons) {
   return (dispatch) => {
     dispatch({
       type: types.REQUEST_MODS,
     })
 
-    return post('/api/mod/save', params)
+    return post('/api/mod/save', {templates, excludedToons})
       .then((response) => {
         dispatch({
           type: types.SAVE_MODS,

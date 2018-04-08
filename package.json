@@ -7,7 +7,7 @@
     "lint": "eslint --ext .jsx --ext .js assets/js"
   },
   "dependencies": {
-    "auth0-js": "^9.4.1",
+    "auth0-js": "^9.4.2",
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.0.0",
@@ -17,11 +17,11 @@
     "lodash": "^4.17.5",
     "path-to-regexp": "^2.2.0",
     "prop-types": "^15.6.1",
-    "react": "^16.2.0",
+    "react": "^16.3.1",
     "react-bootstrap": "^0.32.1",
     "react-confirm-alert": "^1.0.8",
-    "react-dom": "^16.2.0",
-    "react-feather": "^1.0.8",
+    "react-dom": "^16.3.1",
+    "react-feather": "^1.1.0",
     "react-fontawesome": "^1.6.1",
     "react-forms": "^1.0.0-rc6",
     "react-ga": "^2.4.1",
@@ -49,10 +49,10 @@
     "uuid": "^3.2.1",
     "validator": "^7.0.0",
     "warning": "^3.0.0",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.17.1",
+    "@symfony/webpack-encore": "github:symfony/webpack-encore",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
@@ -73,7 +73,7 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-jsx-a11y": "^3.0.2 || ^4.0.0",
     "eslint-plugin-react": "^6.9.0",
     "font-awesome": "^4.7.0",

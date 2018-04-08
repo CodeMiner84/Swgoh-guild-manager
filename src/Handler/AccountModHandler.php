@@ -35,13 +35,15 @@ class AccountModHandler extends ApiHandler
      */
     public function saveUserMods(array $params, array $groups)
     {
+        list($templates, $excluded) = $params;
         if ($accountMods = $this->repository->findOneByAccount($this->user->getId())) {
-            $accountMods->setMods(json_encode($params));
+            //$accountMods->setMods(json_encode($templates), $excluded);
             $this->em->flush();
         } else {
             $accountMods = new AccountMods();
             $accountMods->setAccount($this->user);
-            $accountMods->setMods(json_encode($params));
+            $accountMods->setMods(json_encode($templates));
+            //$accountMods->setExcluded($excluded);
 
             $this->em->persist($accountMods);
             $this->em->flush();

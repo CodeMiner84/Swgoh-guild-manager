@@ -32,6 +32,15 @@ class AccountMods
     private $mods;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Character")
+     * @JoinTable(name="character",
+     *      joinColumns={@JoinColumn(name="account_mod_1", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="character_id", referencedColumnName="id")}
+     *      )
+     */
+    private $excludedCharacters;
+
+    /**
      * Get id.
      *
      * @return int
