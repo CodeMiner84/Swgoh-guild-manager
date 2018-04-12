@@ -38,8 +38,10 @@ function saveMods(templates, excludedToons) {
     dispatch({
       type: types.REQUEST_MODS,
     })
+    
+    templates['excluded'] = excludedToons
 
-    return post('/api/mod/save', {templates, excludedToons})
+    return post('/api/mod/save', templates)
       .then((response) => {
         dispatch({
           type: types.SAVE_MODS,

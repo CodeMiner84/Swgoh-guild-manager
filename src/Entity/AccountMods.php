@@ -32,11 +32,10 @@ class AccountMods
     private $mods;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Character")
-     * @JoinTable(name="character",
-     *      joinColumns={@JoinColumn(name="account_mod_1", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="character_id", referencedColumnName="id")}
-     *      )
+     * @ORM\Column(type="json_array")
+     *
+     * @JMS\Groups({"account_mods"})
+     * @JMS\Expose
      */
     private $excludedCharacters;
 
@@ -96,5 +95,17 @@ class AccountMods
     public function getAccount()
     {
         return $this->account;
+    }
+
+    public function getExcludedCharacters()
+    {
+        return $this->excludedCharacters;
+    }
+
+    public function setExcludedCharacters($excludedCharacters): self
+    {
+        $this->excludedCharacters = $excludedCharacters;
+
+        return $this;
     }
 }

@@ -31,9 +31,10 @@ class Mods extends React.Component {
     this.props.fetchUserCharacter()
     this.props.getMods().then((response) => {
       if (this.props.mods) {
+        console.log('this.props', this.props);
         const mods = this.props.mods.mods
         this.setState({
-          stats: mods,
+          stats: this.props.mods.mods,
         })
       }
     })
@@ -135,6 +136,8 @@ class Mods extends React.Component {
     if (this.props.isLoading) {
       return <Loader />
     }
+    
+    console.log('this.props.mods.excluded_characters', this.props.mods);
 
     return (
       <div >
@@ -170,13 +173,14 @@ class Mods extends React.Component {
 
 const getModsSettings = () => state => state.mods.settings
 const getUserMods = () => state => state.mods.mods
+const getExcludedToons = () => state => state.mods
 const getGeneratedMods = () => state => state.mods.generated
 const getChars = () => state => state.account.userCharacters
 
 const selector = createSelector(
-  [getModsSettings(), getUserMods(), getGeneratedMods()],
-  (settings, mods, generated) => ({
-    settings, mods, generated,
+  [getModsSettings(), getUserMods(), getGeneratedMods(), getExcludedToons()],
+  (settings, mods, generated, excluded) => ({
+    settings, mods, generated, excluded
   }),
 )
 

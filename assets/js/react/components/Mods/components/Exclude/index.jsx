@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import { WithContext as ReactTags } from 'react-tag-input'
 import Tag from './Tag'
 import TagLabel from './TagLabel'
@@ -27,7 +27,7 @@ class Exclude extends React.Component {
       const characters = []
       Object.keys(toons).map((key) => {
         suggestions.push(toons[key].character.name)
-        characters.push(toons[key].character.id)
+        characters[toons[key].character.name] = toons[key].character.id
       })
 
       this.setState({
@@ -44,16 +44,16 @@ class Exclude extends React.Component {
   }
 
   handleAddition(tag) {
-    console.log('additon', tag);
     const tags = this.state.tags
     tags.push({
       id: tags.length + 1,
       text: tag,
     })
     this.setState({ tags })
-    console.log('addddd');
-    this.props.excludeCharacters(tags);
-
+    const list = []
+    Object.keys(tags).map(key => list.push(this.state.characters[tags[key].text]))
+    
+    this.props.excludeCharacters(list);
   }
 
   handleDrag(tag, currPos, newPos) {
@@ -65,9 +65,6 @@ class Exclude extends React.Component {
 
     // re-render
     this.setState({ tags })
-
-console.log('handle Dra');
-    console.log('tags', tags);
   }
 
   handleSuggestion = (textInputValue, possibleSuggestionsArray) =>
@@ -108,7 +105,16 @@ console.log('handle Dra');
       </Tag>
     )
   }
-
 }
+
+Exclude.defaultProps = {
+  excludeCharacters: () => {},
+  characters: [],
+};
+
+Exclude.propTypes = {
+  excludeCharacters: PropTypes.func,
+  characters: PropTypes.arrayOf(PropTypes.shape()),
+};
 
 export default Exclude
