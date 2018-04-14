@@ -38,7 +38,7 @@ function saveMods(templates, excludedToons) {
     dispatch({
       type: types.REQUEST_MODS,
     })
-    
+
     templates['excluded'] = excludedToons
 
     return post('/api/mod/save', templates)
@@ -60,7 +60,13 @@ function getMods() {
     return get('/api/mod/get')
       .then(response => dispatch({
         type: types.RECV_MODS,
-        payload: response.data.data[0] ? JSON.parse(response.data.data[0].mods) : {},
+        payload: response.data.data[0] ? {
+          mods: JSON.parse(response.data.data[0].mods),
+          excluded_characters: response.data.data[0].excluded_characters
+        } : {
+          mod: {},
+          excluded_characters: {},
+        },
       }))
   }
 }

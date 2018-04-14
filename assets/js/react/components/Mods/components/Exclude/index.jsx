@@ -19,20 +19,32 @@ class Exclude extends React.Component {
     this.handleDrag = this.handleDrag.bind(this)
   }
 
-
   componentDidMount(props) {
     const toons = this.props.characters
+    const tags = []
     if (Object.keys(toons).length > 0) {
-      const suggestions = []
+      const suggestions = [ ]
       const characters = []
       Object.keys(toons).map((key) => {
         suggestions.push(toons[key].character.name)
         characters[toons[key].character.name] = toons[key].character.id
+
+        Object.keys(this.props.excluded).filter(exKey=> {
+          if (this.props.excluded[exKey] ===  toons[key].character.id) {
+            tags.push({
+              id: toons[key].character.id,
+              text: toons[key].character.name,
+            });
+          }
+        })
       })
+
+      this.props.excludeCharacters(this.props.excluded);
 
       this.setState({
         suggestions,
         characters,
+        tags,
       })
     }
   }
@@ -41,6 +53,10 @@ class Exclude extends React.Component {
     const tags = this.state.tags
     tags.splice(i, 1)
     this.setState({ tags })
+
+    const list = []
+    Object.keys(tags).map(key => list.push(this.state.characters[tags[key].text]))
+    this.props.excludeCharacters(list);
   }
 
   handleAddition(tag) {
@@ -52,7 +68,7 @@ class Exclude extends React.Component {
     this.setState({ tags })
     const list = []
     Object.keys(tags).map(key => list.push(this.state.characters[tags[key].text]))
-    
+
     this.props.excludeCharacters(list);
   }
 

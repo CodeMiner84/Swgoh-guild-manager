@@ -136,8 +136,9 @@ class Mods extends React.Component {
     if (this.props.isLoading) {
       return <Loader />
     }
-    
-    console.log('this.props.mods.excluded_characters', this.props.mods);
+
+
+    console.log('this.props.mods.excluded_characters', this.props.mods.excluded_characters);
 
     return (
       <div >
@@ -145,7 +146,7 @@ class Mods extends React.Component {
           <Tip>
             <div className={'badge badge-light'}>TIP</div> Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
           </Tip>
-          <Exclude characters={this.props.userCharacters} excludeCharacters={this.excludeCharacters} />
+          <Exclude characters={this.props.userCharacters} excluded={this.props.mods.excluded_characters} excludeCharacters={this.excludeCharacters} />
           <div className="col-12">
             <button className={'btn btn-info mr-20'} onClick={this.addPrototype}>+ Add mod template</button>
             <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>
@@ -173,15 +174,22 @@ class Mods extends React.Component {
 
 const getModsSettings = () => state => state.mods.settings
 const getUserMods = () => state => state.mods.mods
-const getExcludedToons = () => state => state.mods
 const getGeneratedMods = () => state => state.mods.generated
 const getChars = () => state => state.account.userCharacters
 
 const selector = createSelector(
-  [getModsSettings(), getUserMods(), getGeneratedMods(), getExcludedToons()],
-  (settings, mods, generated, excluded) => ({
-    settings, mods, generated, excluded
-  }),
+  [getModsSettings(), getUserMods(), getGeneratedMods()],
+  (settings, modData, generated) => {
+    if (modData === undefined) {
+      modData = {
+        mods: {},
+        excluded_characters: {},
+      }
+    }
+    return {
+      settings, mods: modData.mods, generated, excluded_characters: modData.excluded_characters
+    }
+  },
 )
 
 const characterSelector = createSelector(

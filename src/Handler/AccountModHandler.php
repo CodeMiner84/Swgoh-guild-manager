@@ -80,6 +80,7 @@ class AccountModHandler extends ApiHandler
 
         $savedMods = json_decode($mods->getMods(), true);
 
+        $excluded = $mods->getExcludedCharacters();
         $return = [];
         $modUuids = [];
         foreach ($savedMods as $key => $savedMod) {
@@ -93,7 +94,7 @@ class AccountModHandler extends ApiHandler
 
             $tmp = [];
             foreach ($template as $slot => $mod) {
-                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $mod, $slot, $modUuids, $primary, $secondary);
+                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $mod, $excluded, $slot, $modUuids, $primary, $secondary);
                 $modUuids[$tmp[$slot]['uuid']] = $tmp[$slot]['uuid'];
             }
             $return[$key] = $tmp;

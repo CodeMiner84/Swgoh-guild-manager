@@ -25,7 +25,7 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
         ;
     }
 
-    public function findBestMod(int $accountId, ?array $params, ?string $slot, array $existed, ?string $globalPrimary, ?string $globalSecondary)
+    public function findBestMod(int $accountId, ?array $params, ?array $excluded, ?string $slot, array $existed, ?string $globalPrimary, ?string $globalSecondary)
     {
         $mod = $params['mod'];
         $primary = $params['primary'];
@@ -50,6 +50,11 @@ class ModRepository extends ServiceEntityRepository implements RepositoryInterfa
             ->where('m.user = :account')
             ->setParameter('account', $accountId)
         ;
+
+        if (count($excluded) > 0) {
+            $query
+                ->andWhere($qb->expr()->notIn('character.id', $excluded));
+        }
 
         if ($mod) {
             $query->andWhere('m.type = :type')
