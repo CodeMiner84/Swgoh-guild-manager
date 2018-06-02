@@ -16,7 +16,6 @@ function get(url, params) {
     )
 }
 function post(url, params) {
-  console.log('parameters in request ', params);
   return axios.post(url, {
     ...params,
   },

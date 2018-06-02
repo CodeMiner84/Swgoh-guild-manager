@@ -31,7 +31,6 @@ class Mods extends React.Component {
     this.props.fetchUserCharacter()
     this.props.getMods().then((response) => {
       if (this.props.mods) {
-        console.log('this.props', this.props);
         const mods = this.props.mods.mods
         this.setState({
           stats: this.props.mods.mods,
@@ -136,9 +135,6 @@ class Mods extends React.Component {
     if (this.props.isLoading) {
       return <Loader />
     }
-
-
-    console.log('this.props.mods.excluded_characters', this.props.mods.excluded_characters);
 
     return (
       <div >
