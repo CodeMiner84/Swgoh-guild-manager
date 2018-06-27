@@ -69,8 +69,13 @@ class UserCharactersCommand extends Command
 
         $user = $this->entityManager->getRepository(User::class)->findOneByUuid($code);
 
+        if (!$user instanceof User) {
+
+        }
+
         $progress = new ProgressBar($output);
         $this->userCrawler->crawlGuildUser($user);
+        die("A");
         $progress->setMessage('Import complete');
         $progress->advance();
         $progress->finish();
