@@ -45,6 +45,9 @@ class CrawlerFactory
             case 'user-character':
                 $instance = new UserCharacterCrawler($client, $settings, $em, $em->getRepository(UserCharacter::class));
                 break;
+            case 'single-user-character':
+                $instance = new SingleUserCrawler($client, $settings, $em, $em->getRepository(UserCharacter::class));
+                break;
             case 'mod':
                 $instance = new ModCrawler($client, $settings, $em, $em->getRepository(Mod::class));
                 break;
