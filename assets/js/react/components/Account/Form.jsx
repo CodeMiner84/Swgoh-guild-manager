@@ -46,7 +46,7 @@ let AccountForm = (props) => {
           className="form-control"
         />
         <small id="emailHelp" className="form-text text-muted">User code is required for some features in site.</small>
-        <small id="emailHelp" className="form-text text-muted">Save form and check if Your account is on <Link to={`http://swgoh.gg/u/${props.data.uuid}`} target={"_blank"}>http://swgoh.gg/u/{props.data.uuid}</Link></small>
+        <small id="emailHelp" className="form-text text-muted">Save form and check if Your account is on <a href={`http://swgoh.gg/u/${props.data.uuid}`} target={"_blank"}>http://swgoh.gg/u/{props.data.uuid}</a></small>
       </div>
       <div>
         <button type="submit" disabled={pristine || submitting} className="btn btn-primary">Save</button>

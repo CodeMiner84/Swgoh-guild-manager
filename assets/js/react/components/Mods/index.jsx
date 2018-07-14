@@ -3,6 +3,7 @@ import uuid from 'uuid'
 import { confirmAlert } from 'react-confirm-alert'
 import ReactTimeout from 'react-timeout'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { createSelector } from 'reselect'
 import Prototype from './Prototype'
 import actions from '../../actions/mods'
@@ -138,11 +139,14 @@ class Mods extends React.Component {
 
     return (
       <div >
+        {this.state.stats !== undefined && Object.keys(this.state.stats).length > 0 &&
         <div className="row">
           <Tip>
-            <div className={'badge badge-light'}>TIP</div> Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
+            <div className={'badge badge-light'}>TIP</div>
+            Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
           </Tip>
-          <Exclude characters={this.props.userCharacters} excluded={this.props.mods.excluded_characters} excludeCharacters={this.excludeCharacters} />
+          <Exclude characters={this.props.userCharacters} excluded={this.props.mods.excluded_characters}
+                   excludeCharacters={this.excludeCharacters}/>
           <div className="col-12">
             <button className={'btn btn-info mr-20'} onClick={this.addPrototype}>+ Add mod template</button>
             <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>
@@ -163,6 +167,12 @@ class Mods extends React.Component {
             )}
           </div>
         </div>
+        }
+        {!(this.state.stats !== undefined && Object.keys(this.state.stats).length > 0) &&
+          <div className="alert alert-warning">
+            You need to synchronize Your account to use this feature. <Link to={'/account'}>here</Link>
+          </div>
+        }
       </div>
     )
   }
