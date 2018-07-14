@@ -17,6 +17,8 @@ class Character
 {
     use TimestampableEntity;
 
+    public const CHARACTER_PATH = 'img/character_image/';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
