@@ -14,7 +14,7 @@ class CharacterFactory
      *
      * @return Character
      */
-    public function create(array $data)
+    public static function create(array $data): Character
     {
         $character = new Character();
         $character->setCode($data['code'])
