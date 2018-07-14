@@ -10,7 +10,7 @@ export default class RowItem extends React.Component {
     return (
       <div className="col-xs-6 col-sm-3 col-md-2">
         <BoxItem>
-          <Image side={this.props.item.side}><img src={this.props.item.image} /></Image>
+          <Image side={this.props.item.side}><img src={'/' + this.props.item.image} /></Image>
           <Name>{this.props.item.name}</Name>
         </BoxItem>
       </div>
