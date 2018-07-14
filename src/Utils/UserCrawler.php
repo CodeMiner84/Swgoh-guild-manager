@@ -76,4 +76,44 @@ class UserCrawler extends BaseCrawler implements CrawlerInterface
         }
         $this->em->flush();
     }
+
+    /**
+     * @param Guild $guild
+     *
+     * @return string
+     */
+    private function getUserUrl(Guild $guild): string
+    {
+        return file_get_contents(sprintf('%s%s/%s',
+            $this->settings->getApi(),
+            $this->settings->getUserSuffix(),
+            $guild->getCode()
+        ));
+    }
+
+    /**
+     * @param string $uuid
+     * @param array $usersList
+     * @param $matchCode
+     */
+    private function fetchUser(string $uuid): void
+    {
+        var_dump($uuid);die;
+        $crawler = new Crawler($this->getUserUrl($this->guild));
+        $usersTableList = $crawler->filter('table.table a');
+
+        $this->fetchUsers($this->guild, $usersTableList);
+
+        foreach ($usersList as $user) {
+            preg_match('/\/u\/(.*)\//', $user->getAttribute('href'), $matchCode);
+
+            $entity = UserFactory::create([
+                'uuid' => $matchCode[1],
+                'name' => trim($user->nodeValue),
+                'guild' => $guild,
+            ]);
+            $this->em->persist($entity);
+        }
+        $this->em->flush();
+    }
 }

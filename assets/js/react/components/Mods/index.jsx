@@ -6,9 +6,12 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import Prototype from './Prototype'
 import actions from '../../actions/mods'
+import userActions from '../../actions/account'
 import Loader from '../Loader/index'
 import Buttons from './Prototype/components/Buttons'
 import SaveButton from './Prototype/components/SaveButton'
+import Tip from './Prototype/components/Tip'
+import Exclude from './components/Exclude'
 
 class Mods extends React.Component {
   constructor(props) {
@@ -20,15 +23,17 @@ class Mods extends React.Component {
 
     this.protRef = null
     this.number = 0
+    this.excludedToons= {}
   }
 
   componentDidMount() {
     this.props.getModsSettings()
+    this.props.fetchUserCharacter()
     this.props.getMods().then((response) => {
       if (this.props.mods) {
         const mods = this.props.mods.mods
         this.setState({
-          stats: mods,
+          stats: this.props.mods.mods,
         })
       }
     })
@@ -41,6 +46,7 @@ class Mods extends React.Component {
     this.setState({
       stats: updatedStats,
     })
+
   }
 
   addPrototype = (key, map) => {
@@ -101,7 +107,7 @@ class Mods extends React.Component {
   }
 
   generate = () => {
-    this.props.saveMods(this.getStats()).then(() => this.props.generate())
+    this.props.saveMods(this.getStats(), this.excludedToons).then(() => this.props.generate())
   }
 
   synchronizeMods = () => {
@@ -112,6 +118,10 @@ class Mods extends React.Component {
         this.syncAlert(false)
       }
     }, this)
+  }
+
+  excludeCharacters = (excludedToons) => {
+    this.excludedToons = excludedToons
   }
 
   syncAlert = (success) => {
@@ -129,11 +139,14 @@ class Mods extends React.Component {
     return (
       <div >
         <div className="row">
-
-          <divstats className="col-12">
+          <Tip>
+            <div className={'badge badge-light'}>TIP</div> Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
+          </Tip>
+          <Exclude characters={this.props.userCharacters} excluded={this.props.mods.excluded_characters} excludeCharacters={this.excludeCharacters} />
+          <div className="col-12">
             <button className={'btn btn-info mr-20'} onClick={this.addPrototype}>+ Add mod template</button>
             <button className={'btn btn-danger pull-right'} onClick={this.synchronizeMods}>Synchronize mods</button>
-          </divstats>
+          </div>
           <div className="col-12">
             <Buttons>
               <SaveButton className={'btn btn-success'} onClick={this.generate}>Save & Generate</SaveButton>
@@ -158,17 +171,34 @@ class Mods extends React.Component {
 const getModsSettings = () => state => state.mods.settings
 const getUserMods = () => state => state.mods.mods
 const getGeneratedMods = () => state => state.mods.generated
+const getChars = () => state => state.account.userCharacters
 
 const selector = createSelector(
   [getModsSettings(), getUserMods(), getGeneratedMods()],
-  (settings, mods, generated) => ({
-    settings, mods, generated,
+  (settings, modData, generated) => {
+    if (modData === undefined) {
+      modData = {
+        mods: {},
+        excluded_characters: {},
+      }
+    }
+    return {
+      settings, mods: modData.mods, generated, excluded_characters: modData.excluded_characters
+    }
+  },
+)
+
+const characterSelector = createSelector(
+  [getChars()],
+  userCharacters => ({
+    userCharacters,
   }),
 )
 
 function mapStateToProps(state) {
   return {
     mods: selector(state),
+    userCharacters: characterSelector(state).userCharacters,
   }
 }
 
@@ -178,6 +208,7 @@ const mapDispatchToProps = {
   getMods: actions.getMods,
   generate: actions.generate,
   synchronizeMods: actions.synchronizeMods,
+  fetchUserCharacter: userActions.fetchPersonalCollection,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactTimeout(Mods))

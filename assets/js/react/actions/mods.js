@@ -33,13 +33,15 @@ function generate() {
   }
 }
 
-function saveMods(params) {
+function saveMods(templates, excludedToons) {
   return (dispatch) => {
     dispatch({
       type: types.REQUEST_MODS,
     })
 
-    return post('/api/mod/save', params)
+    templates['excluded'] = excludedToons
+
+    return post('/api/mod/save', templates)
       .then((response) => {
         dispatch({
           type: types.SAVE_MODS,
@@ -58,7 +60,13 @@ function getMods() {
     return get('/api/mod/get')
       .then(response => dispatch({
         type: types.RECV_MODS,
-        payload: response.data.data[0] ? JSON.parse(response.data.data[0].mods) : {},
+        payload: response.data.data[0] ? {
+          mods: JSON.parse(response.data.data[0].mods),
+          excluded_characters: response.data.data[0].excluded_characters
+        } : {
+          mod: {},
+          excluded_characters: {},
+        },
       }))
   }
 }

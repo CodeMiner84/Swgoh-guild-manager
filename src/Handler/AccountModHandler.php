@@ -35,16 +35,26 @@ class AccountModHandler extends ApiHandler
      */
     public function saveUserMods(array $params, array $groups)
     {
+        $excluded = $params['excluded'];
+        unset($params['excluded']);
+        $templates = $params;
         if ($accountMods = $this->repository->findOneByAccount($this->user->getId())) {
-            $accountMods->setMods(json_encode($params));
+            $accountMods->setMods(json_encode($templates));
+            $accountMods->setExcludedCharacters($excluded);
             $this->em->flush();
         } else {
             $accountMods = new AccountMods();
             $accountMods->setAccount($this->user);
-            $accountMods->setMods(json_encode($params));
+            $accountMods->setMods(json_encode($templates));
+            $accountMods->setExcludedCharacters($excluded);
 
             $this->em->persist($accountMods);
             $this->em->flush();
+
+            var_dump(json_encode($templates));
+            var_dump($excluded);
+            die("!");
+            die("!");
         }
 
         $view = $this->createView(
@@ -70,6 +80,7 @@ class AccountModHandler extends ApiHandler
 
         $savedMods = json_decode($mods->getMods(), true);
 
+        $excluded = $mods->getExcludedCharacters();
         $return = [];
         $modUuids = [];
         foreach ($savedMods as $key => $savedMod) {
@@ -83,7 +94,7 @@ class AccountModHandler extends ApiHandler
 
             $tmp = [];
             foreach ($template as $slot => $mod) {
-                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $mod, $slot, $modUuids, $primary, $secondary);
+                $tmp[$slot] = $modRepo->findBestMod($account->getId(), $mod, $excluded, $slot, $modUuids, $primary, $secondary);
                 $modUuids[$tmp[$slot]['uuid']] = $tmp[$slot]['uuid'];
             }
             $return[$key] = $tmp;

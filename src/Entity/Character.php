@@ -22,7 +22,7 @@ class Character
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @JMS\Groups({"characters", "guild_squad", "guild_squad_collection", "guild_users", "user_squad_list"})
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users", "user_squad_list"})
      * @JMS\Expose
      */
     private $id;

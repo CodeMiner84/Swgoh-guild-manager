@@ -14,8 +14,8 @@ const Generated = (props) => {
           const secondary =
             stats[key] !== undefined &&
             stats[key].secondary !== undefined ?
-              this.props.mods.secondaryStats[stats[key].secondary] :
-              this.props.secondary
+              props.mods.secondaryStats[stats[key].secondary] :
+              props.secondary
 
           return (<Item
             className={'col-sm col.md col.lg'}
@@ -23,7 +23,7 @@ const Generated = (props) => {
             mod={generated[key]}
             stats={stats[key]}
           />)
-        })}
+        }, this)}
       </Container>
     </div>
   )

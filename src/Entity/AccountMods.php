@@ -32,6 +32,14 @@ class AccountMods
     private $mods;
 
     /**
+     * @ORM\Column(type="json_array")
+     *
+     * @JMS\Groups({"account_mods"})
+     * @JMS\Expose
+     */
+    private $excludedCharacters;
+
+    /**
      * Get id.
      *
      * @return int
@@ -87,5 +95,17 @@ class AccountMods
     public function getAccount()
     {
         return $this->account;
+    }
+
+    public function getExcludedCharacters()
+    {
+        return $this->excludedCharacters;
+    }
+
+    public function setExcludedCharacters($excludedCharacters): self
+    {
+        $this->excludedCharacters = $excludedCharacters;
+
+        return $this;
     }
 }
