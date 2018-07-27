@@ -70,6 +70,8 @@ class CronJobCommand extends Command
 
                 $command->setFinished(1);
             } catch (\Exception $e) {
+                echo ($e->getMessage());
+                die("!");
             }
         }
 

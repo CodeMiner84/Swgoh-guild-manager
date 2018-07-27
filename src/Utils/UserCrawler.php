@@ -57,8 +57,7 @@ class UserCrawler extends BaseCrawler implements CrawlerInterface
 
     /**
      * @param Guild $guild
-     * @param array $usersList
-     * @param $matchCode
+     * @param Crawler $usersList
      */
     private function fetchUsers(Guild $guild, Crawler $usersList): void
     {
