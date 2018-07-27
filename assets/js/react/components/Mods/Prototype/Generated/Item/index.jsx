@@ -17,7 +17,7 @@ class Item extends React.Component {
         <ImageContainer>
           <img src={`/img/mods/${mod.image}`} />
           <CharacterImageContainer>
-            <img src={mod.character.image} />
+            <img src={'/' + mod.character.image} />
           </CharacterImageContainer>
         </ImageContainer>
         <StatsContainer >

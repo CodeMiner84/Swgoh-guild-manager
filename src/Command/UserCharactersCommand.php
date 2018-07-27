@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Entity\User;
+use App\Factory\UserFactory;
+use App\Utils\SingleUserCrawler;
 use App\Utils\UserCharacterCrawler;
 use App\Utils\UserCrawler;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,21 +31,27 @@ class UserCharactersCommand extends Command
     private $userCrawler;
 
     /**
+     * @var SingleUserCrawler
+     */
+    private $singleUserCrawler;
+
+    /**
      * @var string
      */
     protected static $defaultName = 'swgoh:user:characters';
 
     /**
-     * UserCharacterCommand constructor.
+     * UserCharactersCommand constructor.
      *
-     * @param EntityManagerInterface $entityManager
-     * @param UserCrawler            $userCrawler
+     * @param EntityManagerInterface $em
+     * @param UserCharacterCrawler $userCrawler
      */
-    public function __construct(EntityManagerInterface $entityManager, UserCharacterCrawler $userCrawler)
+    public function __construct(EntityManagerInterface $em, UserCharacterCrawler $userCrawler, SingleUserCrawler $singleUserCrawler)
     {
-        $this->entityManager = $entityManager;
+        $this->em = $em;
 
         $this->userCrawler = $userCrawler;
+        $this->singleUserCrawler = $singleUserCrawler;
 
         parent::__construct();
     }
@@ -67,7 +75,10 @@ class UserCharactersCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $code = $input->getArgument('code');
 
-        $user = $this->entityManager->getRepository(User::class)->findOneByUuid($code);
+        $user = $this->em->getRepository(User::class)->findOneByUuid($code);
+        if (!$user) {
+            $user = $this->fetchUser($code);
+        }
 
         if (!$user instanceof User) {
 
@@ -81,5 +92,17 @@ class UserCharactersCommand extends Command
         $progress->finish();
 
         $io->success('IMPORT SUCCESSFULL');
+    }
+
+    public function fetchUser(string $code)
+    {
+        $user = UserFactory::create([
+            'uuid' => $code,
+            'name' => trim($code),
+            'guild' => null,
+        ]);
+        $this->em->persist($user);
+
+        return $user;
     }
 }

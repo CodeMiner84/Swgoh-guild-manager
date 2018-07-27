@@ -49,6 +49,14 @@ class UserCharacterCrawler extends BaseCrawler implements CrawlerInterface
         $this->fetchCharacters($user, $usersTableList);
     }
 
+    public function createUser(string $code)
+    {
+        $crawler = new Crawler($this->getUserCharacters($user));
+        $usersTableList = $crawler->filter('.collection-char');
+
+        $this->fetchCharacters($user, $usersTableList);
+    }
+
     /**
      * @param Guild $guild
      *
