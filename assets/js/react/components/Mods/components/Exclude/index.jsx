@@ -20,13 +20,14 @@ class Exclude extends React.Component {
   }
 
   componentDidMount(props) {
-    const toons = this.props.characters
+    const toons = this.props.characters || []
+    window.test = toons
     const tags = []
     if (Object.keys(toons).length > 0) {
-      const suggestions = [ ]
+      const suggestions = []
       const characters = []
       Object.keys(toons).map((key) => {
-        suggestions.push({'text': toons[key].character.name})
+        suggestions.push(toons[key].character.name)
         characters[toons[key].character.name] = toons[key].character.id
 
         Object.keys(this.props.excluded).filter(exKey=> {
@@ -85,7 +86,7 @@ class Exclude extends React.Component {
 
   handleSuggestion = (textInputValue, possibleSuggestionsArray) =>
     possibleSuggestionsArray.filter(
-      suggestion => suggestion.text.toLowerCase().includes(textInputValue.toLowerCase())
+      suggestion => suggestion.toLowerCase().includes(textInputValue.toLowerCase())
     )
 
   render() {

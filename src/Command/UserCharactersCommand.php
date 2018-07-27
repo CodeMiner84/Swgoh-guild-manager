@@ -86,7 +86,6 @@ class UserCharactersCommand extends Command
 
         $progress = new ProgressBar($output);
         $this->userCrawler->crawlGuildUser($user);
-        die("A");
         $progress->setMessage('Import complete');
         $progress->advance();
         $progress->finish();
