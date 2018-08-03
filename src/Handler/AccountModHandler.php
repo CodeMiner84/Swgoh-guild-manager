@@ -50,11 +50,6 @@ class AccountModHandler extends ApiHandler
 
             $this->em->persist($accountMods);
             $this->em->flush();
-
-            var_dump(json_encode($templates));
-            var_dump($excluded);
-            die("!");
-            die("!");
         }
 
         $view = $this->createView(

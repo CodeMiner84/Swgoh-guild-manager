@@ -53,7 +53,8 @@ class Mods extends React.Component {
   addPrototype = (key, map) => {
     const number = map !== undefined ? map.uuid : uuid.v4()
 
-    const stats = this.state.stats
+    const stats = this.state.stats || []
+
     stats[number] = {
       modNumber: 0,
       stats: {},
@@ -136,10 +137,11 @@ class Mods extends React.Component {
     if (this.props.isLoading) {
       return <Loader />
     }
+    const stats = this.state.stats || [];
 
     return (
       <div >
-        {this.state.stats !== undefined && Object.keys(this.state.stats).length > 0 &&
+        {stats !== undefined && Object.keys(stats).length >= 0 &&
         <div className="row">
           <Tip>
             <div className={'badge badge-light'}>TIP</div>
@@ -155,11 +157,11 @@ class Mods extends React.Component {
             <Buttons>
               <SaveButton className={'btn btn-success'} onClick={this.generate}>Save & Generate</SaveButton>
             </Buttons>
-            {Object.keys(this.state.stats).map(number =>
+            {Object.keys(stats).map(number =>
               <Prototype
-                templates={this.state.stats}
+                templates={stats}
                 handleUpdateMod={this.handleUpdateMod}
-                data={this.state.stats[number]}
+                data={stats[number]}
                 removePrototype={this.removePrototype}
                 generated={this.props.generated ? this.props.generated[number] : {}}
                 number={number}
@@ -168,7 +170,7 @@ class Mods extends React.Component {
           </div>
         </div>
         }
-        {!(this.state.stats !== undefined && Object.keys(this.state.stats).length > 0) &&
+        {!(stats !== undefined && Object.keys(stats).length >= 0) &&
           <div className="alert alert-warning">
             You need to synchronize Your account to use this feature. <Link to={'/account'}>here</Link>
           </div>
