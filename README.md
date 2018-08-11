@@ -5,18 +5,31 @@
 
 ### INSTALATION
 
-1. Download project from my repository.
-2. ```cd swgoh-manager ```
-3. ```composer install```
-4. ```yarn install``` or ```npm install``` if You don't have yarn
-4. ```php bin/console doctrine:migrations:migrate```
+* Download project from my repository.
+* ```cd swgoh-manager ```
+* ```composer install```
+* ```bin/console doctrine:database:create```
+* ```bin/console doctrine:schema:update --force```
+* ```bin/console doctrine:fixtures:load```
+* ```yarn install``` or ```npm install``` if You don't have yarn
+* ```php bin/console doctrine:migrations:migrate```
 
 ### RUN PROJECT
 Simply start php server and run application on http://localhost:3000
 ```bash
 php bin/console server:run
 ```
+Also run this command to build all assets
+```bash
+yarn run encore production
+```
 or add project public folder to Your vhost configuration if You depends on you local server.
+
+###INSTALL ASSETS
+This command needs to be execute each time new character release (also on application init)
+```bash
+php bin/console swgoh:fetch:characters
+```
 
 #### Commands
 Add this command to crontab to execute every 5minutes or execute it manually in some special cases

@@ -24,7 +24,7 @@ class LoadSettings extends Fixture
     {
         $this->manager = $manager;
         $this->loadSettings();
-        $this->loadGuild();
+        //$this->loadGuild();
     }
 
     /**
