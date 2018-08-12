@@ -6,7 +6,9 @@ import { isAuth } from '../../utils/auth'
 
 const TopNav = ({ handleFiltering, filtering, logoutUser }) => (
   <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a className="navbar-brand col-sm-3 col-md-2 mr-0">SWGOH<i>manager</i></a>
+    <a className="navbar-brand col-sm-3 col-md-2 mr-0 text-center" style={{ display: 'block' }}>
+      <img src="/img/logo.png" className="img-fluid" style={{ maxWidth: '80%'}} alt=""/>
+    </a>
 
     <ul className="navbar-nav px-3">
       <li className="nav-item text-nowrap">
