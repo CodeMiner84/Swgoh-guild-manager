@@ -59,7 +59,12 @@ class Queue
      *
      * @ORM\Column(type="integer")
      */
-    private $errors = 0;
+    private $errors;
+
+    public function __construct()
+    {
+        $this->errors = 0;
+    }
 
     /**
      * @return mixed
