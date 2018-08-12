@@ -70,8 +70,10 @@ class CronJobCommand extends Command
 
                 $command->setFinished(1);
             } catch (\Exception $e) {
-                echo ($e->getMessage());
-                die("!");
+                $command->setErrors($command->getErrors()+1);
+                if ($command->getErrors() > 3) {
+                    $this->entityManager->remove($command);
+                }
             }
         }
 

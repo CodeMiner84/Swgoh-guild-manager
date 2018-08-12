@@ -55,6 +55,13 @@ class Queue
     private $params;
 
     /**
+     * var integer.
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $errors = 0;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -171,6 +178,24 @@ class Queue
     {
         $this->params = $params;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @param mixed $errors
+     * @return Queue
+     */
+    public function setErrors($errors)
+    {
+        $this->errors = $errors;
         return $this;
     }
 }
