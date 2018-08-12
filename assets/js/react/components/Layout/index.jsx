@@ -43,9 +43,8 @@ class Main extends React.Component {
     })
     if (shouldUserCheck()) {
       this.props.getAccount()
-        .then(() => {
-
-          this.props.history.push('/')
+        .then((response) => {
+          //this.props.history.push('/')
         }).catch(() => {
           this.props.history.push('/login')
         })
