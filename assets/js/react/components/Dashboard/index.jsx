@@ -35,10 +35,7 @@ class Dashboard extends React.Component {
           <li>
             <b>Where can I connect my profile with swgoh.gg ?</b><br/>
             <Link to={'/account'}>Here</Link> you can link your profile. <br/>
-            <YouTube
-              videoId="ZcrrHe-FsYA"
-              opts={opts}
-            />
+            Just type Your swgoh.gg account name
           </li>
           <li>
             <b>What do I need to link my profile ?</b><br/>
@@ -47,11 +44,11 @@ class Dashboard extends React.Component {
           </li>
           <li>
             <b>How can I sync my data ?</b><br/>
-            Once you type your nickname your data is synchronize in background after user click on red button Synchronize data <Link to={'/account'}>Here</Link>. After click data will be fetch more or less in few minutes.
+            Once You type Your nickname You need to synchronize data. In account page click on red button Synchronize data <Link to={'/account'}>Here</Link>. After click data will be fetch more or less in few minutes.
           </li>
           <li>
             <b>How can I fetch my mods ?</b><br/>
-            Mods module is <Link to={'/mods'}>HERE</Link>. You can also synchronize your mods the same like account.
+            Mods module is <Link to={'/mods'}>HERE</Link>. You can also synchronize your mods, similar to account page.
           </li>
           <li>
             <b>How can I suits the best mods ?</b><br/>
@@ -60,28 +57,21 @@ class Dashboard extends React.Component {
             After click on spot you see a modal where you can set up type, primary or secondary stats for each slot. <br/>
             If you don't set up primary and secondary stats for each slot separately you can do this globally for template by selecting one of available value in primary and secondary select placed next to mod template.
             When your template are done - hit SAVE & GENERATE button. System will automatically suits the best mods acording to selected stats.
-            <br/><YouTube
-              videoId="Ce06lQ8Oozc"
-              opts={opts}
-            />
+          </li>
+          <li>
+            <b>I wan't to set up mods for my B squad. How to do this ?</b>
+            If You set up mods for Your main squad You can exclude few characters from mod generator.<br/>
+            This option will fetch mods except mods from selected characters.
           </li>
           <li>
             <b>What will happend when I generate mods without setting anything except globall secondary stat ?</b><br/>
             System find the best mods for you. But only secondary / primary stats. The percentage boost from mode isn't calculated.
           </li>
           <li>
-            <b>Is percentage stats of mods are calculating ?</b><br/>
-            No only primary / secondary stats are matter. For example system don't see difference in speed betwen 4 healt and 4 speed mods.
-          </li>
-          <li>
             <b>User squad - whats for ?</b><br/>
             You can group your squads per TB / TW / Sith raid or whatever. Each group can have their own squads, but one toon can be set once in each group.<br/>
             If you have wide squad and sometime you add one toon to few squads and then need to edit and check what toon is in used than this will help you to manage this. <br/>
             You can set as many squads you want, and then you can easily set up your rooster in game.
-            <br/><YouTube
-              videoId="HEq2KuklAEc"
-              opts={opts}
-            />
           </li>
           {/*<li>*/}
             {/*<b>Guild squad - whats for ?</b><br/>*/}
