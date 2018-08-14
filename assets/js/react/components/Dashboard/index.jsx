@@ -33,7 +33,7 @@ class Dashboard extends React.Component {
             All data is fetched from http://swgoh.gg, and if your profile needs to be public. If not - then your data won't fetch.
           </li>
           <li>
-            <b>Where can I connect my from with swgoh.gg ?</b><br/>
+            <b>Where can I connect my profile with swgoh.gg ?</b><br/>
             <Link to={'/account'}>Here</Link> you can link your profile. <br/>
             <YouTube
               videoId="ZcrrHe-FsYA"
@@ -47,7 +47,7 @@ class Dashboard extends React.Component {
           </li>
           <li>
             <b>How can I sync my data ?</b><br/>
-            One you type your nickname your data is synchronize in background after user click on red button Synchronize data <Link to={'/account'}>Here</Link>. After click data will be fetch more or less in few minutes.
+            Once you type your nickname your data is synchronize in background after user click on red button Synchronize data <Link to={'/account'}>Here</Link>. After click data will be fetch more or less in few minutes.
           </li>
           <li>
             <b>How can I fetch my mods ?</b><br/>

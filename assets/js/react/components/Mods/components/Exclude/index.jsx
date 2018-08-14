@@ -1,8 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { WithContext as ReactTags } from 'react-tag-input'
 import Tag from './Tag'
 import TagLabel from './TagLabel'
+import actions from '../../../../actions/character'
 
 class Exclude extends React.Component {
 
@@ -19,35 +22,38 @@ class Exclude extends React.Component {
     this.handleDrag = this.handleDrag.bind(this)
   }
 
-  componentDidMount(props) {
+  componentDidMount() {
+    this.props.getAll().then(() => {
     const toons = this.props.characters || []
-    window.test = toons
     const tags = []
-    if (Object.keys(toons).length > 0) {
-      const suggestions = []
-      const characters = []
-      Object.keys(toons).map((key) => {
-        suggestions.push(toons[key].character.name)
-        characters[toons[key].character.name] = toons[key].character.id
+      if (Object.keys(toons).length > 0) {
+        const suggestions = []
+        const characters = []
+        Object.keys(toons)
+          .map((key) => {
+            suggestions.push(toons[key].name)
+            characters[toons[key].name] = toons[key].id
 
-        Object.keys(this.props.excluded).filter(exKey=> {
-          if (this.props.excluded[exKey] ===  toons[key].character.id) {
-            tags.push({
-              id: toons[key].character.id,
-              text: toons[key].character.name,
-            });
-          }
+            Object.keys(this.props.excluded)
+              .filter(exKey => {
+                if (this.props.excluded[exKey] === toons[key].id) {
+                  tags.push({
+                    id: toons[key].id,
+                    text: toons[key].name,
+                  });
+                }
+              })
+          })
+
+        this.props.excludeCharacters(this.props.excluded);
+
+        this.setState({
+          suggestions,
+          characters,
+          tags,
         })
-      })
-
-      this.props.excludeCharacters(this.props.excluded);
-
-      this.setState({
-        suggestions,
-        characters,
-        tags,
-      })
-    }
+      }
+    })
   }
 
   handleDelete(i) {
@@ -134,4 +140,15 @@ Exclude.propTypes = {
   characters: PropTypes.arrayOf(PropTypes.shape()),
 };
 
-export default Exclude
+
+function mapStateToProps(state) {
+  return {
+    characters: state.character.characters,
+  };
+}
+
+const mapDispatchToProps = {
+  getAll: actions.fetchCharacters,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Exclude));
