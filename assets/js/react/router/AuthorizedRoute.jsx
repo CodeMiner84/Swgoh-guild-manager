@@ -37,10 +37,6 @@ class AuthHOC extends Component {
 }
 
 const AuthorizedRoute = ({ component: Component, searchPhrase: phrase, ...rest }) => {
-
-  console.log('estsetsets');
-  console.log('rest', rest);
-
   return (
     <Route
       {...rest}
