@@ -5,21 +5,18 @@ import { isAuth } from '../../utils/auth'
 
 
 const TopNav = ({ handleFiltering, filtering, logoutUser }) => (
-  <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a className="navbar-brand col-sm-3 col-md-2 mr-0 text-center" style={{ display: 'block' }}>
-      <img src="/img/logo.png" className="img-fluid" style={{ maxWidth: '80%'}} alt=""/>
+  <nav className="navbar main navbar-dark sticky-top bg-dark d-block flex-md-nowrap p-0">
+    <a className="col-sm-3 col-md-2 pull-left mr-0 text-center" style={{ display: 'block' }}>
+      <img src="/img/logo.png" className="img-fluid" style={{ maxWidth: '80%', marginTop: '10px'}} alt=""/>
     </a>
-
-    <ul className="navbar-nav px-3">
-      <li className="nav-item text-nowrap">
+    <div className="pull-right">
         {!isAuth() &&
-        <Link to="/login">Log in</Link>
+        <Link className={'top-nav-button'} to="/login">Log in</Link>
         }
         {isAuth() &&
-        <Link to="#" onClick={logoutUser}>Logout</Link>
+        <Link to="#" className={'top-nav-button'} onClick={logoutUser}>Logout</Link>
         }
-      </li>
-    </ul>
+    </div>
   </nav>
   )
 

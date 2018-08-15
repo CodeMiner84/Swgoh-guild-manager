@@ -10,7 +10,8 @@ Encore
     })
     .enableSassLoader()
     .enableVersioning(false)
-    .addEntry('js/app', ['babel-polyfill', './assets/js/app.js', './assets/js/react/app.jsx'])
+  .addEntry('js/app', ['babel-polyfill', './assets/js/react/app.jsx'])
+  .addEntry('js/scripts', ['babel-polyfill', './assets/js/app.js'])
     .addStyleEntry('css/app', ['./assets/scss/app.scss'])
     .enableReactPreset()
 ;

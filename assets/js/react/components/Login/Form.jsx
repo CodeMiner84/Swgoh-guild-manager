@@ -29,7 +29,10 @@ const Form = ({ handleSubmit, onChange, error }) => {
             </div>
           </div>
           <div className={'form-group row'}>
-            <input type="submit" name="login" className={'login loginmodal-submit'} value="Login" />
+            <label className={'col-sm-3 col-form-label'}></label>
+            <div className="col-sm-9">
+              <input type="submit" name="login" className={'btn btn-primary login'} value="Login" />
+            </div>
           </div>
         </form>
       </div>

@@ -8,8 +8,8 @@ const Generated = (props) => {
   const { generated, stats: { stats } } = props
 
   return (
-    <div className={'row'}>
-      <Container>
+    <div className={'clearfix'}>
+      <Container className={'clearfix'}>
         {Object.keys(generated).map((key) => {
           const secondary =
             stats[key] !== undefined &&

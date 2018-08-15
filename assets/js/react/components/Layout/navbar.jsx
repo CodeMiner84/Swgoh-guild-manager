@@ -1,92 +1,56 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import FontAwesome from 'react-fontawesome'
+import {Navbar, Nav, NavItem, MenuItem} from 'react-bootstrap'
 
-const Navbar = () => (
-  <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-    <div className="sidebar-sticky">
-      <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-        <span>GENERAL</span>
-        <a className="d-flex align-items-center text-muted" href="#">
-          <span data-feather="plus-circle" />
-        </a>
-      </h6>
-      <ul className="nav flex-column">
-        <li className="nav-item">
+const NavbarMenu = () => (
+  <Navbar className={'col-md-3 col-lg-2 d-md-block left-sidebar align-items-start'}>
+    <Navbar.Header>
+      <Navbar.Toggle />
+    </Navbar.Header>
+    <Navbar.Collapse>
+      <Nav>
+        <h4 className={'text-muted'}>GENERAL</h4>
+        <NavItem eventKey={1} >
           <Link to={'/'} className="nav-link">
             <FontAwesome name="home" className="mr-1" />
             Dashboard
           </Link>
-        </li>
-        <li className="nav-item">
+        </NavItem>
+        <NavItem eventKey={2} >
           <Link to={'/characters'} className="nav-link">
             <FontAwesome name="users" className="mr-1" />
             Characters
           </Link>
-        </li>
-        {/*<li className="nav-item">*/}
-          {/*<Link to={'/guilds'} className="nav-link">*/}
-            {/*<FontAwesome name="building" className="mr-1" />*/}
-            {/*Guilds*/}
-          {/*</Link>*/}
-        {/*</li>*/}
-      </ul>
-      <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-        <span>PERSONAL</span>
-        <a className="d-flex align-items-center text-muted" href="#">
-          <span data-feather="plus-circle" />
-        </a>
-      </h6>
-      <ul className="nav flex-column">
-        <li className="nav-item">
+        </NavItem>
+        <h4 className={'text-muted'}>PERSONAL</h4>
+        <NavItem>
           <Link to={'/account'} className="nav-link">
             <FontAwesome name="user" className="mr-1" />
             Account
           </Link>
-        </li>
-        <li className="nav-item">
+        </NavItem>
+        <NavItem>
           <Link to={'/mods'} className="nav-link">
             <FontAwesome name="gears" className="mr-1" />
             Mods
           </Link>
-        </li>
-        <li className="nav-item">
+        </NavItem>
+        <NavItem>
           <Link to={'/collection'} className="nav-link">
             <FontAwesome name="users" className="mr-1" />
             Your collection
           </Link>
-        </li>
-        <li className="nav-item">
+        </NavItem>
+        <NavItem>
           <Link to={'/user-squad-group'} className="nav-link">
             <FontAwesome name="list-alt" className="mr-1" />
             User squads
           </Link>
-        </li>
-        {/*<li className="nav-item">*/}
-          {/*<Link to={'/guild-squads'} className="nav-link">*/}
-            {/*<FontAwesome name="list" className="mr-1" />*/}
-            {/*Guild squads*/}
-          {/*</Link>*/}
-        {/*</li>*/}
-        {/*<li className="nav-item">*/}
-          {/*<Link to={'/guild'} className="nav-link">*/}
-            {/*<FontAwesome name="object-group" className="mr-1" />*/}
-            {/*Your guild*/}
-          {/*</Link>*/}
-        {/*</li>*/}
-      </ul>
-      <div>
-        <hr/>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick" />
-            <input type="hidden" name="hosted_button_id" value="YFN6J65X8T74W" />
-            <input type="image" src="https://www.paypalobjects.com/en_US/PL/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" />
-            <img alt="" border="0" src="https://www.paypalobjects.com/pl_PL/i/scr/pixel.gif" width="1" height="1" />
-        </form>
-      </div>
-    </div>
-  </nav>
+        </NavItem>
+      </Nav>
+    </Navbar.Collapse>
+  </Navbar>
 )
 
-
-export default Navbar
+export default NavbarMenu

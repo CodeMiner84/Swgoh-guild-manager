@@ -140,7 +140,7 @@ class Mods extends React.Component {
     const stats = this.state.stats || [];
 
     return (
-      <div >
+      <div className={'container'}>
         {stats !== undefined && Object.keys(stats).length >= 0 &&
         <div className="row">
           <Tip>

@@ -63,7 +63,7 @@ class Dashboard extends React.Component {
     }
 
     return (
-      <div >
+      <div className={'container'} >
         <div className="row">
           <div className="col">
             <h3 className={'pull-left'}>Account</h3>
@@ -74,12 +74,14 @@ class Dashboard extends React.Component {
           </div>
         </div>
         {this.state.loaded &&
-        <Form
-          saved={this.state.saved}
-          onSubmit={this.handleSubmit}
-          submitting={this.state.submitting}
-          data={this.props.auth}
-        />
+        <div className="row">
+          <Form
+            saved={this.state.saved}
+            onSubmit={this.handleSubmit}
+            submitting={this.state.submitting}
+            data={this.props.auth}
+          />
+        </div>
         }
       </div>
     )

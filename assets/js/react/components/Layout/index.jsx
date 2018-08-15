@@ -100,7 +100,7 @@ class Main extends React.Component {
             {this.state.auth &&
               <Navbar />
             }
-            <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <main role="main" className={this.state.auth ? 'col-md-9 col-lg-2 ml-sm-auto col-lg-10 pt-3 px-4' : 'col-xs-12 mt-20'}>
               <Route exact path="/" component={Dashboard} />
               <Switch>
                 <Route path="/login" component={Login} />
