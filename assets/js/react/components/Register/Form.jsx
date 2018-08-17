@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import FontAwesome from 'react-fontawesome'
 
 const Form = ({ handleSubmit, onChange, error, message}) => {
   return (
@@ -10,6 +11,12 @@ const Form = ({ handleSubmit, onChange, error, message}) => {
         </div>
         }
         <form className="" onSubmit={handleSubmit}>
+          <div className={'form-group row'}>
+            <label htmlFor="username" className={'col-sm-2 col-form-label'}></label>
+            <div className={'col-sm-10'}>
+              <div className="text-muted"><FontAwesome name={'exclamation-circle'} /> Username and Email is no related to Your swgoh.gg account.</div>
+            </div>
+          </div>
           <div className={'form-group row'}>
             <label htmlFor="username" className={'col-sm-2 col-form-label'}>Username</label>
             <div className={'col-sm-10'}>

@@ -7,12 +7,4 @@ export default styled.div`
     box-shadow: inset 0px 0px 31px 0px rgba(227,227,227,1);
     border: 1px solid #FFF;
     margin: 5px;
-    &:hover, &:focus {
-      background: #FFF;
-      box-shadow: none;
-      border: 1px solid #aaa;
-      img {
-        opacity: 1;
-      }
-    }
 `

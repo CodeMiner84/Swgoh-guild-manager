@@ -14,7 +14,7 @@ const NavbarMenu = () => (
         <NavItem eventKey={1} >
           <Link to={'/'} className="nav-link">
             <FontAwesome name="home" className="mr-1" />
-            Dashboard
+            FAQ
           </Link>
         </NavItem>
         <NavItem eventKey={2} >
