@@ -145,7 +145,7 @@ class Mods extends React.Component {
         <div className="row">
           <Tip>
             <div className={'badge badge-light'}>TIP</div>
-            Your account on swgoh.gg need to be sync if you want to synchronize mods in swogh-manager.
+            Your account on swgoh.gg need to be sync and be public if you want to synchronize mods in swogh-manager. Also unequipped mods doesn't count - mod needs to be assigned to character.
           </Tip>
           <Exclude characters={this.props.userCharacters} excluded={this.props.mods.excluded_characters}
                    excludeCharacters={this.excludeCharacters}/>
