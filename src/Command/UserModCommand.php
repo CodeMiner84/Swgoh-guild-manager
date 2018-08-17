@@ -70,7 +70,9 @@ class UserModCommand extends Command
         $user = $this->entityManager->getRepository(User::class)->findOneByUuid($code);
 
         $progress = new ProgressBar($output);
-        $this->modCrawler->setUser($user)->crawl();
+        if ($user) {
+            $this->modCrawler->setUser($user)->crawl();
+        }
         $progress->setMessage('Importing...');
         $progress->finish();
 
