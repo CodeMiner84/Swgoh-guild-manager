@@ -86,6 +86,6 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
     private function uploadCharacterImage(string $source, string $filename): void
     {
         $fs = new Filesystem();
-        $fs->copy($source, Character::CHARACTER_PATH . $filename);
+        $fs->copy($source, 'pubic/'.Character::CHARACTER_PATH . $filename);
     }
 }

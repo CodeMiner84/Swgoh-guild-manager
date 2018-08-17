@@ -22,7 +22,7 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
     {
         $this->collectGuildsDOM($this->getModUrl($this->user), 1);
 
-        $this->repository->remove();
+        //$this->repository->remove();
 
         foreach ($this->buffer as $collectionHtml) {
             $crawler = new Crawler($collectionHtml);
@@ -33,6 +33,7 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
             $character = $this->em->getRepository(Character::class)->findOneByCode($characterCode[2]);
             $account = $this->em->getRepository(Account::class)->find(6);
             //if (!$this->checkGuild($match[2], $match[1])) {
+
             if ($character instanceof Character) {
                 $imageNode = $crawler->filter('img.statmod-img')->getNode(0);
                 $modImage = $imageNode->getAttribute('src');
@@ -97,8 +98,8 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
         ++$this->iter;
         try {
             $crawler = new Crawler($this->getSiteHtml(sprintf('%s?page=%s', $url, $page)));
+// $crawler = new Crawler($this->getSiteHtml('https://swgoh.gg/u/ziul/mods/'));
             $domElements = $crawler->filter('li.collection-mod-list > div > div.col-xs-12 ');
-
             if (count($domElements) > 0) {
                 foreach ($domElements as $domElement) {
                     $this->buffer[] = $domElement->ownerDocument->saveHTML($domElement);
@@ -106,6 +107,7 @@ class ModCrawler extends BaseCrawler implements CrawlerInterface
                 $this->collectGuildsDOM($url, ++$page);
             }
         } catch (\Exception $e) {
+//var_dump($e->getMessage());
         }
     }
 
