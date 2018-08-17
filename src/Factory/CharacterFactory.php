@@ -5,9 +5,7 @@ namespace App\Factory;
 use App\Entity\Character;
 
 /**
- * Class CharacterFactory
- *
- * @package App\Factory
+ * Class CharacterFactory.
  */
 class CharacterFactory
 {
@@ -16,7 +14,7 @@ class CharacterFactory
      *
      * @return Character
      */
-    public function create(array $data)
+    public static function create(array $data): Character
     {
         $character = new Character();
         $character->setCode($data['code'])
@@ -24,6 +22,7 @@ class CharacterFactory
             ->setDescription($data['description'])
             ->setSide($data['side'])
             ->setImage($data['image'])
+            ->setTags($data['tags'])
         ;
 
         return $character;

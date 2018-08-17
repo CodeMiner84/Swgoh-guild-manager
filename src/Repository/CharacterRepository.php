@@ -8,13 +8,13 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class CharacterRepository
- * @package App\Repository
+ * Class CharacterRepository.
  */
-class CharacterRepository extends ServiceEntityRepository
+class CharacterRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     /**
      * CharacterRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
@@ -30,7 +30,9 @@ class CharacterRepository extends ServiceEntityRepository
      */
     public function findByPhrase($qb, string $phrase): QueryBuilder
     {
-        return $qb->andWhere('name = :phrase')
+        return $qb->andWhere('name', ':phrase')
+            ->andWhere('side', ':phrase')
+            ->andWhere('tags', ':phrase')
             ->setParameter('phrase', $phrase)
             ;
     }
@@ -42,5 +44,31 @@ class CharacterRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute()
         ;
+    }
+
+    /**
+     * @param string $code
+     * @param array  $data
+     */
+    public function update(string $code, array $data): void
+    {
+        $this->createQueryBuilder('c')
+            ->update($this->getEntityName(), 'c')
+            ->set('c.name', ':name')
+            ->set('c.description', ':description')
+            ->set('c.side', ':side')
+            ->set('c.image', ':image')
+            ->set('c.tags', ':tags')
+            ->where('c.code = :code')
+            ->setParameters([
+                'code' => $code,
+                'name' => $data['name'],
+                'description' => $data['description'],
+                'side' => $data['side'],
+                'image' => $data['image'],
+                'tags' => $data['tags'],
+            ])
+            ->getQuery()
+            ->execute();
     }
 }

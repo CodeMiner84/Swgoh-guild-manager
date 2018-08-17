@@ -22,6 +22,13 @@
         <!-- ###+ symfony/swiftmailer-bundle ### -->
         <env name="MAILER_URL" value="null://localhost"/>
         <!-- ###- symfony/swiftmailer-bundle ### -->
+
+        <!-- ###+ lexik/jwt-authentication-bundle ### -->
+        <!-- Key paths should be relative to the project directory -->
+        <env name="JWT_PRIVATE_KEY_PATH" value="config/jwt/private.pem"/>
+        <env name="JWT_PUBLIC_KEY_PATH" value="config/jwt/public.pem"/>
+        <env name="JWT_PASSPHRASE" value="7d970ed909ab53927705583c18eda6be"/>
+        <!-- ###- lexik/jwt-authentication-bundle ### -->
     </php>
 
     <testsuites>

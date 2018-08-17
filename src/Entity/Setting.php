@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
@@ -10,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Setting
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -35,17 +38,22 @@ class Setting
     /**
      * @ORM\Column(type="string")
      */
-    private $userSuffix = '';
+    private $userSuffix = '/u';
 
     /**
      * @ORM\Column(type="string")
      */
-    private $guildSuffix = '';
+    private $guildSuffix = '/g';
 
     /**
      * @ORM\Column(type="string")
      */
     private $unitSuffix = '';
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $modsUrl = '/mods';
 
     /**
      * Get id.
@@ -175,5 +183,47 @@ class Setting
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnitSuffix()
+    {
+        return $this->unitSuffix;
+    }
+
+    /**
+     * @param string $unitSuffix
+     */
+    public function setUnitSuffix($unitSuffix): self
+    {
+        $this->unitSuffix = $unitSuffix;
+
+        return $this;
+    }
+
+    /**
+     * Set modsUrl.
+     *
+     * @param string $modsUrl
+     *
+     * @return Setting
+     */
+    public function setModsUrl($modsUrl)
+    {
+        $this->modsUrl = $modsUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get modsUrl.
+     *
+     * @return string
+     */
+    public function getModsUrl()
+    {
+        return $this->modsUrl;
     }
 }

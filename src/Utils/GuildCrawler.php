@@ -2,71 +2,67 @@
 
 namespace App\Utils;
 
+use App\Entity\Character;
 use App\Entity\Guild;
-use App\Entity\User;
-use App\Factory\UserFactory;
+use App\Factory\GuildFactory;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Class GuildCrawler
- * @package App\Utils
+ * Class GuildCrawler.
  */
-class GuildCrawler extends AbstractCrawler
+class GuildCrawler extends BaseCrawler implements CrawlerInterface
 {
-    /**
-     * @param Guild $guild
-     */
-    public function crawl(Guild $guild)
+    public function crawl()
     {
-        $crawler = new Crawler($this->getGuildUrl($guild));
-        $usersTableList = $crawler->filter('table.table a');
+        $this->collectGuildsDOM($this->settings->getApi().$this->settings->getGuildSuffix(), 1);
 
-        $this->fetchUsers($guild, $usersTableList);
-    }
+        foreach ($this->buffer as $collectionHtml) {
+            $crawler = new Crawler($collectionHtml);
+            preg_match('/\/g\/(\d+)\/(.*)\//', $crawler->filter('a')->getNode(0)->getAttribute('href'), $match);
 
-
-    /**
-     * @param Guild $guild
-     *
-     * @return string
-     */
-    private function getGuildUrl(Guild $guild): string
-    {
-        return file_get_contents(sprintf("%s%s/%s/%s/",
-            $this->settings->getApi(),
-            $this->settings->getGuildSuffix(),
-            $guild->getUuid(),
-            $guild->getCode()
-        ));
-    }
-
-    /**
-     * @param Guild $guild
-     */
-    private function removeUsers(Guild $guild): void
-    {
-        $this->em->getRepository(User::class)->removeFromGuild($guild);
-    }
-
-    /**
-     * @param Guild $guild
-     * @param $usersList
-     * @param $matchCode
-     */
-    private function fetchUsers(Guild $guild, $usersList): void
-    {
-        $this->removeUsers($guild);
-
-        foreach ($usersList as $user) {
-            preg_match('/\/u\/(.*)\//', $user->getAttribute('href'), $matchCode);
-
-            $entity = UserFactory::create([
-                'uuid' => $matchCode[1],
-                'title' => trim($user->nodeValue),
-                'guild' => $guild,
-            ]);
-            $this->em->persist($entity);
+            if (!$this->checkGuild($match[2], $match[1])) {
+                $guild = GuildFactory::create([
+                    'name' => $crawler->filter('h3')->text(),
+                    'uuid' => $match[1],
+                    'code' => $match[2],
+                ]);
+                $this->em->persist($guild);
+            }
         }
         $this->em->flush();
+    }
+
+    public function checkGuild(string $code, string $uuid)
+    {
+        return $this->em->getRepository(Guild::class)->findOneBy([
+            'code' => $code,
+            'uuid' => $uuid,
+        ]);
+    }
+
+    private function removeGuilds(): void
+    {
+        $this->em->getRepository(Guild::class)->remove();
+    }
+
+    /**
+     * @param string $url
+     * @param int    $page
+     */
+    private function collectGuildsDOM(string $url, $page = 1): void
+    {
+        ++$this->iter;
+        try {
+            $crawler = new Crawler($this->getSiteHtml(sprintf('%s/?page=%s', $url, $page)));
+            $domElements = $crawler->filter('ul.list-group li.character');
+
+            if (count($domElements) > 0) {
+                foreach ($domElements as $domElement) {
+                    $this->buffer[] = $domElement->ownerDocument->saveHTML($domElement);
+                }
+                $this->collectGuildsDOM($url, ++$page);
+            }
+        } catch (\Exception $e) {
+        }
     }
 }

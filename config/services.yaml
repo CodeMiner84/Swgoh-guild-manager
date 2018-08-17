@@ -4,6 +4,10 @@ parameters:
     locale: 'en'
     # This parameter defines the codes of the locales (languages) enabled in the application
     #app_locales: en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl|hr|zh_CN
+    jwt_private_key_path: '%kernel.root_dir%/../var/jwt/private.pem' # ssh private key path
+    jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'  # ssh public key path
+    jwt_key_pass_phrase:  'michal'                                         # ssh key pass phrase
+    jwt_token_ttl:        3600
 
 services:
     # default configuration for services in *this* file
@@ -28,8 +32,42 @@ services:
         # but if a service is unused, it's removed anyway
         exclude: '../src/{Entity,Migrations,Tests,Handler}'
 
-
     App\Handler\:
         resource: '../src/Handler'
         public: true
 
+    App\Utils\CharacterCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'character'
+
+    App\Utils\GuildCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'guild'
+
+    App\Utils\UserCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'user'
+
+    App\Utils\UserCharacterCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'user-character'
+
+    App\Utils\ModCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'mod'
+
+    App\Utils\SingleUserCrawler:
+        factory: 'App\Utils\CrawlerFactory:get'
+        arguments:
+            $crawler: 'single-user-character'
+
+    Gedmo\Timestampable\TimestampableListener:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ 'setAnnotationReader', [ '@annotation_reader' ] ]

@@ -8,4 +8,4 @@ yes | ./bin/console doctrine:migrations:migrate &&
 yes | ./bin/console doctrine:fixtures:load &&
 ./bin/console assets:install &&
 ./bin/console cache:clear &&
-yarn run encore dev
+./node_modules/.bin/encore production
