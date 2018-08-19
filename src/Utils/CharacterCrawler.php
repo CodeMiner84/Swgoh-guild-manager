@@ -54,19 +54,21 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
 
             $originalImagePath = preg_replace('/^\/\//', 'http://', $liCrawler->filter('img.char-portrait-img')->getNode(0)->getAttribute('data-src'));
             $characterImageName = preg_replace('/^tex\.charui_/', '', basename($originalImagePath));
-            $this->uploadCharacterImage($originalImagePath, $characterImageName);
+            //$this->uploadCharacterImage($originalImagePath, $characterImageName);
 
             if ($this->checkCharacter($matches[1])) {
                 $this->update($matches[1], [
                     'name' => $domElement->getAttribute('data-name-lower'),
+                    'apiCode' => '',
                     'description' => strip_tags($liCrawler->filter('p.character-description')->html()),
                     'side' => 'Light Side' === trim($side[0]) ? 1 : 0,
-                    'image' => Character::CHARACTER_PATH .$characterImageName,
+                    //'image' => Character::CHARACTER_PATH .$characterImageName,
                     'tags' => $tags,
                 ]);
             } else {
                 $character = CharacterFactory::create([
                     'code' => $matches[1],
+                    'apiCode' => '',
                     'name' => $domElement->getAttribute('data-name-lower'),
                     'description' => strip_tags($liCrawler->filter('p.character-description')->html()),
                     'side' => 'Light Side' === trim($side[0]) ? 1 : 0,

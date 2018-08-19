@@ -57,16 +57,18 @@ class CharacterRepository extends ServiceEntityRepository implements RepositoryI
             ->set('c.name', ':name')
             ->set('c.description', ':description')
             ->set('c.side', ':side')
-            ->set('c.image', ':image')
+           // ->set('c.image', ':image')
             ->set('c.tags', ':tags')
+            ->set('c.apiCode', ':apiCode')
             ->where('c.code = :code')
             ->setParameters([
                 'code' => $code,
                 'name' => $data['name'],
                 'description' => $data['description'],
                 'side' => $data['side'],
-                'image' => $data['image'],
+               // 'image' => $data['image'],
                 'tags' => $data['tags'],
+                'apiCode' => $data['apiCode']
             ])
             ->getQuery()
             ->execute();

@@ -38,6 +38,15 @@ class Character
     private $code = '';
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     *
+     * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users", "user_squad_list"})
+     * @JMS\Expose
+     */
+    private $apiCode = '';
+
+    /**
      * @ORM\Column(type="string")
      *
      * @JMS\Groups({"characters", "guild_squad", "user_character", "guild_squad_collection", "guild_users", "user_squad_list"})
@@ -304,5 +313,23 @@ class Character
     public function getGuildSquadCollection()
     {
         return $this->guildSquadCollection;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiCode(): string
+    {
+        return $this->apiCode;
+    }
+
+    /**
+     * @param string $apiCode
+     * @return Character
+     */
+    public function setApiCode(string $apiCode): Character
+    {
+        $this->apiCode = $apiCode;
+        return $this;
     }
 }

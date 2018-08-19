@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Utils\API\ApiConnector;
+use App\Utils\API\UnitData;
+use App\Utils\API\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -32,8 +35,13 @@ class ShopController extends Controller
      * @Route("/user-squad/{squad}/{action}/{id}", name="action-squad-edit")
      * @Route("/mods", name="mdos")
      */
-    public function index()
+    public function index(ApiConnector $apiConnector, UserData $userData, UnitData $unitData)
     {
+        $apiConnector->connect();
+        $unitData->fetchUnits();
+        die;
+        $userData->fetchUser(254583433);
+        die("A");
         // replace this line with your own code!
         return $this->render('shop/index.html.twig', [
             ]);

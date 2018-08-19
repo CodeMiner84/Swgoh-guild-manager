@@ -23,6 +23,7 @@ class CharacterFactory
             ->setSide($data['side'])
             ->setImage($data['image'])
             ->setTags($data['tags'])
+            ->setCode($data['apiCode'])
         ;
 
         return $character;
