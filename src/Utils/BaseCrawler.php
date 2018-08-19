@@ -4,6 +4,7 @@ namespace App\Utils;
 
 use App\Entity\Setting;
 use App\Repository\RepositoryInterface;
+use App\Utils\API\ApiConnector;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 
@@ -43,14 +44,27 @@ class BaseCrawler
     public $em;
 
     /**
-     * BaseCrawler constructor.
-     *
-     * @param Setting                $setting
-     * @param EntityManagerInterface $em
-     * @param RepositoryInterface    $repository
+     * @var ApiConnector
      */
-    public function __construct(Client $curlClient, Setting $setting, EntityManagerInterface $em, RepositoryInterface $repository)
+    protected $apiConnector;
+
+    /**
+     * BaseCrawler constructor.
+     * @param ApiConnector $apiConnector
+     * @param Client $curlClient
+     * @param Setting $setting
+     * @param EntityManagerInterface $em
+     * @param RepositoryInterface $repository
+     */
+    public function __construct(
+        ApiConnector $apiConnector,
+        Client $curlClient,
+        Setting $setting,
+        EntityManagerInterface $em,
+        RepositoryInterface $repository
+    )
     {
+        $this->apiConnector = $apiConnector;
         $this->curlClient = $curlClient;
         $this->settings = $setting;
         $this->em = $em;

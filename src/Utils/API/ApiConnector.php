@@ -95,4 +95,48 @@ class ApiConnector
             }
         }
     }
+
+    /**
+     * @param string $apiUrl
+     * @param array $params
+     * @param bool $withAuthorization
+     *
+     * @return array
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getResource(string $apiUrl, array $params, bool $withAuthorization = true): array
+    {
+        try {
+            $client = new Client();
+
+            $client = $client->request('POST', $apiUrl, [
+                'headers' => $this->getHeaders($withAuthorization),
+                'form_params' => $params
+            ]);
+
+            return json_decode($client->getBody()->getContents());
+        } catch (\Exception $e) {
+            echo [
+                ($e->getMessage())
+            ];die;
+        }
+    }
+
+    /**
+     * @param bool $withAuthorization
+     * @return array
+     */
+    private function getHeaders(bool $withAuthorization): array
+    {
+        $headers = [];
+        if ($withAuthorization) {
+            $headers = [
+                'Authorization' => 'Bearer ' . $this->accessToken,
+                'Accept' => 'application/json',
+            ];
+        }
+
+        return $headers;
+    }
 }

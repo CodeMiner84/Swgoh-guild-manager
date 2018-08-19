@@ -8,6 +8,7 @@ use App\Entity\Mod;
 use App\Entity\Setting;
 use App\Entity\User;
 use App\Entity\UserCharacter;
+use App\Utils\API\ApiConnector;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
@@ -25,7 +26,7 @@ class CrawlerFactory
      *
      * @return CharacterCrawler|GuildCrawler|UserCrawler|null
      */
-    public static function get($crawler, EntityManagerInterface $em)
+    public static function get($crawler, EntityManagerInterface $em, ApiConnector $apiConnector)
     {
         $instance = null;
         $client = new Client();
@@ -34,22 +35,22 @@ class CrawlerFactory
 
         switch ($crawler) {
             case 'character':
-                $instance = new CharacterCrawler($client, $settings, $em, $em->getRepository(Character::class));
+                $instance = new CharacterCrawler($apiConnector, $client, $settings, $em, $em->getRepository(Character::class));
                 break;
             case 'guild':
-                $instance = new GuildCrawler($client, $settings, $em, $em->getRepository(Guild::class));
+                $instance = new GuildCrawler($apiConnector, $client, $settings, $em, $em->getRepository(Guild::class));
                 break;
             case 'user':
-                $instance = new UserCrawler($client, $settings, $em, $em->getRepository(User::class));
+                $instance = new UserCrawler($apiConnector, $client, $settings, $em, $em->getRepository(User::class));
                 break;
             case 'user-character':
-                $instance = new UserCharacterCrawler($client, $settings, $em, $em->getRepository(UserCharacter::class));
+                $instance = new UserCharacterCrawler($apiConnector, $client, $settings, $em, $em->getRepository(UserCharacter::class));
                 break;
             case 'single-user-character':
-                $instance = new SingleUserCrawler($client, $settings, $em, $em->getRepository(UserCharacter::class));
+                $instance = new SingleUserCrawler($apiConnector, $client, $settings, $em, $em->getRepository(UserCharacter::class));
                 break;
             case 'mod':
-                $instance = new ModCrawler($client, $settings, $em, $em->getRepository(Mod::class));
+                $instance = new ModCrawler($apiConnector, $client, $settings, $em, $em->getRepository(Mod::class));
                 break;
         }
 

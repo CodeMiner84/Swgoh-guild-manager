@@ -13,10 +13,31 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class CharacterCrawler extends BaseCrawler implements CrawlerInterface
 {
+    private const API_URL = 'https://apiv2.swgoh.help/swgoh/data';
+    private const API_PARAMS = [
+        'collection' => 'unitsList',
+        'language' => 'eng_us'
+    ];
+
     public function crawl(): void
     {
         $crawler = new Crawler($this->getSiteHtml($this->settings->getApi()));
         $this->fetchCharacters($crawler->filter('li.character'));
+        $this->updateUnitsFromApi();
+    }
+
+    private function updateUnitsFromApi(): void
+    {
+        $data = $this->apiConnector->getResource(self::API_URL, self::API_PARAMS);
+
+        foreach ($data as $unit) {
+            $character = $this->em->getRepository(Character::class)->findOneByName(strtolower($name));
+            if ($character instanceof Character) {
+                $character->setApiCode($unit->baseId);
+            }
+        }
+
+        $this->em->flush();
     }
 
     /**

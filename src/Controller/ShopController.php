@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Utils\API\ApiConnector;
 use App\Utils\API\UnitData;
 use App\Utils\API\UserData;
+use App\Utils\CharacterCrawler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

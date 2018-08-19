@@ -14,9 +14,6 @@ class UnitData extends ApiConnector
         $data = $this->getData();
 
         foreach ($data as $unit) {
-            if ($unit->name === 'Asaj ventress') {
-                die("!");
-            }
             $name = $unit->name === 'Asaj ventress' ? 'Asaj ventress' : $unit->name;
             $character = $this->em->getRepository(Character::class)->findOneByName(strtolower($name));
             if ($character instanceof Character) {
