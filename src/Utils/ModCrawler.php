@@ -16,13 +16,31 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class ModCrawler extends BaseCrawler implements CrawlerInterface
 {
+    private const API_URL = 'https://apiv2.swgoh.help/swgoh/player';
+    private const API_PARAMS = [
+        'allycode' => '254583433',
+        'language' => 'eng_us'
+    ];
+
+    private const SET_MAPPER = [
+
+    ];
+
     private $user;
 
     public function crawl()
     {
+        //$this->repository->remove();
+        $data = $this->apiConnector->getResource(self::API_URL, self::API_PARAMS);
+        dump($data->roster[0]);die;
+        die("A");
+    }
+
+    public function crawlOld()
+    {
         $this->collectGuildsDOM($this->getModUrl($this->user), 1);
 
-        //$this->repository->remove();
+        $this->repository->remove();
 
         foreach ($this->buffer as $collectionHtml) {
             $crawler = new Crawler($collectionHtml);

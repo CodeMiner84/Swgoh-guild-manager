@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Utils\API\ApiConnector;
 use App\Utils\API\UnitData;
 use App\Utils\API\UserData;
 use App\Utils\CharacterCrawler;
+use App\Utils\ModCrawler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -36,8 +38,11 @@ class ShopController extends Controller
      * @Route("/user-squad/{squad}/{action}/{id}", name="action-squad-edit")
      * @Route("/mods", name="mdos")
      */
-    public function index(ApiConnector $apiConnector, UserData $userData, UnitData $unitData)
+    public function index(ApiConnector $apiConnector, UserData $userData, ModCrawler $modCrawler)
     {
+        $user = $this->getDoctrine()->getRepository(User::class)->find(1);
+        $modCrawler->setUser($user)->crawl();
+        die;
         $apiConnector->connect();
         $unitData->fetchUnits();
         die;

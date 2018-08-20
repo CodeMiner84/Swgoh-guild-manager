@@ -105,7 +105,7 @@ class ApiConnector
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getResource(string $apiUrl, array $params, bool $withAuthorization = true): array
+    public function getResource(string $apiUrl, array $params, bool $withAuthorization = true)
     {
         try {
             $client = new Client();

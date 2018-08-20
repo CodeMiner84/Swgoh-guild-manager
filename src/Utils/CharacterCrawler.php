@@ -31,7 +31,7 @@ class CharacterCrawler extends BaseCrawler implements CrawlerInterface
         $data = $this->apiConnector->getResource(self::API_URL, self::API_PARAMS);
 
         foreach ($data as $unit) {
-            $character = $this->em->getRepository(Character::class)->findOneByName(strtolower($name));
+            $character = $this->em->getRepository(Character::class)->findOneByName(strtolower($unit->name));
             if ($character instanceof Character) {
                 $character->setApiCode($unit->baseId);
             }
