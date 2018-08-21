@@ -19,7 +19,7 @@ class UserCharacterFactory
     {
         $user = new UserCharacter();
         $user
-            ->setUser($data['user'])
+            ->setAccount($data['account'])
             ->setCharacter($data['character'])
             ->setStars($data['stars'])
             ->setLevel($data['level'])

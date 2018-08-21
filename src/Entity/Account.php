@@ -117,11 +117,30 @@ class Account implements UserInterface, \Serializable, EntityInterface
     private $guildSquads;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @JMS\Groups({"account_show"})
+     * @JMS\Expose
+     */
+    private $allyCode;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserCharacter", mappedBy="user")
+     *
+     * @JMS\Groups({"guild_users"})
+     * @JMS\Expose
+     */
+    private $userCharacters;
+
+    /**
      * Admin constructor.
      */
     public function __construct()
     {
         $this->guildSquads = new ArrayCollection();
+        $this->userCharacters = new ArrayCollection();
     }
 
     /**
@@ -454,5 +473,60 @@ class Account implements UserInterface, \Serializable, EntityInterface
     public function getGuildCode()
     {
         return $this->guildCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAllyCode(): string
+    {
+        return $this->allyCode;
+    }
+
+    /**
+     * @param string $allyCode
+     * @return Account
+     */
+    public function setAllyCode(string $allyCode): Account
+    {
+        $this->allyCode = $allyCode;
+
+        return $this;
+    }
+
+    /**
+     * Add userCharacter.
+     *
+     * @param \App\Entity\UserCharacter $userCharacter
+     *
+     * @return User
+     */
+    public function addUserCharacter(\App\Entity\UserCharacter $userCharacter)
+    {
+        $this->userCharacters;
+
+        return $this;
+    }
+
+    /**
+     * Remove userCharacter.
+     *
+     * @param \App\Entity\UserCharacter $userCharacter
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeUserCharacter(\App\Entity\UserCharacter $userCharacter)
+    {
+        return $this->userCharacters->removeElement($userCharacter);
+    }
+
+    /**
+     * Get userCharacters.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserCharacters()
+    {
+        return $this->userCharacters;
     }
 }

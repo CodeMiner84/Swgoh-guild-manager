@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ApiConnector
 {
@@ -38,8 +39,14 @@ class ApiConnector
      */
     protected $em;
 
-    public function  __construct(EntityManagerInterface $entityManager, SessionInterface $session)
+    /**
+     * @var TokenStorageInterface
+     */
+    protected $token;
+
+    public function  __construct(TokenStorageInterface $token, EntityManagerInterface $entityManager, SessionInterface $session)
     {
+        $this->token = $token;
         $this->session = $session;
         $this->connect();
         $this->em = $entityManager;
