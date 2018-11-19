@@ -2,7 +2,12 @@
 
 namespace App\Utils\API;
 
+use App\Entity\Account;
 use App\Entity\Character;
+use App\Entity\User;
+use App\Entity\UserCharacter;
+use App\Factory\UserCharacterFactory;
+use App\Utils\CharacterCrawler;
 use GuzzleHttp\Client;
 
 class UserData extends ApiConnector
@@ -11,64 +16,62 @@ class UserData extends ApiConnector
 
     public function fetchUser(string $allyCode)
     {
-        $user = $this->token->getUser();
+        $data = $this->getData($allyCode);
 
-        $units = $this->getData($allyCode);
-        var_dump($units->MAGMATROOPER[0]);
-        foreach ($units as $apiCode => $unit) {
-            $character = $this->em->getRepository(Character::class)->findByApiCode($apiCode);
+        $account = $this->em->getRepository(Account::class)->findOneByAllyCode($allyCode);
+        foreach ($data as $apiCode => $unit) {
+            $unit = current($unit);
+            $character = $this->em->getRepository(Character::class)->findOneByApiCode($apiCode);
+            if (!$character instanceof Character) {
+                continue;
+            }
 
             $data = [
                 'stars' => $unit->starLevel,
-                //'user' => $user,
+                'account' => $account,
                 'character' => $character,
+                'active' => true,
                 'level' => $unit->level,
                 'gear' => $unit->gearLevel,
                 'power' => $unit->gp,
             ];
 
-            if ($this->characterExists($user, $character)) {
-                $this->repository->updateToon($user, $data);
+            if ($this->characterExists($account, $character)) {
+                $this->em->getRepository(UserCharacter::class)->updateToon($account, $data);
             } else {
                 $this->em->persist(UserCharacterFactory::create($data));
             }
-
         }
 
-        die;
-        foreach ($existed as $item) {
-            if (isset($toons[$item->getApiCode()])) {
-                //var_dump($item->getCode());
-                unset($toons[$item->getApiCode()]);
-            }
-        }
-        var_dump(count($toons));
-        var_dump($toons);die;
-        die;
-        var_dump($this->getData($allyCode));
-        die;
-        die;
+        $this->em->flush();
     }
 
+    /**
+     * @param Account      $account
+     * @param Character $character
+     *
+     * @return int
+     */
+    public function characterExists(Account $account, Character $character)
+    {
+        return $this->em->getRepository(UserCharacter::class)->findOneBy([
+            'account' => $account,
+            'character' => $character,
+        ]);
+    }
+
+    /**
+     * @param string $allyCode
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     private function getData(string $allyCode)
     {
-        try {
-            $client = new Client();
-            $headers = [
-                'Authorization' => 'Bearer ' . $this->accessToken,
-                'Accept'        => 'application/json',
-            ];
-            $client = $client->request('POST', self::API_URL, [
-                'headers' => $headers,
-                'form_params' => [
-                    'allycode' => $allyCode,
-                    'mods' => true,
-                ]
-            ]);
+        $params = [
+            'allycode' => $allyCode,
+            'mods' => true,
+        ];
 
-            return json_decode($client->getBody()->getContents());
-        } catch (\Exception $e) {
-            echo ($e->getMessage());die;
-        }
+        return $this->getResource(self::API_URL, $params);
     }
 }

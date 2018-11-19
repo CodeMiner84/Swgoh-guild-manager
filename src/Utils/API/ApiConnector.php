@@ -41,12 +41,13 @@ class   ApiConnector
     protected $em;
 
     /**
-     * @var TokenInterface
+     * @var TokenStorageInterface
      */
     protected $token;
 
     public function  __construct(TokenStorageInterface $token, EntityManagerInterface $entityManager, SessionInterface $session)
     {
+        $this->token = $token;
         $this->session = $session;
         $this->connect();
         $this->em = $entityManager;

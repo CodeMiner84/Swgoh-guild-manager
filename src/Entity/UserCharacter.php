@@ -43,10 +43,10 @@ class UserCharacter
     private $character;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="userCharacters", cascade={"persist"})
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="userCharacters", cascade={"persist"})
+     * @ORM\JoinColumn(fieldName="account_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $user;
+    private $account;
 
     /**
      * @ORM\Column(type="integer")
@@ -156,6 +156,7 @@ class UserCharacter
      * Get character.
      *
      * @return \App\Entity\Character|null
+     *
      */
     public function getCharacter()
     {
@@ -163,27 +164,27 @@ class UserCharacter
     }
 
     /**
-     * Set user.
+     * Set account.
      *
-     * @param \App\Entity\User|null $user
+     * @param \App\Entity\Account|null $account
      *
      * @return UserCharacter
      */
-    public function setUser(\App\Entity\User $user = null)
+    public function setAccount(\App\Entity\Account $account = null)
     {
-        $this->user = $user;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Get user.
+     * Get account.
      *
-     * @return \App\Entity\User|null
+     * @return \App\Entity\Account|null
      */
-    public function getUser()
+    public function getAccount()
     {
-        return $this->user;
+        return $this->account;
     }
 
     /**
