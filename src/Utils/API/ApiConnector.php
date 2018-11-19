@@ -6,8 +6,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class ApiConnector
+class   ApiConnector
 {
     private const API_URL = 'https://apiv2.swgoh.help/auth/signin';
 
@@ -38,11 +40,17 @@ class ApiConnector
      */
     protected $em;
 
-    public function  __construct(EntityManagerInterface $entityManager, SessionInterface $session)
+    /**
+     * @var TokenInterface
+     */
+    protected $token;
+
+    public function  __construct(TokenStorageInterface $token, EntityManagerInterface $entityManager, SessionInterface $session)
     {
         $this->session = $session;
         $this->connect();
         $this->em = $entityManager;
+        $this->token = $token;
     }
 
     public function connect()
@@ -54,7 +62,7 @@ class ApiConnector
 
             }
         } catch (\Exception $exception) {
-            var_dump($exception->getMessage());die;
+            //var_dump($exception->getMessage());die;
             return false;
         }
     }//92a28fa6061d7f11d240761ae81e13d91984690e
@@ -118,7 +126,7 @@ class ApiConnector
             return json_decode($client->getBody()->getContents());
         } catch (\Exception $e) {
             echo [
-                ($e->getMessage())
+                'message' => $e->getMessage()
             ];die;
         }
     }

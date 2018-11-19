@@ -40,14 +40,14 @@ class ShopController extends Controller
      */
     public function index(ApiConnector $apiConnector, UserData $userData, ModCrawler $modCrawler)
     {
+        $userData->fetchUser(254583433);
+        die("A");
         $user = $this->getDoctrine()->getRepository(User::class)->find(1);
-        $modCrawler->setUser($user)->crawl();
+        $userData->crawl();
         die;
         $apiConnector->connect();
         $unitData->fetchUnits();
         die;
-        $userData->fetchUser(254583433);
-        die("A");
         // replace this line with your own code!
         return $this->render('shop/index.html.twig', [
             ]);

@@ -11,20 +11,31 @@ class UserData extends ApiConnector
 
     public function fetchUser(string $allyCode)
     {
-        var_dump($allyCode);
-        var_dump($this->accessToken);
+        $user = $this->token->getUser();
 
-        $data = $this->getData($allyCode);
+        $units = $this->getData($allyCode);
+        var_dump($units->MAGMATROOPER[0]);
+        foreach ($units as $apiCode => $unit) {
+            $character = $this->em->getRepository(Character::class)->findByApiCode($apiCode);
 
+            $data = [
+                'stars' => $unit->starLevel,
+                //'user' => $user,
+                'character' => $character,
+                'level' => $unit->level,
+                'gear' => $unit->gearLevel,
+                'power' => $unit->gp,
+            ];
 
-        $toons = [];
-        foreach ($data as $characterCode => $character) {
-            //var_dump($characterCode);
-            $toons[$characterCode] = $characterCode;
+            if ($this->characterExists($user, $character)) {
+                $this->repository->updateToon($user, $data);
+            } else {
+                $this->em->persist(UserCharacterFactory::create($data));
+            }
+
         }
-        $existed = $this->em->getRepository(Character::class)->findAll();
 
-        var_dump(count($toons));
+        die;
         foreach ($existed as $item) {
             if (isset($toons[$item->getApiCode()])) {
                 //var_dump($item->getCode());
